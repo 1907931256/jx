@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<Configuration>
+
+  <DBSettings>
+    <!--add key="MedITS" DBType="SQL Server" DBServer="172.16.13.107\SQLEXPRESS" DBUserName="sa" DBUserPWD="vico0808" DBInstance="JX" DBTimeout="30" /-->
+    <add key="MedITS" DBType="Oracle" DBServer="MSDAORA.1" DBUserName="vtrack" DBUserPWD="vico0808" DBInstance="JX" DBTimeout="30" />
+  </DBSettings>
+  
+</Configuration>

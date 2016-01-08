@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{76C049C8-5FA9-4256-8339-3CCAF5648C2E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ITSWareHouseManager</RootNamespace>
+    <AssemblyName>ITSWareHouseManager</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\Debug\</OutputPath>
+    <DocumentationFile>ITSWareHouseManager.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>ITSWareHouseManager.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\Debug\</OutputPath>
+    <DocumentationFile>ITSWareHouseManager.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>ITSWareHouseManager.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrmExpried.Designer.vb">
+      <DependentUpon>FrmExpried.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmExpried.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmHighValueDispatchReg.Designer.vb">
+      <DependentUpon>FrmHighValueDispatchReg.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmHighValueDispatchReg.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmPackageChange.Designer.vb">
+      <DependentUpon>FrmPackageChange.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPackageChange.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmWareHouseInOutQuery.Designer.vb">
+      <DependentUpon>FrmWareHouseInOutQuery.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmWareHouseInOutQuery.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmWareHouseInReg.Designer.vb">
+      <DependentUpon>FrmWareHouseInReg.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmWareHouseInReg.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmWareHouseOutReg.Designer.vb">
+      <DependentUpon>FrmWareHouseOutReg.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmWareHouseOutReg.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmWareHouseStock.Designer.vb">
+      <DependentUpon>FrmWareHouseStock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmWareHouseStock.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmWareHouseStocking.Designer.vb">
+      <DependentUpon>FrmWareHouseStocking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmWareHouseStocking.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FrmExpried.resx">
+      <DependentUpon>FrmExpried.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmHighValueDispatchReg.resx">
+      <DependentUpon>FrmHighValueDispatchReg.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPackageChange.resx">
+      <DependentUpon>FrmPackageChange.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmWareHouseInOutQuery.resx">
+      <DependentUpon>FrmWareHouseInOutQuery.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmWareHouseInReg.resx">
+      <DependentUpon>FrmWareHouseInReg.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmWareHouseOutReg.resx">
+      <DependentUpon>FrmWareHouseOutReg.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmWareHouseStock.resx">
+      <DependentUpon>FrmWareHouseStock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmWareHouseStocking.resx">
+      <DependentUpon>FrmWareHouseStocking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBManager\DBManager.vbproj">
+      <Project>{72af3398-e8e6-422d-a6ca-205a4018df3d}</Project>
+      <Name>DBManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ITSBase\ITSBase.vbproj">
+      <Project>{cc5e39f5-66fe-401e-bb81-4f9e47f1b190}</Project>
+      <Name>ITSBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ITSProcess\ITSProcess.vbproj">
+      <Project>{04fd6fc1-2d7c-4675-a2b0-7e05a3981b5f}</Project>
+      <Name>ITSProcess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UIControlLib\UIControlLib.vbproj">
+      <Project>{91e4f7e2-5797-4365-b74f-e748d2115d42}</Project>
+      <Name>UIControlLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

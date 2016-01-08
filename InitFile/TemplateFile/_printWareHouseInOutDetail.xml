@@ -1,0 +1,46 @@
+<daReport papersize="A4" layout="Portrait">
+	<margins left="50" top="50" right="50" bottom="50"/>
+	<parameters>
+		<parameter name="Title"/>
+	</parameters>
+	<content>
+		<staticContent>
+			<textField x="20" y="85" width="800" height="36" horAlignment="None" verAlignment="None" Selectable="True">
+				<text horAlignment="Center" verAlignment="Top">$P{Title}</text>
+				<font family="gothic" size="18" style="Bold"/>
+				<foregroundColor color="Black"/>
+				<backgroundColor color="Transparent"/>
+				<border width="0" color="Black"/>
+			</textField>
+		</staticContent>
+		<dynamicContent>
+			<textField x="677" y="1088" width="100" height="25" horAlignment="None" verAlignment="None" Selectable="True">
+				<text horAlignment="Right" verAlignment="Top">$P{pageNumber} / $P{totalPages} 页</text>
+				<font family="gothic" size="10" style="Bold"/>
+				<foregroundColor color="Black"/>
+				<backgroundColor color="Transparent"/>
+				<border width="0" color="Black"/>
+			</textField>
+			<table x="15" y="125" width="700" height="950" borderColor="Black" drawEmptyRows="false" cellHeight="20" dataSource="printTable" horAlignment="None" verAlignment="None" Selectable="True" GroupByField="">
+				<header headerColor="NavajoWhite" headerFontColor="Black">
+					<font family="gothic" size="10" style="Bold"/>
+				</header>
+				<dataRows dataFontColor="Black">
+					<font family="gothic" size="10"/>
+				</dataRows>
+				<columns>
+					<column name="物品编号" label="物品编号" FormatMask="" width="70" align="Center"/>
+					<column name="物品名称" label="物品名称" FormatMask="" width="110" align="Center"/>
+					<column name="物品规格" label="物品规格" FormatMask="" width="70" align="Center"/>
+					<column name="单位" label="单位" FormatMask="" width="40" align="Center"/>
+					<column name="数量" label="数量" FormatMask="" width="40" align="Center"/>
+					<column name="生产厂商" label="生产厂商" FormatMask="" width="70" align="Center"/>
+					<column name="批号" label="批号" FormatMask="" width="70" align="Center"/>
+					<column name="失效日期" label="失效日期" FormatMask="" width="90" align="Center"/>
+					<column name="登记人员姓名" label="登记人员姓名" FormatMask="" width="100" align="Center"/>
+					<column name="登记时间" label="登记时间" FormatMask="yyyy-MM-dd HH:mm" width="100" align="Center"/>
+				</columns>
+			</table>
+		</dynamicContent>
+	</content>
+</daReport>

@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{91E4F7E2-5797-4365-B74F-E748D2115D42}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>UIControlLib</RootNamespace>
+    <AssemblyName>UIControlLib</AssemblyName>
+    <MyType>Windows</MyType>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>http://localhost/UIControlLib/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\Debug\</OutputPath>
+    <DocumentationFile>UIControlLib.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DocumentationFile>UIControlLib.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseRight|AnyCPU' ">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\ReleaseRight\</OutputPath>
+    <DocumentationFile>UIControlLib.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\Debug\</OutputPath>
+    <DocumentationFile>UIControlLib.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>UIControlLib.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseRight|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\ReleaseRight\</OutputPath>
+    <DocumentationFile>UIControlLib.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CmbDropDownList.Designer.vb">
+      <DependentUpon>CmbDropDownList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CmbDropDownList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorLabel.designer.vb">
+      <DependentUpon>ColorLabel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ColorLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FocusDispatch.vb" />
+    <Compile Include="InputMonitor.vb" />
+    <Compile Include="LabelPerform.designer.vb">
+      <DependentUpon>LabelPerform.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LabelPerform.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyUserControlBase.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIDataGridViewCheckBoxColumn.vb" />
+    <Compile Include="UIDataGridViewEditBtnColumn.vb" />
+    <Compile Include="UIDataGridViewImgColumn.vb" />
+    <Compile Include="UIDataGridViewLinkColumn.vb" />
+    <Compile Include="EnterProcessManager.vb" />
+    <Compile Include="ModalDialogBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="OutputDetailView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OutputDispatchView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OutputView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ResizeAlgorithm.vb" />
+    <Compile Include="Schedule.vb" />
+    <Compile Include="UIDataGridView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIDataGridViewDelBtnColumn.vb" />
+    <Compile Include="UIDataGridViewOKBtnColumn.vb" />
+    <Compile Include="UIExpandPanelDataTable.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIDataGridViewTextBoxColumn.vb" />
+    <Compile Include="LabelMenu.Designer.vb">
+      <DependentUpon>LabelMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LabelMenu.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LabelEx.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LabelLine.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyLabelBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyLabelExBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIDropDownList.Designer.vb">
+      <DependentUpon>UIDropDownList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UIDropDownList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIExpandPanel.Designer.vb">
+      <DependentUpon>UIExpandPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UIExpandPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIFrmInfo.Designer.vb">
+      <DependentUpon>UIFrmInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UIFrmInfo.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIMsgBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIPanelForRequestHistory.Designer.vb">
+      <DependentUpon>UIPanelForRequestHistory.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UIPanelForRequestHistory.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UITerminalDataLoadButton.Designer.vb">
+      <DependentUpon>UITerminalDataLoadButton.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UITerminalDataLoadButton.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UITraceInfoPanel.Designer.vb">
+      <DependentUpon>UITraceInfoPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UITraceInfoPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIProgressBar.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIRoundPanelBase.Designer.vb">
+      <DependentUpon>UIRoundPanelBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UIRoundPanelBase.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIXpMenu.vb">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ColorLabel.resx">
+      <DependentUpon>ColorLabel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModalDialogBase.resx">
+      <DependentUpon>ModalDialogBase.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabelEx.resx">
+      <DependentUpon>LabelEx.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabelLine.resx">
+      <DependentUpon>LabelLine.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyLabelBase.resx">
+      <DependentUpon>MyLabelBase.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyLabelExBase.resx">
+      <DependentUpon>MyLabelExBase.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OutputView.resx">
+      <DependentUpon>OutputView.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIExpandPanel.resx">
+      <DependentUpon>UIExpandPanel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIFrmInfo.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>UIFrmInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIMsgBox.resx">
+      <DependentUpon>UIMsgBox.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIPanelForRequestHistory.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>UIPanelForRequestHistory.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UITerminalDataLoadButton.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>UITerminalDataLoadButton.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UITraceInfoPanel.resx">
+      <DependentUpon>UITraceInfoPanel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIRoundPanelBase.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>UIRoundPanelBase.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ITSBase\ITSBase.vbproj">
+      <Project>{cc5e39f5-66fe-401e-bb81-4f9e47f1b190}</Project>
+      <Name>ITSBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UIGraphLib\UIGraphLib.csproj">
+      <Project>{2541686B-1673-43BF-AF89-3163945DB009}</Project>
+      <Name>UIGraphLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnOver_50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add_over.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add_press.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnNormal_50.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

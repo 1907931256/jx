@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configration>
+  <ExcelConfig>
+    <DataAreaSetting>
+      <dataItem name="DataTitle" fontname="宋体" size="12" align="Center" bold="true" backcolor="darkgray"/>
+      <dataItem name="DataArea" fontname="宋体" size="12" align="Center" bold="false" backcolor="whitea"/>
+    </DataAreaSetting>
+    <ChartSetting>
+      <chartItem name="ChartArea" left="0" top="0" width="400" height="350" GraphType="51" TitleFontName="宋体" TitleFontSize="18" TitleFontBold="true"/>
+      <chartItem name="PlotArea" top="35" left="0" width="248" height="315" backcolor="white" xAxisFontSize="10" yAxisFontSize="10"/>
+      <chartItem name="Legend" left="250" top="70" width="135" height="200" fontname="宋体" size="10"/>
+    </ChartSetting>
+    <ColumnSet>
+      <Column name="物品编号" value="物品编号"/>
+      <Column name="物品名称" value="物品名称"/>
+      <Column name="物品规格" value="物品规格"/>
+      <Column name="单位" value="单位"/>
+      <Column name="总计" value="总计"/>
+    </ColumnSet>
+  </ExcelConfig>
+</Configration>

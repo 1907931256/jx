@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{953D6BFB-2D4B-431C-964D-2AB124DDA25F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ITSDrugManager</RootNamespace>
+    <AssemblyName>ITSDrugManager</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\Debug\</OutputPath>
+    <DocumentationFile>ITSDrugManager.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DocumentationFile>ITSDrugManager.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrmDrugDispatchReg.Designer.vb">
+      <DependentUpon>FrmDrugDispatchReg.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDrugDispatchReg.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmDrugConsumeStatistics.Designer.vb">
+      <DependentUpon>FrmDrugConsumeStatistics.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDrugConsumeStatistics.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmDrugInOutStatistics.Designer.vb">
+      <DependentUpon>FrmDrugInOutStatistics.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDrugInOutStatistics.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmDrugStockTaking.Designer.vb">
+      <DependentUpon>FrmDrugStockTaking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDrugStockTaking.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmDrugOutReg.Designer.vb">
+      <DependentUpon>FrmDrugOutReg.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDrugOutReg.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmDrugInReg.Designer.vb">
+      <DependentUpon>FrmDrugInReg.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDrugInReg.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmDrugManager.Designer.vb">
+      <DependentUpon>FrmDrugManager.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDrugManager.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FrmDrugDispatchReg.resx">
+      <DependentUpon>FrmDrugDispatchReg.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDrugConsumeStatistics.resx">
+      <DependentUpon>FrmDrugConsumeStatistics.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDrugInOutStatistics.resx">
+      <DependentUpon>FrmDrugInOutStatistics.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDrugStockTaking.resx">
+      <DependentUpon>FrmDrugStockTaking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDrugOutReg.resx">
+      <DependentUpon>FrmDrugOutReg.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDrugInReg.resx">
+      <DependentUpon>FrmDrugInReg.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDrugManager.resx">
+      <DependentUpon>FrmDrugManager.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBManager\DBManager.vbproj">
+      <Project>{72AF3398-E8E6-422D-A6CA-205A4018DF3D}</Project>
+      <Name>DBManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ITSBase\ITSBase.vbproj">
+      <Project>{cc5e39f5-66fe-401e-bb81-4f9e47f1b190}</Project>
+      <Name>ITSBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UIControlLib\UIControlLib.vbproj">
+      <Project>{91e4f7e2-5797-4365-b74f-e748d2115d42}</Project>
+      <Name>UIControlLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

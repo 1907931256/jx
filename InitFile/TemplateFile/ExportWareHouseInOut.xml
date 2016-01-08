@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configration>
+  <ExcelConfig>
+    <DataAreaSetting>
+      <dataItem name="DataTitle" fontname="宋体" size="12" align="Center" bold="true" backcolor="darkgray"/>
+      <dataItem name="DataArea" fontname="宋体" size="12" align="Center" bold="false" backcolor="whitea"/>
+    </DataAreaSetting>
+    <ChartSetting>
+      <chartItem name="ChartArea" left="0" top="0" width="400" height="350" GraphType="51" TitleFontName="宋体" TitleFontSize="18" TitleFontBold="true"/>
+      <chartItem name="PlotArea" top="35" left="0" width="248" height="315" backcolor="white" xAxisFontSize="10" yAxisFontSize="10"/>
+      <chartItem name="Legend" left="250" top="70" width="135" height="200" fontname="宋体" size="10"/>
+    </ChartSetting>
+    <ColumnSet>
+      <Column name="入出库类型" value="入出库类型"/>
+      <Column name="登记人员姓名" value="登记人员姓名"/>
+      <Column name="登记时间" value="登记时间" Format="yyyy-MM-dd HH:mm"/>
+      <Column name="无菌区组合名称" value="无菌区组合名称"/>
+    </ColumnSet>
+  </ExcelConfig>
+</Configration>
