@@ -76,6 +76,7 @@ Partial Class FrmLocationQuery
         Me.dgv.MultiSelect = False
         Me.dgv.Name = "dgv"
         Me.dgv.ReadOnly = True
+        Me.dgv.RowHeadersVisible = False
         Me.dgv.RowTemplate.Height = 23
         Me.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv.Size = New System.Drawing.Size(166, 244)

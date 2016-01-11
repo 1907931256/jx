@@ -32,7 +32,7 @@ Public Class FrmWorkloadAccount
             Try
                 Dim startTime As String = dtpStart.Value.Date
                 Dim endTime As String = dtpEnd.Value.Date.AddDays(1).AddSeconds(-1)
-                Dim codeColl As List(Of String) = (From cardRow As DataGridViewRow In dgvItemsSel.Rows Select cardName = Judgement.JudgeDBNullValue(cardRow.Cells(TEXT_ID_INFO_CODE).Value.ToString(), ENUM_DATA_TYPE.DATA_TYPE_STRING) Where Not String.IsNullOrEmpty(cardName)).Cast(Of String)().ToList()
+                Dim codeColl As List(Of String) = (From cardRow As DataGridViewRow In dgvItemsSel.Rows Select cardName = Judgement.JudgeDBNullValue(cardRow.Cells(TEXT_ID_INFO_CODE).Value, ENUM_DATA_TYPE.DATA_TYPE_STRING) Where Not String.IsNullOrEmpty(cardName)).Cast(Of String)().ToList()
                 Dim backAccount As New BackgroundWorker()
                 AddHandler backAccount.DoWork, AddressOf BackAccountDoWork
                 AddHandler backAccount.RunWorkerCompleted, AddressOf BackAccountCompleted
@@ -133,10 +133,6 @@ Public Class FrmWorkloadAccount
     End Sub
 
     Private Sub BindEntityTable(ByVal dataSource As DataTable)
-        dgvItemsSel.ClearBoolColumn()
-        dgvItemsSel.ClearFormatColumn()
-        Dim nArrWidth() As Short = {60, 40}
-        dgvItemsSel.ColumnWidthCollection = nArrWidth
         dgvItemsSel.DataSource = dataSource
         dgvItemsSel.ClearSelection()
     End Sub
@@ -186,7 +182,6 @@ Public Class FrmWorkloadAccount
                 newRow.Item(de.Value.name) = de.Value.Workload
             Next
             outlineTable.Rows.Add(newRow)
-            dgvAccount.RealColumnWidthCollection = nArrWidth
             dgvAccount.DataSource = outlineTable
             If chtAccount.Series.Count > 0 AndAlso outlineTable.Rows.Count > 0 AndAlso outlineTable.Columns.Count > 0 Then
                 Dim colArr() As String = (From col As DataColumn In outlineTable.Columns Select col.ColumnName).ToArray()
@@ -196,8 +191,6 @@ Public Class FrmWorkloadAccount
         ElseIf workloadPage = workloadPage.Detail Then
             Dim dv As DataView = _workloadTable.Copy().DefaultView
             dv.Sort = String.Format("{0} asc,{1} asc", TEXT_ID_INFO_CODE, TEXT_TRAIL_RECORD_ARRIVE_TIME)
-            Dim nArrWidth() As Short = {75, 75, 150, 100, 200, 200, 200, 100}
-            dgvAccount.RealColumnWidthCollection = nArrWidth
             dgvAccount.DataSource = dv.Table.Copy()
         End If
     End Sub
