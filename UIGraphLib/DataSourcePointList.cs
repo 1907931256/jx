@@ -18,12 +18,9 @@
 //============================================================================= 
 
 using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
+using System.Data;
 using System.Reflection;
 using System.Windows.Forms;
-using System.Data;
 
 namespace UIGraphLib
 {
@@ -41,10 +38,10 @@ namespace UIGraphLib
 		private BindingSource _bindingSource;
 
 		//private object _dataSource = null; 
-		private string _xDataMember = null;
-		private string _yDataMember = null;
-		private string _zDataMember = null;
-		private string _tagDataMember = null;
+		private string _xDataMember;
+		private string _yDataMember;
+		private string _zDataMember;
+		private string _tagDataMember;
 
 		#region Properties
 
@@ -60,7 +57,7 @@ namespace UIGraphLib
 			get
 			{
 				if ( index < 0 || index >= _bindingSource.Count )
-					throw new System.ArgumentOutOfRangeException( "Error: Index out of range" );
+					throw new ArgumentOutOfRangeException( "Error: Index out of range" );
 
 				object row = _bindingSource[index];
 
@@ -82,10 +79,9 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( _bindingSource != null )
+			    if ( _bindingSource != null )
 					return _bindingSource.Count;
-				else
-					return 0;
+			    return 0;
 			}
 		}
 
@@ -208,7 +204,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns> 
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary> 
@@ -252,7 +248,7 @@ namespace UIGraphLib
 			else if ( drv != null )
 				val = drv[dataMember];
 			else if ( pInfo == null )
-				throw new System.Exception( "Can't find DataMember '" + dataMember + "' in DataSource" );
+				throw new Exception( "Can't find DataMember '" + dataMember + "' in DataSource" );
 
 			// if ( val == null ) 
 			// throw new System.Exception( "Can't find DataMember '" + dataMember + "' in DataSource" ); 
@@ -293,7 +289,7 @@ namespace UIGraphLib
 				val = drv[dataMember];
 
 			if ( val == null )
-				throw new System.Exception( "Can't find DataMember '" + dataMember + "' in DataSource" );
+				throw new Exception( "Can't find DataMember '" + dataMember + "' in DataSource" );
 
 			return val;
 		}

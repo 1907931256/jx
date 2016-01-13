@@ -20,7 +20,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -235,7 +234,7 @@ namespace UIGraphLib
 			blend.Positions[1] = 1.0f;
 			_type = FillType.Brush;
 
-			this.CreateBrushFromBlend( blend, angle );
+			CreateBrushFromBlend( blend, angle );
 		}
 		
 		/// <summary>
@@ -284,7 +283,7 @@ namespace UIGraphLib
 			blend.Positions[2] = 1.0f;
 			_type = FillType.Brush;
 			
-			this.CreateBrushFromBlend( blend, angle );
+			CreateBrushFromBlend( blend, angle );
 		}
 		
 		/// <summary>
@@ -313,7 +312,7 @@ namespace UIGraphLib
 		{
 			Init();
 			_type = FillType.Brush;
-			this.CreateBrushFromBlend( blend, angle );
+			CreateBrushFromBlend( blend, angle );
 		}
 
 		/// <summary>
@@ -352,10 +351,10 @@ namespace UIGraphLib
 			blend.Positions = new float[colors.Length];
 			blend.Positions[0] = 0.0F;
 			for ( int i=1; i<colors.Length; i++ )
-				blend.Positions[i] = (float) i / (float)( colors.Length - 1 );
+				blend.Positions[i] = i / (float)( colors.Length - 1 );
 			_type = FillType.Brush;
 
-			this.CreateBrushFromBlend( blend, angle );
+			CreateBrushFromBlend( blend, angle );
 		}
 
 		/// <summary>
@@ -398,7 +397,7 @@ namespace UIGraphLib
 			blend.Positions = positions;
 			_type = FillType.Brush;
 
-			this.CreateBrushFromBlend( blend, angle );
+			CreateBrushFromBlend( blend, angle );
 		}
 
 		/// <summary>
@@ -519,7 +518,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -607,7 +606,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 
@@ -881,7 +880,7 @@ namespace UIGraphLib
 		public Brush MakeBrush( RectangleF rect, PointPair dataValue )
 		{
 			// get a brush
-			if ( this.IsVisible && ( !_color.IsEmpty || _brush != null ) )
+			if ( IsVisible && ( !_color.IsEmpty || _brush != null ) )
 			{
 				if ( rect.Height < 1.0F )
 					rect.Height = 1.0F;
@@ -893,39 +892,35 @@ namespace UIGraphLib
 				{
 					return ScaleBrush( rect, _brush, _isScaled );
 				}
-				else if ( IsGradientValueType )
-				{
-					if ( dataValue != null )
-					{
-						if ( !_secondaryValueGradientColor.IsEmpty )
-						{
-							// Go ahead and create a new Fill so we can do all the scaling, etc.,
-							// that is associated with a gradient
-							Fill tmpFill = new Fill( _secondaryValueGradientColor,
-									GetGradientColor( dataValue ), _angle );
-							return tmpFill.MakeBrush( rect );
-						}
-						else
-							return new SolidBrush( GetGradientColor( dataValue ) );
-					}
-					else if ( _rangeDefault != double.MaxValue )
-					{
-						if ( !_secondaryValueGradientColor.IsEmpty )
-						{
-							// Go ahead and create a new Fill so we can do all the scaling, etc.,
-							// that is associated with a gradient
-							Fill tmpFill = new Fill( _secondaryValueGradientColor,
-									GetGradientColor( _rangeDefault ), _angle );
-							return tmpFill.MakeBrush( rect );
-						}
-						else
-							return new SolidBrush( GetGradientColor( _rangeDefault ) );
-					}
-					else
-						return ScaleBrush( rect, _brush, true );
-				}
-				else
-					return new SolidBrush( _color );
+			    if ( IsGradientValueType )
+			    {
+			        if ( dataValue != null )
+			        {
+			            if ( !_secondaryValueGradientColor.IsEmpty )
+			            {
+			                // Go ahead and create a new Fill so we can do all the scaling, etc.,
+			                // that is associated with a gradient
+			                Fill tmpFill = new Fill( _secondaryValueGradientColor,
+			                    GetGradientColor( dataValue ), _angle );
+			                return tmpFill.MakeBrush( rect );
+			            }
+			            return new SolidBrush( GetGradientColor( dataValue ) );
+			        }
+			        if ( _rangeDefault != double.MaxValue )
+			        {
+			            if ( !_secondaryValueGradientColor.IsEmpty )
+			            {
+			                // Go ahead and create a new Fill so we can do all the scaling, etc.,
+			                // that is associated with a gradient
+			                Fill tmpFill = new Fill( _secondaryValueGradientColor,
+			                    GetGradientColor( _rangeDefault ), _angle );
+			                return tmpFill.MakeBrush( rect );
+			            }
+			            return new SolidBrush( GetGradientColor( _rangeDefault ) );
+			        }
+			        return ScaleBrush( rect, _brush, true );
+			    }
+			    return new SolidBrush( _color );
 			}
 
 			// Always return a suitable default
@@ -982,115 +977,110 @@ namespace UIGraphLib
 
 		private Brush ScaleBrush( RectangleF rect, Brush brush, bool isScaled )
 		{
-			if ( brush != null )
-			{
-				if ( brush is SolidBrush )
+		    if ( brush != null )
+		    {
+		        if ( brush is SolidBrush )
 				{
 					return (Brush) brush.Clone();
 				}
-				else if ( brush is LinearGradientBrush )
-				{
-					LinearGradientBrush linBrush = (LinearGradientBrush) brush.Clone();
+		        if ( brush is LinearGradientBrush )
+		        {
+		            LinearGradientBrush linBrush = (LinearGradientBrush) brush.Clone();
 					
-					if ( isScaled )
-					{
-						linBrush.ScaleTransform( rect.Width / linBrush.Rectangle.Width,
-							rect.Height / linBrush.Rectangle.Height, MatrixOrder.Append );
-						linBrush.TranslateTransform( rect.Left - linBrush.Rectangle.Left,
-							rect.Top - linBrush.Rectangle.Top, MatrixOrder.Append );
-					}
-					else
-					{
-						float	dx = 0,
-								dy = 0;
-						switch ( _alignH )
-						{
-						case AlignH.Left:
-							dx = rect.Left - linBrush.Rectangle.Left;
-							break;
-						case AlignH.Center:
-							dx = ( rect.Left + rect.Width / 2.0F ) - linBrush.Rectangle.Left;
-							break;
-						case AlignH.Right:
-							dx = ( rect.Left + rect.Width ) - linBrush.Rectangle.Left;
-							break;
-						}
+		            if ( isScaled )
+		            {
+		                linBrush.ScaleTransform( rect.Width / linBrush.Rectangle.Width,
+		                    rect.Height / linBrush.Rectangle.Height, MatrixOrder.Append );
+		                linBrush.TranslateTransform( rect.Left - linBrush.Rectangle.Left,
+		                    rect.Top - linBrush.Rectangle.Top, MatrixOrder.Append );
+		            }
+		            else
+		            {
+		                float	dx = 0,
+		                    dy = 0;
+		                switch ( _alignH )
+		                {
+		                    case AlignH.Left:
+		                        dx = rect.Left - linBrush.Rectangle.Left;
+		                        break;
+		                    case AlignH.Center:
+		                        dx = ( rect.Left + rect.Width / 2.0F ) - linBrush.Rectangle.Left;
+		                        break;
+		                    case AlignH.Right:
+		                        dx = ( rect.Left + rect.Width ) - linBrush.Rectangle.Left;
+		                        break;
+		                }
 						
-						switch ( _alignV )
-						{
-						case AlignV.Top:
-							dy = rect.Top - linBrush.Rectangle.Top;
-							break;
-						case AlignV.Center:
-							dy = ( rect.Top + rect.Height / 2.0F ) - linBrush.Rectangle.Top;
-							break;
-						case AlignV.Bottom:
-							dy = ( rect.Top + rect.Height) - linBrush.Rectangle.Top;
-							break;
-						}
+		                switch ( _alignV )
+		                {
+		                    case AlignV.Top:
+		                        dy = rect.Top - linBrush.Rectangle.Top;
+		                        break;
+		                    case AlignV.Center:
+		                        dy = ( rect.Top + rect.Height / 2.0F ) - linBrush.Rectangle.Top;
+		                        break;
+		                    case AlignV.Bottom:
+		                        dy = ( rect.Top + rect.Height) - linBrush.Rectangle.Top;
+		                        break;
+		                }
 
-						linBrush.TranslateTransform( dx, dy, MatrixOrder.Append );
-					}
+		                linBrush.TranslateTransform( dx, dy, MatrixOrder.Append );
+		            }
 					
-					return linBrush;
+		            return linBrush;
 					
-				} // LinearGradientBrush
-				else if ( brush is TextureBrush )
-				{
-					TextureBrush texBrush = (TextureBrush) brush.Clone();
+		        } // LinearGradientBrush
+		        if ( brush is TextureBrush )
+		        {
+		            TextureBrush texBrush = (TextureBrush) brush.Clone();
 					
-					if ( isScaled )
-					{
-						texBrush.ScaleTransform( rect.Width / texBrush.Image.Width,
-							rect.Height / texBrush.Image.Height, MatrixOrder.Append );
-						texBrush.TranslateTransform( rect.Left, rect.Top, MatrixOrder.Append );
-					}
-					else
-					{
-						float	dx = 0,
-								dy = 0;
-						switch ( _alignH )
-						{
-						case AlignH.Left:
-							dx = rect.Left;
-							break;
-						case AlignH.Center:
-							dx = ( rect.Left + rect.Width / 2.0F );
-							break;
-						case AlignH.Right:
-							dx = ( rect.Left + rect.Width );
-							break;
-						}
+		            if ( isScaled )
+		            {
+		                texBrush.ScaleTransform( rect.Width / texBrush.Image.Width,
+		                    rect.Height / texBrush.Image.Height, MatrixOrder.Append );
+		                texBrush.TranslateTransform( rect.Left, rect.Top, MatrixOrder.Append );
+		            }
+		            else
+		            {
+		                float	dx = 0,
+		                    dy = 0;
+		                switch ( _alignH )
+		                {
+		                    case AlignH.Left:
+		                        dx = rect.Left;
+		                        break;
+		                    case AlignH.Center:
+		                        dx = ( rect.Left + rect.Width / 2.0F );
+		                        break;
+		                    case AlignH.Right:
+		                        dx = ( rect.Left + rect.Width );
+		                        break;
+		                }
 						
-						switch ( _alignV )
-						{
-						case AlignV.Top:
-							dy = rect.Top;
-							break;
-						case AlignV.Center:
-							dy = ( rect.Top + rect.Height / 2.0F );
-							break;
-						case AlignV.Bottom:
-							dy = ( rect.Top + rect.Height);
-							break;
-						}
+		                switch ( _alignV )
+		                {
+		                    case AlignV.Top:
+		                        dy = rect.Top;
+		                        break;
+		                    case AlignV.Center:
+		                        dy = ( rect.Top + rect.Height / 2.0F );
+		                        break;
+		                    case AlignV.Bottom:
+		                        dy = ( rect.Top + rect.Height);
+		                        break;
+		                }
 
-						texBrush.TranslateTransform( dx, dy, MatrixOrder.Append );
-					}
+		                texBrush.TranslateTransform( dx, dy, MatrixOrder.Append );
+		            }
 					
-					return texBrush;
-				}
-				else // other brush type
-				{
-					return (Brush) brush.Clone();
-				}
-			}
-			else
-				// If they didn't provide a brush, make one using the fillcolor gradient to white
-				return new LinearGradientBrush( rect, Color.White, _color, 0F );
+		            return texBrush;
+		        }
+		        return (Brush) brush.Clone();
+		    }
+		    return new LinearGradientBrush( rect, Color.White, _color, 0F );
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Fill the background of the <see c_ref="RectangleF"/> area, using the
 		/// fill type from this <see c_ref="Fill"/>.
 		/// </summary>
@@ -1130,9 +1120,9 @@ namespace UIGraphLib
 		/// <see c_ref="FillType.GradientByZ" /> <see c_ref="FillType" />.</param>
 		public void Draw( Graphics g, RectangleF rect, PointPair pt )
 		{
-			if ( this.IsVisible )
+			if ( IsVisible )
 			{
-				using ( Brush brush = this.MakeBrush( rect, pt ) )
+				using ( Brush brush = MakeBrush( rect, pt ) )
 				{
 					g.FillRectangle( brush, rect );
 				}

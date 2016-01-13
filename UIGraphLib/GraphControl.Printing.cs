@@ -15,13 +15,9 @@
 //=============================================================================
 
 using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
-using System.Drawing.Imaging;
 using System.Drawing.Printing;
-using System.Threading;
+using System.Windows.Forms;
 
 namespace UIGraphLib
 {
@@ -63,7 +59,7 @@ namespace UIGraphLib
 		{
 			PrintDocument pd = sender as PrintDocument;
 
-			MasterPane mPane = this.MasterPane;
+			MasterPane mPane = MasterPane;
 			bool[] isPenSave = new bool[mPane.PaneList.Count + 1];
 			bool[] isFontSave = new bool[mPane.PaneList.Count + 1];
 			isPenSave[0] = mPane.IsPenWidthScaled;
@@ -83,8 +79,8 @@ namespace UIGraphLib
 			SizeF newSize = mPane.Rect.Size;
 			if ( _isPrintFillPage && _isPrintKeepAspectRatio )
 			{
-				float xRatio = (float)e.MarginBounds.Width / (float)newSize.Width;
-				float yRatio = (float)e.MarginBounds.Height / (float)newSize.Height;
+				float xRatio = e.MarginBounds.Width / newSize.Width;
+				float yRatio = e.MarginBounds.Height / newSize.Height;
 				float ratio = Math.Min( xRatio, yRatio );
 
 				newSize.Width *= ratio;
@@ -97,7 +93,7 @@ namespace UIGraphLib
 				e.MarginBounds.Top, newSize.Width, newSize.Height ) );
 			mPane.Draw( e.Graphics );
 
-			using ( Graphics g = this.CreateGraphics() )
+			using ( Graphics g = CreateGraphics() )
 			{
 				mPane.ReSize( g, saveRect );
 				//g.Dispose();
@@ -126,7 +122,7 @@ namespace UIGraphLib
 					if ( _pdSave == null )
 					{
 						_pdSave = new PrintDocument();
-						_pdSave.PrintPage += new PrintPageEventHandler( Graph_PrintPage );
+						_pdSave.PrintPage += Graph_PrintPage;
 					}
 				}
 				catch ( Exception exception )

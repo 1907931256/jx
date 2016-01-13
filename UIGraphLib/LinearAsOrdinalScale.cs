@@ -18,8 +18,6 @@
 //=============================================================================
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -189,7 +187,7 @@ namespace UIGraphLib
 		override internal string MakeLabel( GraphPane pane, int index, double dVal )
 		{
 			if ( _format == null )
-				_format = Scale.Default.Format;
+				_format = Default.Format;
 
 			double val;
 
@@ -198,11 +196,10 @@ namespace UIGraphLib
 			if ( pane.CurveList.Count > 0 && pane.CurveList[0].Points.Count > tmpIndex )
 			{
 				val = pane.CurveList[0].Points[tmpIndex].X;
-				double scaleMult = Math.Pow( (double) 10.0, _mag );
+				double scaleMult = Math.Pow( 10.0, _mag );
 				return ( val / scaleMult ).ToString( _format );
 			}
-			else
-				return string.Empty;
+		    return string.Empty;
 		}
 
 	#endregion
@@ -232,7 +229,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );

@@ -18,7 +18,6 @@
 //=============================================================================
 
 using System;
-using System.Drawing;
 using System.Collections.Generic;
 
 namespace UIGraphLib
@@ -69,7 +68,7 @@ namespace UIGraphLib
 			for ( int i = 0; i < rhs.Count; i++ )
 			{
 				StockPt pt = new StockPt( rhs[i] );
-				this.Add( pt );
+				Add( pt );
 			}
 		}
 
@@ -80,7 +79,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>

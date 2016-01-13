@@ -18,8 +18,6 @@
 //=============================================================================
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -192,7 +190,7 @@ namespace UIGraphLib
 		/// </returns>
 		override internal double CalcMajorTicValue( double baseVal, double tic )
 		{
-			return baseVal + (double)tic * CyclesPerStep;
+			return baseVal + tic * CyclesPerStep;
 
 		//	double val = baseVal + (double)tic * CyclesPerStep;
 		//	double frac = val - Math.Floor( val );
@@ -221,7 +219,7 @@ namespace UIGraphLib
 									0.698970004336019, 0.778151250383644, 0.845098040014257,
 									0.903089986991944, 0.954242509439325, 1 };
 
-			return baseVal + Math.Floor( (double) iTic / 9.0 ) + dLogVal[( iTic + 9 ) % 9];
+			return baseVal + Math.Floor( iTic / 9.0 ) + dLogVal[( iTic + 9 ) % 9];
 		}
 
 		/// <summary>
@@ -256,12 +254,8 @@ namespace UIGraphLib
 		{
 			if ( _baseTic != PointPair.Missing )
 				return _baseTic;
-			else
-			{
-				// go to the nearest even multiple of the step size
-				return Math.Ceiling( Scale.SafeLog( _min ) - 0.00000001 );
-			}
-
+		    // go to the nearest even multiple of the step size
+		    return Math.Ceiling( SafeLog( _min ) - 0.00000001 );
 		}
 		
 		/// <summary>
@@ -279,7 +273,7 @@ namespace UIGraphLib
 
 			//nTics = (int)( ( Math.Floor( Scale.SafeLog( _max ) + 1.0e-12 ) ) -
 			//		( Math.Ceiling( Scale.SafeLog( _min ) - 1.0e-12 ) ) + 1 ) / CyclesPerStep;
-			nTics = (int)( ( Scale.SafeLog( _max ) - Scale.SafeLog( _min ) ) / CyclesPerStep ) + 1;
+			nTics = (int)( ( SafeLog( _max ) - SafeLog( _min ) ) / CyclesPerStep ) + 1;
 
 			if ( nTics < 1 )
 				nTics = 1;
@@ -369,10 +363,10 @@ namespace UIGraphLib
 
 			// Get the nearest power of 10 (no partial log cycles allowed)
 			if ( _minAuto )
-				_min = Math.Pow( (double) 10.0,
+				_min = Math.Pow( 10.0,
 					Math.Floor( Math.Log10( _min ) ) );
 			if ( _maxAuto )
-				_max = Math.Pow( (double) 10.0,
+				_max = Math.Pow( 10.0,
 					Math.Ceiling( Math.Log10( _max ) ) );
 
 		}
@@ -396,12 +390,11 @@ namespace UIGraphLib
 		override internal string MakeLabel( GraphPane pane, int index, double dVal )
 		{
 			if ( _format == null )
-				_format = Scale.Default.Format;
+				_format = Default.Format;
 
 			if ( _isUseTenPower )
 				return string.Format( "{0:F0}", dVal );
-			else
-				return Math.Pow( 10.0, dVal ).ToString( _format );
+		    return Math.Pow( 10.0, dVal ).ToString( _format );
 		}
 
 	#endregion
@@ -431,7 +424,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );

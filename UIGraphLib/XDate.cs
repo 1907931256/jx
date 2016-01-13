@@ -692,17 +692,17 @@ namespace UIGraphLib
 			minute += carry;
 		
 			// Normalize the minutes and carry over to hours
-			carry = (int) Math.Floor( (double) minute / MinutesPerHour );
+			carry = (int) Math.Floor( minute / MinutesPerHour );
 			minute -= carry * (int) MinutesPerHour;
 			hour += carry;
 		
 			// Normalize the hours and carry over to days
-			carry = (int) Math.Floor( (double) hour / HoursPerDay );
+			carry = (int) Math.Floor( hour / HoursPerDay );
 			hour -= carry * (int) HoursPerDay;
 			day += carry;
 		
 			// Normalize the months and carry over to years
-			carry = (int) Math.Floor( (double) month / MonthsPerYear );
+			carry = (int) Math.Floor( month / MonthsPerYear );
 			month -= carry * (int) MonthsPerYear;
 			year += carry;
 		}
@@ -782,12 +782,12 @@ namespace UIGraphLib
 				month += 12;
 			}
 		
-			double A = Math.Floor( (double) year / 100.0 );
+			double A = Math.Floor( year / 100.0 );
 			double B = 2 - A + Math.Floor( A / 4.0 );
 		
-			return	Math.Floor( 365.25 * ( (double) year + 4716.0 ) ) +
-					Math.Floor( 30.6001 * (double) ( month + 1 ) ) +
-					(double) day + B - 1524.5 +
+			return	Math.Floor( 365.25 * ( year + 4716.0 ) ) +
+					Math.Floor( 30.6001 * (month + 1) ) +
+					day + B - 1524.5 +
 					hour  / HoursPerDay + minute / MinutesPerDay + second / SecondsPerDay +
 					millisecond / MillisecondsPerDay;
 		
@@ -1077,7 +1077,7 @@ namespace UIGraphLib
 			double jDayMid = CalendarDateToJulianDay( year, month, day, hour, minute, second );
 			
 			
-			return (double) year + ( jDayMid - jDay1 ) / ( jDay2 - jDay1 );
+			return year + ( jDayMid - jDay1 ) / ( jDay2 - jDay1 );
 		}
 		
 		/// <summary>
@@ -1095,7 +1095,7 @@ namespace UIGraphLib
 			double jDay1 = CalendarDateToJulianDay( year, 1, 1, 0, 0, 0 );
 			double jDay2 = CalendarDateToJulianDay( year + 1, 1, 1, 0, 0, 0 );
 			
-			return JulianDayToXLDate( ( yearDec - (double) year ) * ( jDay2 - jDay1 ) + jDay1 );
+			return JulianDayToXLDate( ( yearDec - year ) * ( jDay2 - jDay1 ) + jDay1 );
 		}
 		
 		/// <summary>
@@ -1229,7 +1229,7 @@ namespace UIGraphLib
 		public void AddMonths( double dMonths )
 		{
 			int iMon = (int) dMonths;
-			double monFrac = Math.Abs( dMonths - (double) iMon );
+			double monFrac = Math.Abs( dMonths - iMon );
 			int sMon = Math.Sign( dMonths );
 			
 			int year, month, day, hour, minute, second;
@@ -1257,7 +1257,7 @@ namespace UIGraphLib
 		public void AddYears( double dYears )
 		{
 			int iYear = (int) dYears;
-			double yearFrac = Math.Abs( dYears - (double) iYear );
+			double yearFrac = Math.Abs( dYears - iYear );
 			int sYear = Math.Sign( dYears );
 			
 			int year, month, day, hour, minute, second;
@@ -1411,19 +1411,18 @@ namespace UIGraphLib
 		/// instance; otherwise, <c>false</c></returns>
 		public override bool Equals( object obj )
 		{
-			if ( obj is XDate )
+		    if ( obj is XDate )
 			{
 				return ((XDate) obj)._xlDate == _xlDate;
 			}
-			else if ( obj is double )
-			{
-				return ((double) obj) == _xlDate;
-			}
-			else
-				return false;
+		    if ( obj is double )
+		    {
+		        return ((double) obj) == _xlDate;
+		    }
+		    return false;
 		}
-		
-		/// <summary>
+
+	    /// <summary>
 		/// Returns the hash code for this <see c_ref="XDate"/> structure.  In this case, the
 		/// hash code is simply the equivalent hash code for the floating point double date value.
 		/// </summary>
@@ -1449,7 +1448,7 @@ namespace UIGraphLib
 			if ( ! (target is XDate) )
 				throw new ArgumentException();
 
-			return ( this.XLDate ).CompareTo( ((XDate)target).XLDate );
+			return ( XLDate ).CompareTo( ((XDate)target).XLDate );
 		}
 
 	#endregion
@@ -1528,7 +1527,7 @@ namespace UIGraphLib
 		/// <returns>A string representation of the date</returns>
 		public string ToString( string fmtStr )
 		{
-			return ToString( this.XLDate, fmtStr );
+			return ToString( XLDate, fmtStr );
 		}
 
 		/// <summary>

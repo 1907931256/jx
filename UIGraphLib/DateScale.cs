@@ -18,8 +18,6 @@
 //=============================================================================
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -194,22 +192,22 @@ namespace UIGraphLib
 			{
 				case DateUnit.Year:
 				default:
-					xDate.AddYears( (double) iTic * _minorStep );
+					xDate.AddYears( iTic * _minorStep );
 					break;
 				case DateUnit.Month:
-					xDate.AddMonths( (double) iTic * _minorStep );
+					xDate.AddMonths( iTic * _minorStep );
 					break;
 				case DateUnit.Day:
-					xDate.AddDays( (double) iTic * _minorStep );
+					xDate.AddDays( iTic * _minorStep );
 					break;
 				case DateUnit.Hour:
-					xDate.AddHours( (double) iTic * _minorStep );
+					xDate.AddHours( iTic * _minorStep );
 					break;
 				case DateUnit.Minute:
-					xDate.AddMinutes( (double) iTic * _minorStep );
+					xDate.AddMinutes( iTic * _minorStep );
 					break;
 				case DateUnit.Second:
-					xDate.AddSeconds( (double) iTic * _minorStep );
+					xDate.AddSeconds( iTic * _minorStep );
 					break;
 			}
 
@@ -263,72 +261,69 @@ namespace UIGraphLib
 		{
 			if ( _baseTic != PointPair.Missing )
 				return _baseTic;
-			else
-			{
-				int year, month, day, hour, minute, second, millisecond;
-				XDate.XLDateToCalendarDate( _min, out year, out month, out day, out hour, out minute,
-											out second, out millisecond );
-				switch ( _majorUnit )
-				{
-					case DateUnit.Year:
-					default:
-						month = 1; day = 1; hour = 0; minute = 0; second = 0; millisecond = 0;
-						break;
-					case DateUnit.Month:
-						day = 1; hour = 0; minute = 0; second = 0; millisecond = 0;
-						break;
-					case DateUnit.Day:
-						hour = 0; minute = 0; second = 0; millisecond = 0;
-						break;
-					case DateUnit.Hour:
-						minute = 0; second = 0; millisecond = 0;
-						break;
-					case DateUnit.Minute:
-						second = 0; millisecond = 0;
-						break;
-					case DateUnit.Second:
-						millisecond = 0;
-						break;
-					case DateUnit.Millisecond:
-						break;
+		    int year, month, day, hour, minute, second, millisecond;
+		    XDate.XLDateToCalendarDate( _min, out year, out month, out day, out hour, out minute,
+		        out second, out millisecond );
+		    switch ( _majorUnit )
+		    {
+		        case DateUnit.Year:
+		        default:
+		            month = 1; day = 1; hour = 0; minute = 0; second = 0; millisecond = 0;
+		            break;
+		        case DateUnit.Month:
+		            day = 1; hour = 0; minute = 0; second = 0; millisecond = 0;
+		            break;
+		        case DateUnit.Day:
+		            hour = 0; minute = 0; second = 0; millisecond = 0;
+		            break;
+		        case DateUnit.Hour:
+		            minute = 0; second = 0; millisecond = 0;
+		            break;
+		        case DateUnit.Minute:
+		            second = 0; millisecond = 0;
+		            break;
+		        case DateUnit.Second:
+		            millisecond = 0;
+		            break;
+		        case DateUnit.Millisecond:
+		            break;
 
-				}
+		    }
 
-				double xlDate = XDate.CalendarDateToXLDate( year, month, day, hour, minute, second, millisecond );
-				if ( xlDate < _min )
-				{
-					switch ( _majorUnit )
-					{
-						case DateUnit.Year:
-						default:
-							year++;
-							break;
-						case DateUnit.Month:
-							month++;
-							break;
-						case DateUnit.Day:
-							day++;
-							break;
-						case DateUnit.Hour:
-							hour++;
-							break;
-						case DateUnit.Minute:
-							minute++;
-							break;
-						case DateUnit.Second:
-							second++;
-							break;
-						case DateUnit.Millisecond:
-							millisecond++;
-							break;
+		    double xlDate = XDate.CalendarDateToXLDate( year, month, day, hour, minute, second, millisecond );
+		    if ( xlDate < _min )
+		    {
+		        switch ( _majorUnit )
+		        {
+		            case DateUnit.Year:
+		            default:
+		                year++;
+		                break;
+		            case DateUnit.Month:
+		                month++;
+		                break;
+		            case DateUnit.Day:
+		                day++;
+		                break;
+		            case DateUnit.Hour:
+		                hour++;
+		                break;
+		            case DateUnit.Minute:
+		                minute++;
+		                break;
+		            case DateUnit.Second:
+		                second++;
+		                break;
+		            case DateUnit.Millisecond:
+		                millisecond++;
+		                break;
 
-					}
+		        }
 
-					xlDate = XDate.CalendarDateToXLDate( year, month, day, hour, minute, second, millisecond );
-				}
+		        xlDate = XDate.CalendarDateToXLDate( year, month, day, hour, minute, second, millisecond );
+		    }
 
-				return xlDate;
-			}
+		    return xlDate;
 		}
 		
 		/// <summary>
@@ -456,9 +451,9 @@ namespace UIGraphLib
 				if ( _isPreventLabelOverlap )
 				{
 					// Calculate the maximum number of labels
-					double maxLabels = (double) this.CalcMaxLabels( g, pane, scaleFactor );
+					double maxLabels = CalcMaxLabels( g, pane, scaleFactor );
 
-					if ( maxLabels < this.CalcNumTics() )
+					if ( maxLabels < CalcNumTics() )
 						_majorStep = CalcDateStepSize( _max - _min, maxLabels );
 				}
 			}
@@ -524,7 +519,7 @@ namespace UIGraphLib
 					if ( tempStep == 1.0 )
 						scale._minorStep = 0.25;
 					else
-						scale._minorStep = Scale.CalcStepSize( tempStep, targetSteps );
+						scale._minorStep = CalcStepSize( tempStep, targetSteps );
 				}
 			}
 			else if ( range > Default.RangeYearMonth )
@@ -785,39 +780,34 @@ namespace UIGraphLib
 					if ( direction == 1 && month == 1 && day == 1 && hour == 0
 						&& minute == 0 && second == 0 )
 						return date;
-					else
-						return XDate.CalendarDateToXLDate( year + direction, 1, 1,
-														0, 0, 0 );
-				case DateUnit.Month:
+			        return XDate.CalendarDateToXLDate( year + direction, 1, 1,
+			            0, 0, 0 );
+			    case DateUnit.Month:
 					// If the date is already an exact month, then don't step to the next month
 					if ( direction == 1 && day == 1 && hour == 0
 						&& minute == 0 && second == 0 )
 						return date;
-					else
-						return XDate.CalendarDateToXLDate( year, month + direction, 1,
-												0, 0, 0 );
-				case DateUnit.Day:
+			        return XDate.CalendarDateToXLDate( year, month + direction, 1,
+			            0, 0, 0 );
+			    case DateUnit.Day:
 					// If the date is already an exact Day, then don't step to the next day
 					if ( direction == 1 && hour == 0 && minute == 0 && second == 0 )
 						return date;
-					else
-						return XDate.CalendarDateToXLDate( year, month,
-											day + direction, 0, 0, 0 );
-				case DateUnit.Hour:
+			        return XDate.CalendarDateToXLDate( year, month,
+			            day + direction, 0, 0, 0 );
+			    case DateUnit.Hour:
 					// If the date is already an exact hour, then don't step to the next hour
 					if ( direction == 1 && minute == 0 && second == 0 )
 						return date;
-					else
-						return XDate.CalendarDateToXLDate( year, month, day,
-													hour + direction, 0, 0 );
-				case DateUnit.Minute:
+			        return XDate.CalendarDateToXLDate( year, month, day,
+			            hour + direction, 0, 0 );
+			    case DateUnit.Minute:
 					// If the date is already an exact minute, then don't step to the next minute
 					if ( direction == 1 && second == 0 )
 						return date;
-					else
-						return XDate.CalendarDateToXLDate( year, month, day, hour,
-													minute + direction, 0 );
-				case DateUnit.Second:
+			        return XDate.CalendarDateToXLDate( year, month, day, hour,
+			            minute + direction, 0 );
+			    case DateUnit.Second:
 					return XDate.CalendarDateToXLDate( year, month, day, hour,
 													minute, second + direction );
 
@@ -847,7 +837,7 @@ namespace UIGraphLib
 		override internal string MakeLabel( GraphPane pane, int index, double dVal )
 		{
 			if ( _format == null )
-				_format = Scale.Default.Format;
+				_format = Default.Format;
 
 			return XDate.ToString( dVal, _format );
 		}
@@ -935,7 +925,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );

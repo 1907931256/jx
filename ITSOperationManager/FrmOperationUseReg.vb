@@ -33,7 +33,7 @@ Public Class FrmOperationUseReg
         Me.cmbSurList.ValueMember = "Key"
         m_oDbOperationManage = New DbOperationManage
         TableConstructor.CreateUseingINS(m_dtPackage)
-        btnOrderExec.Visible = False
+        pnlDrugFunc.Visible = False
         btnInsConfirm.Visible = False
         LoadTodaySurList()
     End Sub
@@ -114,21 +114,21 @@ Public Class FrmOperationUseReg
             Next
         End If
     End Sub
-    Private Sub cmbSurList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSurList.SelectedIndexChanged
+    Private Sub cmbSurList_SelectedIndexChanged(sender As Object, e As EventArgs)
         SetSureryNoteInfo(Me.cmbSurList.SelectedItem.Detail)
     End Sub
 
-    Private Sub btnOrderExec_Click(sender As Object, e As EventArgs) Handles btnOrderExec.Click
+    Private Sub btnOrderExec_Click(sender As Object, e As EventArgs)
         If dgvDrug.SelectedRows.Count <> 1 Then Return
         dgvDrug.SelectedRows(0).Cells(TEXT_DRUG_STATUS).Value = "已执行"
     End Sub
 
-    Private Sub btnInsConfirm_Click(sender As Object, e As EventArgs) Handles btnInsConfirm.Click
+    Private Sub btnInsConfirm_Click(sender As Object, e As EventArgs)
         If dgvInstrument.SelectedRows.Count <> 1 Then Return
         dgvInstrument.SelectedRows(0).Cells(TEXT_INS_STATUS).Value = "准备发放"
     End Sub
 
-    Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
+    Private Sub btnOK_Click(sender As Object, e As EventArgs)
         CType(Me.dgvDrug.DataSource, DataTable).AcceptChanges()
         CType(Me.dgvInstrument.DataSource, DataTable).AcceptChanges()
         Dim operationManage As New DbOperationManage
@@ -140,7 +140,7 @@ Public Class FrmOperationUseReg
                 UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
             End If
         End If
-      
+
     End Sub
     Private Sub dgvINS_CellContentClick(sender As Object, e As System.EventArgs) Handles dgvInstrument.DoubleClick
         Dim dr As DataRow = dgvInstrument.CurrentDataRow
@@ -151,5 +151,10 @@ Public Class FrmOperationUseReg
         Dim strINSUnit As String = dr.Item(TEXT_INS_UNIT)
         Dim oFrmINSDetail As FrmINSDetail = New FrmINSDetail(strINSID, strINSName, strINSType, strINSUnit)
         oFrmINSDetail.ShowDialog()
+    End Sub
+
+    Private Sub FrmOperationRecycleReg_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Me.pnlSurInfo.Width = Me.Width / 4
+        Me.btnOK.Left = (Me.pnlCommit.Width - Me.btnOK.Width) / 2
     End Sub
 End Class

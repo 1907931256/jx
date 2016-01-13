@@ -18,7 +18,6 @@
 //=============================================================================
 
 using System;
-using System.Drawing;
 using System.Collections.Generic;
 
 namespace UIGraphLib
@@ -65,7 +64,7 @@ namespace UIGraphLib
 		{
 			get
 			{
-				int count = this.Count;
+				int count = Count;
 				// The last point is a repeat of the first point
 				if ( index == count - 1 )
 					index = 0;
@@ -73,18 +72,18 @@ namespace UIGraphLib
 				if ( index < 0 || index >= count )
 					return null;
 
-				PointPair pt = (PointPair)base[index];
+				PointPair pt = base[index];
 //				double theta = (double) index / (double) count * 2.0 * Math.PI;
 				double rotationRadians = _rotation * Math.PI / 180;
 				double theta = rotationRadians + ( _clockwise ? -1.0d : 1.0d ) *
-						( (double) index / (double) (count-1) * 2.0 * Math.PI);
+						( index / (double) (count-1) * 2.0 * Math.PI);
 				double x = pt.Y * Math.Cos( theta );
 				double y = pt.Y * Math.Sin( theta );
 				return new PointPair( x, y, pt.Z, (string) pt.Tag );
 			}
 			set
 			{
-				int count = this.Count;
+				int count = Count;
 				// The last point is a repeat of the first point
 				if ( index == count - 1 )
 					index = 0;
@@ -92,7 +91,7 @@ namespace UIGraphLib
 				if ( index < 0 || index >= count )
 					return;
 
-				PointPair pt = (PointPair)base[index];
+				PointPair pt = base[index];
 				pt.Y = Math.Sqrt( value.X * value.X + value.Y * value.Y );
 			}
 		}
@@ -139,7 +138,7 @@ namespace UIGraphLib
 		/// <summary>
 		/// Default Constructor
 		/// </summary>
-		public RadarPointList() : base()
+		public RadarPointList()
 		{
 		}
 
@@ -149,7 +148,7 @@ namespace UIGraphLib
 		public RadarPointList( RadarPointList rhs )
 		{
 			for ( int i = 0; i < rhs.Count; i++ )
-				this.Add( rhs.GetAt(i) );
+				Add( rhs.GetAt(i) );
 		}
 
 		/// <summary>
@@ -159,7 +158,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>

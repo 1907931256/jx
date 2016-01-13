@@ -21,9 +21,6 @@ using System;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-using System.Collections;
-using IComparer	= System.Collections.IComparer;
-
 #if ( !DOTNET1 )	// Is this a .Net 2 compilation?
 using System.Collections.Generic;
 #endif
@@ -130,8 +127,8 @@ namespace UIGraphLib
 		public PointPair( double x, double y, double z, object tag )
 			: base( x, y )
 		{
-			this.Z = z;
-			this.Tag = tag;
+			Z = z;
+			Tag = tag;
 		}
 
 		/// <summary>
@@ -149,12 +146,12 @@ namespace UIGraphLib
 		/// <param name="rhs">The basis for the copy.</param>
 		public PointPair( PointPair rhs ) : base( rhs )
 		{
-			this.Z = rhs.Z;
+			Z = rhs.Z;
 
 			if ( rhs.Tag is ICloneable )
-				this.Tag = ((ICloneable) rhs.Tag).Clone();
+				Tag = ((ICloneable) rhs.Tag).Clone();
 			else
-				this.Tag = rhs.Tag;
+				Tag = rhs.Tag;
 		}
 
 		/// <summary>
@@ -164,7 +161,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -206,7 +203,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -227,15 +224,15 @@ namespace UIGraphLib
 		/// <returns>true if any value is invalid</returns>
 		public bool IsInvalid3D
 		{
-			get { return	this.X == PointPair.Missing ||
-							this.Y == PointPair.Missing ||
-							this.Z == PointPair.Missing ||
-							Double.IsInfinity( this.X ) ||
-							Double.IsInfinity( this.Y ) ||
-							Double.IsInfinity( this.Z ) ||
-							Double.IsNaN( this.X ) ||
-							Double.IsNaN( this.Y ) ||
-							Double.IsNaN( this.Z );
+			get { return	X == Missing ||
+							Y == Missing ||
+							Z == Missing ||
+							Double.IsInfinity( X ) ||
+							Double.IsInfinity( Y ) ||
+							Double.IsInfinity( Z ) ||
+							Double.IsNaN( X ) ||
+							Double.IsNaN( Y ) ||
+							Double.IsNaN( Z );
 				}
 		}
 
@@ -246,8 +243,8 @@ namespace UIGraphLib
 		/// <value>The lower dependent value for this <see c_ref="PointPair"/>.</value>
 		public double LowValue
 		{
-			get { return this.Z; }
-			set { this.Z = value; }
+			get { return Z; }
+			set { Z = value; }
 		}
 
 		/// <summary>
@@ -400,19 +397,19 @@ namespace UIGraphLib
 				{
 					return 0;
 				}
-				else if ( l == null && r != null )
-				{
-					return -1;
-				}
-				else if ( l != null && r == null )
-				{
-					return 1;
-				}
+			    if ( l == null && r != null )
+			    {
+			        return -1;
+			    }
+			    if ( l != null && r == null )
+			    {
+			        return 1;
+			    }
 
-				double lY = l.Y;
+			    double lY = l.Y;
 				double rY = r.Y;
 
-				if ( System.Math.Abs( lY - rY ) < .000000001 )
+				if ( Math.Abs( lY - rY ) < .000000001 )
 					return 0;
 
 				return lY < rY ? -1 : 1;
@@ -434,7 +431,7 @@ namespace UIGraphLib
 			/// <param name="type">The axis type on which to sort.</param>
 			public PointPairComparer( SortType type )
 			{
-				this.sortType = type;
+				sortType = type;
 			}
 
 			/// <summary>
@@ -447,12 +444,12 @@ namespace UIGraphLib
 			{
 				if ( l == null && r == null )
 					return 0;
-				else if ( l == null && r != null )
-					return -1;
-				else if ( l != null && r == null )
-					return 1;
+			    if ( l == null && r != null )
+			        return -1;
+			    if ( l != null && r == null )
+			        return 1;
 
-				double lVal, rVal;
+			    double lVal, rVal;
 
 				if ( sortType == SortType.XValues )
 				{
@@ -465,19 +462,18 @@ namespace UIGraphLib
 					rVal = r.Y;
 				}
 
-				if ( lVal == PointPair.Missing || Double.IsInfinity( lVal ) || Double.IsNaN( lVal ) )
+				if ( lVal == Missing || Double.IsInfinity( lVal ) || Double.IsNaN( lVal ) )
 					l = null;
-				if ( rVal == PointPair.Missing || Double.IsInfinity( rVal ) || Double.IsNaN( rVal ) )
+				if ( rVal == Missing || Double.IsInfinity( rVal ) || Double.IsNaN( rVal ) )
 					r = null;
 
-				if ( ( l == null && r == null ) || ( System.Math.Abs( lVal - rVal ) < 1e-100 ) )
+				if ( ( l == null && r == null ) || ( Math.Abs( lVal - rVal ) < 1e-100 ) )
 					return 0;
-				else if ( l == null && r != null )
-					return -1;
-				else if ( l != null && r == null )
-					return 1;
-				else
-					return lVal < rVal ? -1 : 1;
+			    if ( l == null && r != null )
+			        return -1;
+			    if ( l != null && r == null )
+			        return 1;
+			    return lVal < rVal ? -1 : 1;
 			}
 		}
 
@@ -496,7 +492,7 @@ namespace UIGraphLib
 		public override bool Equals( object obj )
 		{
 			PointPair rhs = obj as PointPair;
-			return this.X == rhs.X && this.Y == rhs.Y && this.Z == rhs.Z;
+			return X == rhs.X && Y == rhs.Y && Z == rhs.Z;
 		}
 
 		/// <summary>
@@ -516,7 +512,7 @@ namespace UIGraphLib
 		/// <returns>A string representation of the PointPair</returns>
 		virtual public string ToString( bool isShowZ )
 		{
-			return this.ToString( PointPair.DefaultFormat, isShowZ );
+			return ToString( DefaultFormat, isShowZ );
 		}
 
 		/// <summary>
@@ -531,9 +527,9 @@ namespace UIGraphLib
 		/// <param name="isShowZ">true to show the third "Z" or low dependent value coordinate</param>
 		virtual public string ToString( string format, bool isShowZ )
 		{
-			return "( " + this.X.ToString( format ) +
-					", " + this.Y.ToString( format ) + 
-					( isShowZ ? ( ", " + this.Z.ToString( format ) ) : "" )
+			return "( " + X.ToString( format ) +
+					", " + Y.ToString( format ) + 
+					( isShowZ ? ( ", " + Z.ToString( format ) ) : "" )
 					+ " )";
 		}
 
@@ -550,9 +546,9 @@ namespace UIGraphLib
 		/// <returns>A string representation of the PointPair</returns>
 		public string ToString( string formatX, string formatY, string formatZ )
 		{
-			return "( " + this.X.ToString( formatX ) +
-					", " + this.Y.ToString( formatY ) + 
-					", " + this.Z.ToString( formatZ ) + 
+			return "( " + X.ToString( formatX ) +
+					", " + Y.ToString( formatY ) + 
+					", " + Z.ToString( formatZ ) + 
 					" )";
 		}
 

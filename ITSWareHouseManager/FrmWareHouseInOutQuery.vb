@@ -176,7 +176,7 @@ Public Class FrmWareHouseInOutQuery
         btnDetail.Enabled = True
         btnTotal.Enabled = False
     End Sub
-    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
+    Private Sub btnRefresh_Click(sender As Object, e As EventArgs)
         SetGridViewDataByTreeView()
     End Sub
 
@@ -191,11 +191,11 @@ Public Class FrmWareHouseInOutQuery
         SetGridViewDataByTreeView()
     End Sub
 
-    Private Sub btnTotal_Click(sender As Object, e As EventArgs) Handles btnTotal.Click
+    Private Sub btnTotal_Click(sender As Object, e As EventArgs)
         ShowTotalCount()
     End Sub
 
-    Private Sub btnDetail_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
+    Private Sub btnDetail_Click(sender As Object, e As EventArgs)
         If dgv.DataSource Is m_dtInOutTotal Then
             '获取物品名称
             Dim strINSID As String = String.Empty
@@ -219,7 +219,7 @@ Public Class FrmWareHouseInOutQuery
         InitialBtn()
     End Sub
 
-    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs)
         Dim oPrint As ReportPrinter = ReportPrinter.GetInstanse
         Dim strName As String = String.Empty
         If dgv.DataSource Is m_dtInOutTotal Then
@@ -259,7 +259,7 @@ Public Class FrmWareHouseInOutQuery
         End If
     End Sub
 
-    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
+    Private Sub btnExport_Click(sender As Object, e As EventArgs)
         Dim oExport As ExportManager = ExportManager.GetInstanse
         Dim strName As String = dgv.Tag
         If dgv.DataSource Is m_dtInOutTotal Then

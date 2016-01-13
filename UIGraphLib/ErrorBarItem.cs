@@ -21,8 +21,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -121,7 +119,7 @@ namespace UIGraphLib
 		/// the <see c_ref="Line"/> properties.
 		/// </param>
 		public ErrorBarItem( string label, double[] x, double[] y, double[] lowValue,
-							System.Drawing.Color color )
+							Color color )
 			: this( label, new PointPairList( x, y, lowValue ), color )
 		{
 		}
@@ -157,7 +155,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -200,7 +198,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -239,8 +237,8 @@ namespace UIGraphLib
 		{
 			if ( _isVisible )
 			{
-				_bar.Draw( g, pane, this, this.BaseAxis( pane ),
-								this.ValueAxis( pane ), scaleFactor );
+				_bar.Draw( g, pane, this, BaseAxis( pane ),
+								ValueAxis( pane ), scaleFactor );
 			}
 		}		
 
@@ -283,7 +281,7 @@ namespace UIGraphLib
 
 			using ( Pen pen = new Pen( _bar.Color, _bar.PenWidth ) )
 			{
-				this.Bar.Draw( g, pane, pane._barSettings.Base == BarBase.X, pixBase, pixValue,
+				Bar.Draw( g, pane, pane._barSettings.Base == BarBase.X, pixBase, pixValue,
 									pixLowValue, scaleFactor, pen, false, null );
 			}
 		}

@@ -20,7 +20,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -165,7 +164,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -209,7 +208,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -251,7 +250,7 @@ namespace UIGraphLib
 					// Fill or draw the symbol as required
 					if ( _fill.IsVisible )
 					{
-						using ( Brush brush = this.Fill.MakeBrush( path.GetBounds() ) )
+						using ( Brush brush = Fill.MakeBrush( path.GetBounds() ) )
 							g.FillPath( brush, path );
 					}
 
@@ -318,7 +317,7 @@ namespace UIGraphLib
 		/// <returns>true if the point lies in the bounding box, false otherwise</returns>
 		override public bool PointInBox( PointF pt, PaneBase pane, Graphics g, float scaleFactor )
 		{
-			if ( _points != null && _points.Length > 1 )
+		    if ( _points != null && _points.Length > 1 )
 			{
 				if ( ! base.PointInBox(pt, pane, g, scaleFactor ) )
 					return false;
@@ -326,11 +325,10 @@ namespace UIGraphLib
 				using ( GraphicsPath path = MakePath( pane ) )
 					return path.IsVisible( pt );
 			}
-			else
-				return false;
+		    return false;
 		}
-		
-	#endregion
+
+	    #endregion
 	
 	}
 }

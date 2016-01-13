@@ -18,10 +18,8 @@
 //=============================================================================
 
 using System;
-using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-using IComparer = System.Collections.IComparer;
 
 namespace UIGraphLib
 {
@@ -110,12 +108,12 @@ namespace UIGraphLib
 					string tag )
 			: base( date, high )
 		{
-			this.Low = low;
-			this.Open = open;
-			this.Close = close;
-			this.Vol = vol;
-			this.ColorValue = PointPair.Missing;
-			this.Tag = tag;
+			Low = low;
+			Open = open;
+			Close = close;
+			Vol = vol;
+			ColorValue = Missing;
+			Tag = tag;
 		}
 
 		/// <summary>
@@ -125,16 +123,16 @@ namespace UIGraphLib
 		public StockPt( StockPt rhs )
 			: base( rhs )
 		{
-			this.Low = rhs.Low;
-			this.Open = rhs.Open;
-			this.Close = rhs.Close;
-			this.Vol = rhs.Vol;
-			this.ColorValue = rhs.ColorValue;
+			Low = rhs.Low;
+			Open = rhs.Open;
+			Close = rhs.Close;
+			Vol = rhs.Vol;
+			ColorValue = rhs.ColorValue;
 
 			if ( rhs.Tag is ICloneable )
-				this.Tag = ( (ICloneable)rhs.Tag ).Clone();
+				Tag = ( (ICloneable)rhs.Tag ).Clone();
 			else
-				this.Tag = rhs.Tag;
+				Tag = rhs.Tag;
 		}
 
 		/// <summary>
@@ -147,17 +145,17 @@ namespace UIGraphLib
 			if ( rhs is StockPt )
 			{
 				StockPt pt = rhs as StockPt;
-				this.Open = pt.Open;
-				this.Close = pt.Close;
-				this.Vol = pt.Vol;
-				this.ColorValue = rhs.ColorValue;
+				Open = pt.Open;
+				Close = pt.Close;
+				Vol = pt.Vol;
+				ColorValue = rhs.ColorValue;
 			}
 			else
 			{
-				this.Open = PointPair.Missing;
-				this.Close = PointPair.Missing;
-				this.Vol = PointPair.Missing;
-				this.ColorValue = PointPair.Missing;
+				Open = Missing;
+				Close = Missing;
+				Vol = Missing;
+				ColorValue = Missing;
 			}
 		}
 
@@ -195,7 +193,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -258,21 +256,21 @@ namespace UIGraphLib
 		{
 			get
 			{
-				return this.Date == PointPair.Missing ||
-						this.Close == PointPair.Missing ||
-						this.Open == PointPair.Missing ||
-						this.High == PointPair.Missing ||
-						this.Low == PointPair.Missing ||
-						Double.IsInfinity( this.Date ) ||
-						Double.IsInfinity( this.Close ) ||
-						Double.IsInfinity( this.Open ) ||
-						Double.IsInfinity( this.High ) ||
-						Double.IsInfinity( this.Low ) ||
-						Double.IsNaN( this.Date ) ||
-						Double.IsNaN( this.Close ) ||
-						Double.IsNaN( this.Open ) ||
-						Double.IsNaN( this.High ) ||
-						Double.IsNaN( this.Low );
+				return Date == Missing ||
+						Close == Missing ||
+						Open == Missing ||
+						High == Missing ||
+						Low == Missing ||
+						Double.IsInfinity( Date ) ||
+						Double.IsInfinity( Close ) ||
+						Double.IsInfinity( Open ) ||
+						Double.IsInfinity( High ) ||
+						Double.IsInfinity( Low ) ||
+						Double.IsNaN( Date ) ||
+						Double.IsNaN( Close ) ||
+						Double.IsNaN( Open ) ||
+						Double.IsNaN( High ) ||
+						Double.IsNaN( Low );
 			}
 		}
 
@@ -288,7 +286,7 @@ namespace UIGraphLib
 		/// <returns>A string representation of the <see c_ref="StockPt" />.</returns>
 		override public string ToString( bool isShowAll )
 		{
-			return this.ToString( PointPair.DefaultFormat, isShowAll );
+			return ToString( DefaultFormat, isShowAll );
 		}
 
 		/// <summary>
@@ -303,12 +301,12 @@ namespace UIGraphLib
 		/// <param name="isShowAll">true to show all the value coordinates</param>
 		override public string ToString( string format, bool isShowAll )
 		{
-			return "( " + XDate.ToString( this.Date,  "g" ) +
-					", " + this.Close.ToString( format ) +
+			return "( " + XDate.ToString( Date,  "g" ) +
+					", " + Close.ToString( format ) +
 					( isShowAll ? (
-								", " + this.Low.ToString( format ) +
-								", " + this.Open.ToString( format ) +
-								", " + this.Close.ToString( format ) ) : "" ) + " )";
+								", " + Low.ToString( format ) +
+								", " + Open.ToString( format ) +
+								", " + Close.ToString( format ) ) : "" ) + " )";
 		}
 
 	#endregion

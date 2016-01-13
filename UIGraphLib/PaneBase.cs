@@ -20,14 +20,13 @@
 #region Using directives
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-using System.IO;
 
 #endregion
 
@@ -510,7 +509,7 @@ namespace UIGraphLib
 		public PaneBase ShallowClone()
 		{
 			// return a shallow copy
-			return this.MemberwiseClone() as PaneBase;
+			return MemberwiseClone() as PaneBase;
 		}
 
 	#endregion
@@ -557,7 +556,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -598,7 +597,7 @@ namespace UIGraphLib
 				return;
 
 			// calculate scaleFactor on "normal" pane size (BaseDimension)
-			float scaleFactor = this.CalcScaleFactor();
+			float scaleFactor = CalcScaleFactor();
 
 			// Fill the pane background and draw a border around it			
 			DrawPaneFrame( g, scaleFactor );
@@ -715,7 +714,7 @@ namespace UIGraphLib
 				// default attributes.
 				_title._fontSpec.Draw( g, this, _title._text,
 					( _rect.Left + _rect.Right ) / 2,
-					_rect.Top + _margin.Top * (float) scaleFactor + size.Height / 2.0F,
+					_rect.Top + _margin.Top * scaleFactor + size.Height / 2.0F,
 					AlignH.Center, AlignV.Center, scaleFactor );
 			}
 		}
@@ -799,13 +798,12 @@ namespace UIGraphLib
 		/// <returns>The scaled pen width, in world pixels</returns>
 		public float ScaledPenWidth( float penWidth, float scaleFactor )
 		{
-			if ( _isPenWidthScaled )
-				return (float)( penWidth * scaleFactor );
-			else
-				return penWidth;
+		    if ( _isPenWidthScaled )
+				return penWidth * scaleFactor;
+		    return penWidth;
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Build a <see c_ref="Bitmap"/> object containing the graphical rendering of
 		/// all the <see c_ref="GraphPane"/> objects in this list.
 		/// </summary>
@@ -832,7 +830,7 @@ namespace UIGraphLib
 			using ( Graphics bitmapGraphics = Graphics.FromImage( bitmap ) )
 			{
 				bitmapGraphics.TranslateTransform( -_rect.Left, -_rect.Top );
-				this.Draw( bitmapGraphics );
+				Draw( bitmapGraphics );
 			}
 
 			return bitmap;
@@ -903,7 +901,7 @@ namespace UIGraphLib
 			SetAntiAliasMode( g, antiAlias );
 
 			// This is actually a shallow clone, so we don't duplicate all the data, curveLists, etc.
-			PaneBase tempPane = this.ShallowClone();
+			PaneBase tempPane = ShallowClone();
 
 			// Clone the Chart object for GraphPanes so we don't mess up the minPix and maxPix values or
 			// the rect/ChartRect calculations of the original
@@ -934,9 +932,9 @@ namespace UIGraphLib
 			Bitmap bm = new Bitmap( 1, 1 );
 			using ( Graphics bmg = Graphics.FromImage( bm ) )
 			{
-				this.ReSize( bmg, this.Rect );
+				ReSize( bmg, Rect );
 				SetAntiAliasMode( bmg, antiAlias );
-				this.Draw( bmg );
+				Draw( bmg );
 			}
 		}
 
@@ -968,9 +966,9 @@ namespace UIGraphLib
 				using ( Graphics metafileGraphics = Graphics.FromImage( metafile ) )
 				{
 					//metafileGraphics.TranslateTransform( -_rect.Left, -_rect.Top );
-					metafileGraphics.PageUnit = System.Drawing.GraphicsUnit.Pixel;
+					metafileGraphics.PageUnit = GraphicsUnit.Pixel;
 					PointF P = new PointF( width, height );
-					PointF[] PA = new PointF[] { P };
+					PointF[] PA = { P };
 					metafileGraphics.TransformPoints( CoordinateSpace.Page, CoordinateSpace.Device, PA );
 					//metafileGraphics.PageScale = 1f;
 
@@ -1020,14 +1018,14 @@ namespace UIGraphLib
 				using ( Graphics metafileGraphics = Graphics.FromImage( metafile ) )
 				{
 					metafileGraphics.TranslateTransform( -_rect.Left, -_rect.Top );
-					metafileGraphics.PageUnit = System.Drawing.GraphicsUnit.Pixel;
+					metafileGraphics.PageUnit = GraphicsUnit.Pixel;
 					PointF P = new PointF( _rect.Width, _rect.Height );
-					PointF[] PA = new PointF[] { P };
+					PointF[] PA = { P };
 					metafileGraphics.TransformPoints( CoordinateSpace.Page, CoordinateSpace.Device, PA );
 					//metafileGraphics.PageScale = 1f;
 
 					// output
-					this.Draw( metafileGraphics );
+					Draw( metafileGraphics );
 
 					g.ReleaseHdc( hdc );
 					return metafile;
@@ -1198,11 +1196,11 @@ namespace UIGraphLib
 			else if ( coord == CoordType.XChartFractionYPaneFraction )
 			{
 				ptPix.X = (float)( chartRect.Left + x * chartRect.Width );
-				ptPix.Y = (float)( this.Rect.Top + y * _rect.Height );
+				ptPix.Y = (float)( Rect.Top + y * _rect.Height );
 			}
 			else if ( coord == CoordType.XPaneFractionYChartFraction )
 			{
-				ptPix.X = (float)( this.Rect.Left + x * _rect.Width );
+				ptPix.X = (float)( Rect.Left + x * _rect.Width );
 				ptPix.Y = (float)( chartRect.Top + y * chartRect.Height );
 			}
 			else	// PaneFraction

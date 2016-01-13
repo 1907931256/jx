@@ -1,11 +1,14 @@
-﻿namespace Test
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Test
 {
     partial class Form2
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -144,6 +147,7 @@
             this.btnInOutStatistics.TabIndex = 14;
             this.btnInOutStatistics.Text = "物品出入库统计";
             this.btnInOutStatistics.UseVisualStyleBackColor = true;
+            this.btnInOutStatistics.Click += new System.EventHandler(this.btnInOutStatistics_Click);
             // 
             // btnStockManage
             // 
@@ -153,6 +157,7 @@
             this.btnStockManage.TabIndex = 13;
             this.btnStockManage.Text = "库存管理";
             this.btnStockManage.UseVisualStyleBackColor = true;
+            this.btnStockManage.Click += new System.EventHandler(this.btnStockManage_Click);
             // 
             // btnWareHouseOutReg
             // 
@@ -162,6 +167,7 @@
             this.btnWareHouseOutReg.TabIndex = 12;
             this.btnWareHouseOutReg.Text = "物品出库登记";
             this.btnWareHouseOutReg.UseVisualStyleBackColor = true;
+            this.btnWareHouseOutReg.Click += new System.EventHandler(this.btnWareHouseOutReg_Click);
             // 
             // btnWareHouseInReg
             // 
@@ -171,6 +177,7 @@
             this.btnWareHouseInReg.TabIndex = 11;
             this.btnWareHouseInReg.Text = "物品入库登记";
             this.btnWareHouseInReg.UseVisualStyleBackColor = true;
+            this.btnWareHouseInReg.Click += new System.EventHandler(this.btnWareHouseInReg_Click);
             // 
             // btnHighValueDispatch
             // 
@@ -180,6 +187,7 @@
             this.btnHighValueDispatch.TabIndex = 10;
             this.btnHighValueDispatch.Text = "高值耗材发放登记";
             this.btnHighValueDispatch.UseVisualStyleBackColor = true;
+            this.btnHighValueDispatch.Click += new System.EventHandler(this.btnHighValueDispatch_Click);
             // 
             // gbOper
             // 
@@ -204,6 +212,7 @@
             this.btnRecycleReg.TabIndex = 9;
             this.btnRecycleReg.Text = "术后回收清点";
             this.btnRecycleReg.UseVisualStyleBackColor = true;
+            this.btnRecycleReg.Click += new System.EventHandler(this.btnRecycleReg_Click);
             // 
             // btnUseReg
             // 
@@ -213,6 +222,7 @@
             this.btnUseReg.TabIndex = 8;
             this.btnUseReg.Text = "术中使用登记";
             this.btnUseReg.UseVisualStyleBackColor = true;
+            this.btnUseReg.Click += new System.EventHandler(this.btnUseReg_Click);
             // 
             // btnFrontUse
             // 
@@ -222,6 +232,7 @@
             this.btnFrontUse.TabIndex = 7;
             this.btnFrontUse.Text = "术前拆包确认";
             this.btnFrontUse.UseVisualStyleBackColor = true;
+            this.btnFrontUse.Click += new System.EventHandler(this.btnFrontUse_Click);
             // 
             // btnPreOpertionReg
             // 
@@ -231,6 +242,7 @@
             this.btnPreOpertionReg.TabIndex = 6;
             this.btnPreOpertionReg.Text = "手术请领登记";
             this.btnPreOpertionReg.UseVisualStyleBackColor = true;
+            this.btnPreOpertionReg.Click += new System.EventHandler(this.btnPreOpertionReg_Click);
             // 
             // btnOperationNote
             // 
@@ -293,26 +305,26 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlFunc;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnAlertQuery;
-        private System.Windows.Forms.Button btnWorkVolumnStatistic;
-        private System.Windows.Forms.Button btnTraceQuery;
-        private System.Windows.Forms.Button btnLocationQuery;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btnInOutStatistics;
-        private System.Windows.Forms.Button btnStockManage;
-        private System.Windows.Forms.Button btnWareHouseOutReg;
-        private System.Windows.Forms.Button btnWareHouseInReg;
-        private System.Windows.Forms.Button btnHighValueDispatch;
-        private System.Windows.Forms.GroupBox gbOper;
-        private System.Windows.Forms.Button btnRecycleReg;
-        private System.Windows.Forms.Button btnUseReg;
-        private System.Windows.Forms.Button btnFrontUse;
-        private System.Windows.Forms.Button btnPreOpertionReg;
-        private System.Windows.Forms.Button btnOperationNote;
-        private System.Windows.Forms.Panel pnlPatInfo;
-        private System.Windows.Forms.Label lblScretch;
-        private System.Windows.Forms.Panel pnlContainer;
+        private Panel pnlFunc;
+        private GroupBox groupBox2;
+        private Button btnAlertQuery;
+        private Button btnWorkVolumnStatistic;
+        private Button btnTraceQuery;
+        private Button btnLocationQuery;
+        private GroupBox groupBox3;
+        private Button btnInOutStatistics;
+        private Button btnStockManage;
+        private Button btnWareHouseOutReg;
+        private Button btnWareHouseInReg;
+        private Button btnHighValueDispatch;
+        private GroupBox gbOper;
+        private Button btnRecycleReg;
+        private Button btnUseReg;
+        private Button btnFrontUse;
+        private Button btnPreOpertionReg;
+        private Button btnOperationNote;
+        private Panel pnlPatInfo;
+        private Label lblScretch;
+        private Panel pnlContainer;
     }
 }

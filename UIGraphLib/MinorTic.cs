@@ -19,7 +19,6 @@
 
 using System;
 using System.Drawing;
-using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -55,9 +54,9 @@ namespace UIGraphLib
 			_color = Default.Color;
 			_penWidth = Default.PenWidth;
 
-			this.IsOutside = Default.IsOutside;
-			this.IsInside = Default.IsInside;
-			this.IsOpposite = Default.IsOpposite;
+			IsOutside = Default.IsOutside;
+			IsInside = Default.IsInside;
+			IsOpposite = Default.IsOpposite;
 			_isCrossOutside = Default.IsCrossOutside;
 			_isCrossInside = Default.IsCrossInside;
 		}
@@ -72,9 +71,9 @@ namespace UIGraphLib
 			_color = rhs._color;
 			_penWidth = rhs._penWidth;
 
-			this.IsOutside = rhs.IsOutside;
-			this.IsInside = rhs.IsInside;
-			this.IsOpposite = rhs.IsOpposite;
+			IsOutside = rhs.IsOutside;
+			IsInside = rhs.IsInside;
+			IsOpposite = rhs.IsOpposite;
 			_isCrossOutside = rhs._isCrossOutside;
 			_isCrossInside = rhs._isCrossInside;
 		}
@@ -86,7 +85,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -149,7 +148,7 @@ namespace UIGraphLib
 		/// <seealso c_ref="PaneBase.CalcScaleFactor"/>
 		public float ScaledTic( float scaleFactor )
 		{
-			return (float)( _size * scaleFactor );
+			return _size * scaleFactor;
 		}
 
 		/// <summary>
@@ -171,9 +170,9 @@ namespace UIGraphLib
 		{
 			set
 			{
-				this.IsOutside = value;
-				this.IsInside = value;
-				this.IsOpposite = value;
+				IsOutside = value;
+				IsInside = value;
+				IsOpposite = value;
 				_isCrossOutside = value;
 				_isCrossInside = value;
 			}
@@ -338,7 +337,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -470,7 +469,7 @@ namespace UIGraphLib
 					float shift, float scaledTic )
 		{
 			// draw the outside tic
-			if ( this.IsOutside )
+			if ( IsOutside )
 				g.DrawLine( pen, pixVal, shift, pixVal, shift + scaledTic );
 
 			// draw the cross tic
@@ -478,7 +477,7 @@ namespace UIGraphLib
 				g.DrawLine( pen, pixVal, 0.0f, pixVal, scaledTic );
 
 			// draw the inside tic
-			if ( this.IsInside )
+			if ( IsInside )
 				g.DrawLine( pen, pixVal, shift, pixVal, shift - scaledTic );
 
 			// draw the inside cross tic
@@ -486,7 +485,7 @@ namespace UIGraphLib
 				g.DrawLine( pen, pixVal, 0.0f, pixVal, -scaledTic );
 
 			// draw the opposite tic
-			if ( this.IsOpposite )
+			if ( IsOpposite )
 				g.DrawLine( pen, pixVal, topPix, pixVal, topPix + scaledTic );
 		}
 

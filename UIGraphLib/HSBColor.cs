@@ -1,7 +1,5 @@
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace UIGraphLib
 {
@@ -52,10 +50,10 @@ namespace UIGraphLib
 		/// <param name="b">The brightness value, ranging from 0 (black) to 255 (white)</param>
 		public HSBColor( int h, int s, int b )
 		{
-			this.H = (byte)h;
-			this.S = (byte)s;
-			this.B = (byte)b;
-			this.A = 255;
+			H = (byte)h;
+			S = (byte)s;
+			B = (byte)b;
+			A = 255;
 		}
 
 		/// <summary>
@@ -71,7 +69,7 @@ namespace UIGraphLib
 		public HSBColor( int a, int h, int s, int b )
 			: this( h, s, b )
 		{
-			this.A = (byte)a;
+			A = (byte)a;
 		}
 
 		/// <summary>
@@ -112,14 +110,14 @@ namespace UIGraphLib
 
 			// Determine which sector of the color wheel contains this hue
 			// hsbColor.H ranges from 0 to 255, and there are 6 sectors, so 42.5 per sector
-			int sector = (int) Math.Floor( (double) hsbColor.H / 42.5 );
+			int sector = (int) Math.Floor( hsbColor.H / 42.5 );
 			// Calculate where the hue lies within the sector for interpolation purpose
-			double fraction = (double) hsbColor.H / 42.5 - (double) sector;
+			double fraction = hsbColor.H / 42.5 - sector;
 
-			double sFrac = (double) hsbColor.S / 255.0;
-			byte p = (byte) (( (double) hsbColor.B * ( 1.0 - sFrac ) ) + 0.5);
-			byte q = (byte) (( (double) hsbColor.B * ( 1.0 - sFrac * fraction ) ) + 0.5);
-			byte t = (byte) (( (double) hsbColor.B * ( 1.0 - sFrac * ( 1.0 - fraction ) ) ) + 0.5);
+			double sFrac = hsbColor.S / 255.0;
+			byte p = (byte) (( hsbColor.B * ( 1.0 - sFrac ) ) + 0.5);
+			byte q = (byte) (( hsbColor.B * ( 1.0 - sFrac * fraction ) ) + 0.5);
+			byte t = (byte) (( hsbColor.B * ( 1.0 - sFrac * ( 1.0 - fraction ) ) ) + 0.5);
 
 
 			switch( sector )
@@ -182,9 +180,9 @@ namespace UIGraphLib
 		/// <returns>An equivalent <see c_ref="HSBColor" /> struct</returns>
 		public static HSBColor FromRGB( Color rgbColor )
 		{
-			double r = (double) rgbColor.R / 255.0;
-			double g = (double) rgbColor.G / 255.0;
-			double b = (double) rgbColor.B / 255.0;
+			double r = rgbColor.R / 255.0;
+			double g = rgbColor.G / 255.0;
+			double b = rgbColor.B / 255.0;
 
 			double min = Math.Min( Math.Min( r, g ), b );
 			double max = Math.Max( Math.Max( r, g ), b );

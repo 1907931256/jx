@@ -19,10 +19,8 @@
 
 using System;
 using System.Drawing;
-using System.Collections;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-
 #if ( !DOTNET1 )	// Is this a .Net 2 compilation?
 using System.Collections.Generic;
 #endif
@@ -193,7 +191,7 @@ namespace UIGraphLib
 			_isX2Axis = false;
 			_isVisible = true;
 			_isOverrideOrdinal = false;
-			this.Tag = null;
+			Tag = null;
 			_yAxisIndex = 0;
 			_link = new Link();
 		}
@@ -228,9 +226,9 @@ namespace UIGraphLib
 			_yAxisIndex = rhs._yAxisIndex;
 
 			if ( rhs.Tag is ICloneable )
-				this.Tag = ((ICloneable) rhs.Tag).Clone();
+				Tag = ((ICloneable) rhs.Tag).Clone();
 			else
-				this.Tag = rhs.Tag;
+				Tag = rhs.Tag;
 			
 			_points = (IPointList) rhs.Points.Clone();
 
@@ -307,7 +305,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -355,20 +353,19 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( this is BarItem )
+			    if ( this is BarItem )
 					return ((BarItem) this).Bar.Fill.Color;
-				else if ( this is LineItem && ((LineItem) this).Line.IsVisible )
-					return ((LineItem) this).Line.Color;
-				else if ( this is LineItem )
-					return ((LineItem) this).Symbol.Border.Color;
-				else if ( this is ErrorBarItem )
-					return ((ErrorBarItem) this).Bar.Color;
-				else if ( this is HiLowBarItem )
-					return ((HiLowBarItem) this).Bar.Fill.Color;
-				else
-					return Color.Empty;
+			    if ( this is LineItem && ((LineItem) this).Line.IsVisible )
+			        return ((LineItem) this).Line.Color;
+			    if ( this is LineItem )
+			        return ((LineItem) this).Symbol.Border.Color;
+			    if ( this is ErrorBarItem )
+			        return ((ErrorBarItem) this).Bar.Color;
+			    if ( this is HiLowBarItem )
+			        return ((HiLowBarItem) this).Bar.Fill.Color;
+			    return Color.Empty;
 			}
-			set 
+		    set 
 			{
 				if ( this is BarItem )
 				{
@@ -567,12 +564,11 @@ namespace UIGraphLib
 		/// </summary>
 		public int NPts
 		{
-			get 
+			get
 			{
-				if ( _points == null )
+			    if ( _points == null )
 					return 0;
-				else
-					return _points.Count;
+			    return _points.Count;
 			}
 		}
 		
@@ -594,10 +590,9 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( _points == null )
+			    if ( _points == null )
 					return new PointPair( PointPair.Missing, PointPair.Missing );
-				else
-					return ( _points )[index];
+			    return ( _points )[index];
 			}
 		}
 
@@ -672,7 +667,7 @@ namespace UIGraphLib
 		/// <param name="y">The Y coordinate value</param>
 		public void AddPoint( double x, double y )
 		{
-			this.AddPoint( new PointPair( x, y ) );
+			AddPoint( new PointPair( x, y ) );
 		}
 
 		/// <summary>
@@ -688,7 +683,7 @@ namespace UIGraphLib
 		public void AddPoint( PointPair point )
 		{
 			if ( _points == null )
-				this.Points = new PointPairList();
+				Points = new PointPairList();
 
 			if ( _points is IPointListEdit )
 				( _points as IPointListEdit ).Add( point );
@@ -740,13 +735,12 @@ namespace UIGraphLib
 		/// </returns>
 		public Axis GetXAxis( GraphPane pane )
 		{
-			if ( _isX2Axis )
+		    if ( _isX2Axis )
 				return pane.X2Axis;
-			else
-				return pane.XAxis;
+		    return pane.XAxis;
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Get the Y Axis instance (either <see c_ref="YAxis" /> or <see c_ref="Y2Axis" />) to
 		/// which this <see c_ref="CurveItem" /> belongs.
 		/// </summary>
@@ -761,24 +755,19 @@ namespace UIGraphLib
 		/// <see c_ref="CurveItem" /> belongs.
 		/// </returns>
 		public Axis GetYAxis( GraphPane pane )
-		{
-			if ( _isY2Axis )
-			{
-				if ( _yAxisIndex < pane.Y2AxisList.Count )
+	    {
+	        if ( _isY2Axis )
+	        {
+	            if ( _yAxisIndex < pane.Y2AxisList.Count )
 					return pane.Y2AxisList[_yAxisIndex];
-				else
-					return pane.Y2AxisList[0];
-			}
-			else
-			{
-				if ( _yAxisIndex < pane.YAxisList.Count )
-					return pane.YAxisList[_yAxisIndex];
-				else
-					return pane.YAxisList[0];
-			}
-		}
+	            return pane.Y2AxisList[0];
+	        }
+	        if ( _yAxisIndex < pane.YAxisList.Count )
+	            return pane.YAxisList[_yAxisIndex];
+	        return pane.YAxisList[0];
+	    }
 
-		/// <summary>
+	    /// <summary>
 		/// Get the index of the Y Axis in the <see c_ref="YAxis" /> or <see c_ref="Y2Axis" /> list to
 		/// which this <see c_ref="CurveItem" /> belongs.
 		/// </summary>
@@ -793,15 +782,14 @@ namespace UIGraphLib
 		/// <see c_ref="CurveItem" />
 		/// </returns>
 		public int GetYAxisIndex( GraphPane pane )
-		{
-			if ( _yAxisIndex >= 0 &&
+	    {
+	        if ( _yAxisIndex >= 0 &&
 					_yAxisIndex < ( _isY2Axis ? pane.Y2AxisList.Count : pane.YAxisList.Count ) )
 				return _yAxisIndex;
-			else
-				return 0;
-		}
+	        return 0;
+	    }
 
-		/// <summary>
+	    /// <summary>
 		/// Loads some pseudo unique colors/symbols into this CurveItem.  This
 		/// is the same as <c>MakeUnique(ColorSymbolRotator.StaticInstance)</c>.
 		/// <seealso c_ref="ColorSymbolRotator.StaticInstance"/>
@@ -810,7 +798,7 @@ namespace UIGraphLib
 		/// </summary>
 		public void MakeUnique()
 		{
-			this.MakeUnique( ColorSymbolRotator.StaticInstance );
+			MakeUnique( ColorSymbolRotator.StaticInstance );
 		}
 
 		/// <summary>
@@ -825,7 +813,7 @@ namespace UIGraphLib
 		/// </param>
 		virtual public void MakeUnique( ColorSymbolRotator rotator )
 		{
-			this.Color = rotator.NextColor;
+			Color = rotator.NextColor;
 		}
 	
 		/// <summary>
@@ -872,8 +860,8 @@ namespace UIGraphLib
 			xMin = yMin = Double.MaxValue;
 			xMax = yMax = Double.MinValue;
 
-			Axis yAxis = this.GetYAxis( pane );
-			Axis xAxis = this.GetXAxis( pane );
+			Axis yAxis = GetYAxis( pane );
+			Axis xAxis = GetXAxis( pane );
 			if ( yAxis == null || xAxis == null )
 				return;
 
@@ -886,8 +874,8 @@ namespace UIGraphLib
 			}
 
 
-			bool isZIncluded = this.IsZIncluded( pane );
-			bool isXIndependent = this.IsXIndependent( pane );
+			bool isZIncluded = IsZIncluded( pane );
+			bool isXIndependent = IsXIndependent( pane );
 			bool isXLog = xAxis.Scale.IsLog;
 			bool isYLog = yAxis.Scale.IsLog;
 			bool isXOrdinal = xAxis.Scale.IsAnyOrdinal;
@@ -896,9 +884,9 @@ namespace UIGraphLib
 
 			// Loop over each point in the arrays
 			//foreach ( PointPair point in this.Points )
-			for ( int i=0; i<this.Points.Count; i++ )
+			for ( int i=0; i<Points.Count; i++ )
 			{
-				PointPair point = this.Points[i];
+				PointPair point = Points[i];
 
 				double curX = isXOrdinal ? i + 1 : point.X;
 				double curY = isYOrdinal ? i + 1 : point.Y;
@@ -972,13 +960,11 @@ namespace UIGraphLib
 
 			if ( barBase == BarBase.X )
 				return pane.XAxis;
-			else if ( barBase == BarBase.X2 )
-				return pane.X2Axis;
-			else if ( barBase == BarBase.Y )
-				return pane.YAxis;
-			else
-				return pane.Y2Axis;
-
+		    if ( barBase == BarBase.X2 )
+		        return pane.X2Axis;
+		    if ( barBase == BarBase.Y )
+		        return pane.YAxis;
+		    return pane.Y2Axis;
 		}
 		/// <summary>Returns a reference to the <see c_ref="Axis"/> object that is the "value"
 		/// (dependent axis) from which the points are drawn. </summary>
@@ -1002,8 +988,7 @@ namespace UIGraphLib
 			{
 				return GetYAxis( pane );
 			}
-			else
-				return GetXAxis( pane );
+		    return GetXAxis( pane );
 		}
 
 		/// <summary>
@@ -1027,8 +1012,8 @@ namespace UIGraphLib
 			float barWidth;
 
 			if ( this is ErrorBarItem )
-				barWidth = (float) ( ((ErrorBarItem)this).Bar.Symbol.Size *
-						pane.CalcScaleFactor() );
+				barWidth = ((ErrorBarItem)this).Bar.Symbol.Size *
+				           pane.CalcScaleFactor();
 //			else if ( this is HiLowBarItem && pane._barSettings.Type != BarType.ClusterHiLow )
 //				barWidth = (float) ( ((HiLowBarItem)this).Bar.GetBarWidth( pane,
 //						((HiLowBarItem)this).BaseAxis(pane), pane.CalcScaleFactor() ) );
@@ -1164,7 +1149,7 @@ namespace UIGraphLib
 			/// <param name="index">The index number of the point on which to sort</param>
 			public Comparer( SortType type, int index )
 			{
-				this.sortType = type;
+				sortType = type;
 				this.index = index;
 			}
 			
@@ -1179,12 +1164,12 @@ namespace UIGraphLib
 			{
 				if (l == null && r == null )
 					return 0;
-				else if (l == null && r != null ) 
-					return -1;
-				else if (l != null && r == null) 
-					return 1;
+			    if (l == null && r != null ) 
+			        return -1;
+			    if (l != null && r == null) 
+			        return 1;
 
-				if ( r != null && r.NPts <= index )
+			    if ( r != null && r.NPts <= index )
 					r = null;
 				if ( l != null && l.NPts <= index )
 					l = null;
@@ -1193,13 +1178,13 @@ namespace UIGraphLib
 
 				if ( sortType == SortType.XValues )
 				{
-					lVal = ( l != null ) ? System.Math.Abs( l[index].X ) : PointPair.Missing;
-					rVal = ( r != null ) ? System.Math.Abs( r[index].X ) : PointPair.Missing;
+					lVal = ( l != null ) ? Math.Abs( l[index].X ) : PointPair.Missing;
+					rVal = ( r != null ) ? Math.Abs( r[index].X ) : PointPair.Missing;
 				}
 				else
 				{
-					lVal = ( l != null ) ? System.Math.Abs( l[index].Y ) : PointPair.Missing;
-					rVal = ( r != null ) ? System.Math.Abs( r[index].Y ) : PointPair.Missing;
+					lVal = ( l != null ) ? Math.Abs( l[index].Y ) : PointPair.Missing;
+					rVal = ( r != null ) ? Math.Abs( r[index].Y ) : PointPair.Missing;
 				}
 				
 				if ( lVal == PointPair.Missing || Double.IsInfinity( lVal ) || Double.IsNaN( lVal ) )
@@ -1207,14 +1192,13 @@ namespace UIGraphLib
 				if ( rVal == PointPair.Missing || Double.IsInfinity( rVal ) || Double.IsNaN( rVal ) )
 					r = null;
 					
-				if ( (l == null && r == null) || ( System.Math.Abs( lVal - rVal ) < 1e-10 ) )
+				if ( (l == null && r == null) || ( Math.Abs( lVal - rVal ) < 1e-10 ) )
 					return 0;
-				else if (l == null && r != null ) 
-					return -1;
-				else if (l != null && r == null) 
-					return 1;
-				else
-					return rVal < lVal ? -1 : 1;
+			    if (l == null && r != null ) 
+			        return -1;
+			    if (l != null && r == null) 
+			        return 1;
+			    return rVal < lVal ? -1 : 1;
 			}
 		}
 

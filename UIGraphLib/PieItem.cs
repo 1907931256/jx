@@ -19,7 +19,6 @@
 
 using System;
 using System.Drawing;
-using System.Collections;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Runtime.Serialization;
@@ -323,9 +322,9 @@ namespace UIGraphLib
 			{
 				_labelType = value;
 				if ( value == PieLabelType.None )
-					this.LabelDetail.IsVisible = false;
+					LabelDetail.IsVisible = false;
 				else
-					this.LabelDetail.IsVisible = true;
+					LabelDetail.IsVisible = true;
 			}
 		}
 
@@ -448,7 +447,7 @@ namespace UIGraphLib
 		{
 			_pieValue = rhs._pieValue;
 			_fill = rhs._fill.Clone();
-			this.Border = rhs._border.Clone();
+			Border = rhs._border.Clone();
 			_displacement = rhs._displacement;
 			_labelDetail = rhs._labelDetail.Clone();
 			_labelType = rhs._labelType;
@@ -463,7 +462,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -521,7 +520,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -595,7 +594,7 @@ namespace UIGraphLib
 
 					Fill tFill = _fill;
 					Border tBorder = _border;
-					if ( this.IsSelected )
+					if ( IsSelected )
 					{
 						tFill = Selection.Fill;
 						tBorder = Selection.Border;
@@ -603,18 +602,18 @@ namespace UIGraphLib
 
 					using ( Brush brush = tFill.MakeBrush( _boundingRectangle ) )
 					{
-						g.FillPie( brush, tRect.X, tRect.Y, tRect.Width, tRect.Height, this.StartAngle, this.SweepAngle );
+						g.FillPie( brush, tRect.X, tRect.Y, tRect.Width, tRect.Height, StartAngle, SweepAngle );
 
 						//add GraphicsPath for hit testing
 						_slicePath.AddPie( tRect.X, tRect.Y, tRect.Width, tRect.Height,
-							this.StartAngle, this.SweepAngle );
+							StartAngle, SweepAngle );
 
-						if ( this.Border.IsVisible )
+						if ( Border.IsVisible )
 						{
 							using ( Pen borderPen = tBorder.GetPen( pane, scaleFactor ) )
 							{
 								g.DrawPie( borderPen, tRect.X, tRect.Y, tRect.Width, tRect.Height,
-									this.StartAngle, this.SweepAngle );
+									StartAngle, SweepAngle );
 							}
 						}
 
@@ -670,7 +669,7 @@ namespace UIGraphLib
 				if ( nonExplRect.Width < nonExplRect.Height )
 				{
 					//create slack rect
-					nonExplRect.Inflate( -(float)0.05F * nonExplRect.Height, -(float)0.05F * nonExplRect.Width );
+					nonExplRect.Inflate( -0.05F * nonExplRect.Height, -0.05F * nonExplRect.Width );
 					//get the difference between dimensions
 					float delta = ( nonExplRect.Height - nonExplRect.Width ) / 2;
 					//make a square	so we end up with circular pie
@@ -680,7 +679,7 @@ namespace UIGraphLib
 				}
 				else
 				{
-					nonExplRect.Inflate( -(float)0.05F * nonExplRect.Height, -(float)0.05F * nonExplRect.Width );
+					nonExplRect.Inflate( -0.05F * nonExplRect.Height, -0.05F * nonExplRect.Width );
 					float delta = ( nonExplRect.Width - nonExplRect.Height ) / 2;
 					nonExplRect.Width = nonExplRect.Height;
 					nonExplRect.X += delta;
@@ -695,7 +694,7 @@ namespace UIGraphLib
 				//modify the rect to determine if any of the labels need to be wrapped....
 				//first see if there's any exploded slices and if so, what's the max displacement...
 				//also, might as well get all the display params we can
-				PieItem.CalculatePieChartParams( pane, ref maxDisplacement );
+				CalculatePieChartParams( pane, ref maxDisplacement );
 
 				if ( maxDisplacement != 0 )			 //need new rectangle if any slice exploded	
 					CalcNewBaseRect( maxDisplacement, ref nonExplRect );
@@ -725,8 +724,8 @@ namespace UIGraphLib
 		{
 			//pie exploded out along the slice bisector - modify upper left of bounding rect to account for displacement
 			//keep height and width same
-			explRect.X += (float)( this.Displacement * explRect.Width / 2 * Math.Cos( _midAngle * Math.PI / 180 ) );
-			explRect.Y += (float)( this.Displacement * explRect.Height / 2 * Math.Sin( _midAngle * Math.PI / 180 ) );
+			explRect.X += (float)( Displacement * explRect.Width / 2 * Math.Cos( _midAngle * Math.PI / 180 ) );
+			explRect.Y += (float)( Displacement * explRect.Height / 2 * Math.Sin( _midAngle * Math.PI / 180 ) );
 		}
 
 		/// <summary>
@@ -760,7 +759,7 @@ namespace UIGraphLib
 				curve.SweepAngle = (float)( 360 * curve.Value / pieTotalValue );
 				curve.MidAngle = curve.StartAngle + curve.SweepAngle / 2;
 				nextStartAngle = curve._startAngle + curve._sweepAngle;
-				PieItem.BuildLabelString( curve );
+				BuildLabelString( curve );
 			}
 		}
 
@@ -787,7 +786,7 @@ namespace UIGraphLib
 			if ( !_labelDetail.IsVisible )
 				return;
 
-			using ( Pen labelPen = this.Border.GetPen( pane, scaleFactor ) )
+			using ( Pen labelPen = Border.GetPen( pane, scaleFactor ) )
 			{
 				//draw line from intersection point to pivot point -
 				g.DrawLine( labelPen, _intersectionPoint, _pivotPoint );
@@ -992,7 +991,7 @@ namespace UIGraphLib
 			float xDispl = (float)( ( maxDisplacement * baseRect.Width ) );
 			float yDispl = (float)( ( maxDisplacement * baseRect.Height ) );
 
-			baseRect.Inflate( -(float)( ( xDispl / 10 ) ), -(float)( ( xDispl / 10 ) ) );
+			baseRect.Inflate( -(xDispl / 10), -(xDispl / 10) );
 		}
 
 		/// <summary>
@@ -1060,7 +1059,7 @@ namespace UIGraphLib
 			// x,y location)
 			matrix.Translate( pt.X, pt.Y );
 
-			matrix.Rotate( this.StartAngle );
+			matrix.Rotate( StartAngle );
 			//One mark every 5'ish degrees
 			int count = (int)Math.Floor ( SweepAngle / 5 ) + 1;
 			PointF[] pts = new PointF[2 + count];

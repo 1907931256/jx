@@ -17,8 +17,8 @@
 //License along with this library; if not, write to the Free Software
 //Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //=============================================================================
+
 using System;
-using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -207,7 +207,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -325,7 +325,7 @@ namespace UIGraphLib
 		/// </param>
 		public void RemoveAt( int index )
 		{
-			int count = this.Count;
+			int count = Count;
 
 			if ( index >= count || index < 0 )
 				throw new ArgumentOutOfRangeException();
@@ -359,13 +359,13 @@ namespace UIGraphLib
 		/// or greater than the total available items in the queue</param>
 		public void RemoveRange( int index, int count )
 		{
-			int totalCount = this.Count;
+			int totalCount = Count;
 
 			if ( index >= totalCount || index < 0 || count < 0 || count > totalCount )
 				throw new ArgumentOutOfRangeException();
 
 			for ( int i = 0; i < count; i++ )
-				this.RemoveAt( index );
+				RemoveAt( index );
 		}
 
 		/// <summary>
@@ -539,14 +539,14 @@ namespace UIGraphLib
 			{
 				PointPair point = new PointPair( 0, 0, 0 );
 				if ( x == null )
-					point.X = (double)i + 1.0;
+					point.X = i + 1.0;
 				else if ( i < x.Length )
 					point.X = x[i];
 				else
 					point.X = PointPair.Missing;
 
 				if ( y == null )
-					point.Y = (double)i + 1.0;
+					point.Y = i + 1.0;
 				else if ( i < y.Length )
 					point.Y = y[i];
 				else
@@ -585,21 +585,21 @@ namespace UIGraphLib
 				PointPair point = new PointPair();
 
 				if ( x == null )
-					point.X = (double)i + 1.0;
+					point.X = i + 1.0;
 				else if ( i < x.Length )
 					point.X = x[i];
 				else
 					point.X = PointPair.Missing;
 
 				if ( y == null )
-					point.Y = (double)i + 1.0;
+					point.Y = i + 1.0;
 				else if ( i < y.Length )
 					point.Y = y[i];
 				else
 					point.Y = PointPair.Missing;
 
 				if ( z == null )
-					point.Z = (double)i + 1.0;
+					point.Z = i + 1.0;
 				else if ( i < z.Length )
 					point.Z = z[i];
 				else
@@ -640,7 +640,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );

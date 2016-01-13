@@ -84,10 +84,10 @@ Partial Class FrmWorkloadAccount
         Me.pnlLayoutSetting.Controls.Add(Me.gbCondition)
         Me.pnlLayoutSetting.Controls.Add(Me.pnlSettingFunc)
         Me.pnlLayoutSetting.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pnlLayoutSetting.Location = New System.Drawing.Point(458, 28)
+        Me.pnlLayoutSetting.Location = New System.Drawing.Point(458, 32)
         Me.pnlLayoutSetting.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlLayoutSetting.Name = "pnlLayoutSetting"
-        Me.pnlLayoutSetting.Size = New System.Drawing.Size(166, 332)
+        Me.pnlLayoutSetting.Size = New System.Drawing.Size(166, 328)
         Me.pnlLayoutSetting.TabIndex = 12
         '
         'gbCondition
@@ -107,7 +107,7 @@ Partial Class FrmWorkloadAccount
         Me.gbCondition.Margin = New System.Windows.Forms.Padding(2)
         Me.gbCondition.Name = "gbCondition"
         Me.gbCondition.Padding = New System.Windows.Forms.Padding(2)
-        Me.gbCondition.Size = New System.Drawing.Size(164, 304)
+        Me.gbCondition.Size = New System.Drawing.Size(164, 300)
         Me.gbCondition.TabIndex = 7
         Me.gbCondition.TabStop = False
         '
@@ -120,7 +120,7 @@ Partial Class FrmWorkloadAccount
         Me.pnlItemsSel.Location = New System.Drawing.Point(2, 116)
         Me.pnlItemsSel.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlItemsSel.Name = "pnlItemsSel"
-        Me.pnlItemsSel.Size = New System.Drawing.Size(160, 186)
+        Me.pnlItemsSel.Size = New System.Drawing.Size(160, 182)
         Me.pnlItemsSel.TabIndex = 19
         '
         'dgvItemsSel
@@ -142,7 +142,7 @@ Partial Class FrmWorkloadAccount
         Me.dgvItemsSel.RowHeadersVisible = False
         Me.dgvItemsSel.RowTemplate.Height = 23
         Me.dgvItemsSel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvItemsSel.Size = New System.Drawing.Size(160, 164)
+        Me.dgvItemsSel.Size = New System.Drawing.Size(160, 160)
         Me.dgvItemsSel.TabIndex = 11
         '
         'dgvItemsSel1
@@ -290,7 +290,7 @@ Partial Class FrmWorkloadAccount
         Me.pnlSettingFunc.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
         Me.pnlSettingFunc.Controls.Add(Me.btnAccount)
         Me.pnlSettingFunc.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.pnlSettingFunc.Location = New System.Drawing.Point(0, 304)
+        Me.pnlSettingFunc.Location = New System.Drawing.Point(0, 300)
         Me.pnlSettingFunc.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlSettingFunc.Name = "pnlSettingFunc"
         Me.pnlSettingFunc.Size = New System.Drawing.Size(164, 26)
@@ -316,10 +316,10 @@ Partial Class FrmWorkloadAccount
         Me.pnlTraceContainer.Controls.Add(Me.pnlAccount)
         Me.pnlTraceContainer.Controls.Add(Me.pnlAccountFunc)
         Me.pnlTraceContainer.Dock = System.Windows.Forms.DockStyle.Left
-        Me.pnlTraceContainer.Location = New System.Drawing.Point(0, 28)
+        Me.pnlTraceContainer.Location = New System.Drawing.Point(0, 32)
         Me.pnlTraceContainer.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlTraceContainer.Name = "pnlTraceContainer"
-        Me.pnlTraceContainer.Size = New System.Drawing.Size(458, 332)
+        Me.pnlTraceContainer.Size = New System.Drawing.Size(458, 328)
         Me.pnlTraceContainer.TabIndex = 11
         '
         'pnlAccount
@@ -331,7 +331,7 @@ Partial Class FrmWorkloadAccount
         Me.pnlAccount.Location = New System.Drawing.Point(0, 0)
         Me.pnlAccount.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlAccount.Name = "pnlAccount"
-        Me.pnlAccount.Size = New System.Drawing.Size(456, 302)
+        Me.pnlAccount.Size = New System.Drawing.Size(456, 298)
         Me.pnlAccount.TabIndex = 1
         '
         'dgvAccount
@@ -352,7 +352,7 @@ Partial Class FrmWorkloadAccount
         Me.dgvAccount.ReadOnly = True
         Me.dgvAccount.RowTemplate.Height = 23
         Me.dgvAccount.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvAccount.Size = New System.Drawing.Size(456, 157)
+        Me.dgvAccount.Size = New System.Drawing.Size(456, 153)
         Me.dgvAccount.TabIndex = 2
         '
         'dgvAccount1
@@ -434,7 +434,7 @@ Partial Class FrmWorkloadAccount
         Me.pnlAccountFunc.Controls.Add(Me.btnDetail)
         Me.pnlAccountFunc.Controls.Add(Me.btnOutline)
         Me.pnlAccountFunc.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.pnlAccountFunc.Location = New System.Drawing.Point(0, 302)
+        Me.pnlAccountFunc.Location = New System.Drawing.Point(0, 298)
         Me.pnlAccountFunc.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlAccountFunc.Name = "pnlAccountFunc"
         Me.pnlAccountFunc.Size = New System.Drawing.Size(456, 28)
@@ -471,14 +471,14 @@ Partial Class FrmWorkloadAccount
         Me.pnlFunc.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlFunc.Location = New System.Drawing.Point(0, 0)
         Me.pnlFunc.Name = "pnlFunc"
-        Me.pnlFunc.Size = New System.Drawing.Size(624, 28)
+        Me.pnlFunc.Size = New System.Drawing.Size(624, 32)
         Me.pnlFunc.TabIndex = 2
         '
         'btnClose
         '
         Me.btnClose.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnClose.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnClose.Location = New System.Drawing.Point(3, 3)
+        Me.btnClose.Location = New System.Drawing.Point(3, 5)
         Me.btnClose.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(58, 22)

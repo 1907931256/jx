@@ -21,8 +21,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -179,7 +177,7 @@ namespace UIGraphLib
 		/// Default constructor that sets all <see c_ref="JapaneseCandleStick"/> properties to
 		/// default values as defined in the <see c_ref="Default"/> class.
 		/// </summary>
-		public JapaneseCandleStick() : base()
+		public JapaneseCandleStick()
 		{
 			_risingFill = new Fill( Default.RisingColor );
 			_fallingFill = new Fill( Default.FallingColor );
@@ -212,7 +210,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -260,7 +258,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -456,7 +454,7 @@ namespace UIGraphLib
 							else
 								pixClose = valueAxis.Scale.Transform( curve.IsOverrideOrdinal, i, close );
 
-							if ( !curve.IsSelected && this._gradientFill.IsGradientValueType )
+							if ( !curve.IsSelected && _gradientFill.IsGradientValueType )
 							{
 								using ( Pen tPen = GetPen( pane, scaleFactor, pt ) )
 									Draw( g, pane, baseAxis is XAxis || baseAxis is X2Axis,

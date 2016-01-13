@@ -17,15 +17,13 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Windows.Forms;
-using System.Threading;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Text;
-
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
+
 //using System.Diagnostics;
 
 namespace UIGraphLib
@@ -65,14 +63,14 @@ namespace UIGraphLib
 			ContextMenuObjectState objState = ContextMenuObjectState.Background;
 
 			// Determine object state
-			Point mousePt = this.PointToClient( Control.MousePosition );
+			Point mousePt = PointToClient( MousePosition );
 			int iPt;
 			GraphPane pane;
 			object nearestObj;
 
-			using ( Graphics g = this.CreateGraphics() )
+			using ( Graphics g = CreateGraphics() )
 			{
-				if ( this.MasterPane.FindNearestPaneObject( mousePt, g, out pane,
+				if ( MasterPane.FindNearestPaneObject( mousePt, g, out pane,
 						out nearestObj, out iPt ) )
 				{
 					CurveItem item = nearestObj as CurveItem;
@@ -112,7 +110,7 @@ namespace UIGraphLib
 				_isPanning = false;
 				Cursor.Current = Cursors.Default;
 
-				_menuClickPt = this.PointToClient( Control.MousePosition );
+				_menuClickPt = PointToClient( MousePosition );
 				GraphPane pane = _masterPane.FindPane( _menuClickPt );
 
 				if ( _isShowContextMenu )
@@ -123,36 +121,36 @@ namespace UIGraphLib
 					item.Name = "copy";
 					item.Tag = "copy";
 					item.Text = _resourceManager.GetString( "copy" );
-					item.Click += new System.EventHandler( this.MenuClick_Copy );
+					item.Click += MenuClick_Copy;
 					menuStrip.Items.Add( item );
 
 					item = new ToolStripMenuItem();
 					item.Name = "save_as";
 					item.Tag = "save_as";
 					item.Text = _resourceManager.GetString( "save_as" );
-					item.Click += new System.EventHandler( this.MenuClick_SaveAs );
+					item.Click += MenuClick_SaveAs;
 					menuStrip.Items.Add( item );
 
 					item = new ToolStripMenuItem();
 					item.Name = "page_setup";
 					item.Tag = "page_setup";
 					item.Text = _resourceManager.GetString( "page_setup" );
-					item.Click += new System.EventHandler( this.MenuClick_PageSetup );
+					item.Click += MenuClick_PageSetup;
 					menuStrip.Items.Add( item );
 
 					item = new ToolStripMenuItem();
 					item.Name = "print";
 					item.Tag = "print";
 					item.Text = _resourceManager.GetString( "print" );
-					item.Click += new System.EventHandler( this.MenuClick_Print );
+					item.Click += MenuClick_Print;
 					menuStrip.Items.Add( item );
 
 					item = new ToolStripMenuItem();
 					item.Name = "show_val";
 					item.Tag = "show_val";
 					item.Text = _resourceManager.GetString( "show_val" );
-					item.Click += new System.EventHandler( this.MenuClick_ShowValues );
-					item.Checked = this.IsShowPointValues;
+					item.Click += MenuClick_ShowValues;
+					item.Checked = IsShowPointValues;
 					menuStrip.Items.Add( item );
 
 					item = new ToolStripMenuItem();
@@ -181,7 +179,7 @@ namespace UIGraphLib
 					//menuItem.Text = "Un-" + ( ( pane == null || pane.zoomStack.IsEmpty ) ?
 					//	"Zoom" : pane.zoomStack.Top.TypeString );
 					item.Text = menuStr;
-					item.Click += new EventHandler( this.MenuClick_ZoomOut );
+					item.Click += MenuClick_ZoomOut;
 					if ( pane == null || pane.ZoomStack.IsEmpty )
 						item.Enabled = false;
 					menuStrip.Items.Add( item );
@@ -191,7 +189,7 @@ namespace UIGraphLib
 					item.Tag = "undo_all";
 					menuStr = _resourceManager.GetString( "undo_all" );
 					item.Text = menuStr;
-					item.Click += new EventHandler( this.MenuClick_ZoomOutAll );
+					item.Click += MenuClick_ZoomOutAll;
 					if ( pane == null || pane.ZoomStack.IsEmpty )
 						item.Enabled = false;
 					menuStrip.Items.Add( item );
@@ -201,7 +199,7 @@ namespace UIGraphLib
 					item.Tag = "set_default";
 					menuStr = _resourceManager.GetString( "set_default" );
 					item.Text = menuStr;
-					item.Click += new EventHandler( this.MenuClick_RestoreScale );
+					item.Click += MenuClick_RestoreScale;
 					if ( pane == null )
 						item.Enabled = false;
 					menuStrip.Items.Add( item );
@@ -212,8 +210,8 @@ namespace UIGraphLib
 
 					// Provide Callback for User to edit the context menu
 					//Revision: JCarpenter 10/06 - add ContextMenuObjectState objState
-					if ( this.ContextMenuBuilder != null )
-						this.ContextMenuBuilder( this, menuStrip, _menuClickPt, objState );
+					if ( ContextMenuBuilder != null )
+						ContextMenuBuilder( this, menuStrip, _menuClickPt, objState );
 				}
 			}
 		}
@@ -224,7 +222,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected void MenuClick_Copy( System.Object sender, System.EventArgs e )
+		protected void MenuClick_Copy( Object sender, EventArgs e )
 		{
 			Copy( _isShowCopyMessage );
 		}
@@ -243,7 +241,7 @@ namespace UIGraphLib
 
 				// Threaded copy mode to avoid crash with MTA
 				// Contributed by Dave Moor
-				Thread ct = new Thread( new ThreadStart( this.ClipboardCopyThread ) );
+				Thread ct = new Thread( ClipboardCopyThread );
 				//ct.ApartmentState = ApartmentState.STA;
 				ct.SetApartmentState( ApartmentState.STA );
 				ct.Start();
@@ -290,7 +288,7 @@ namespace UIGraphLib
 			{
 				// Threaded copy mode to avoid crash with MTA
 				// Contributed by Dave Moor
-				Thread ct = new Thread(new ThreadStart(this.ClipboardCopyThreadEmf));
+				Thread ct = new Thread(ClipboardCopyThreadEmf);
 				//ct.ApartmentState = ApartmentState.STA;
 				ct.SetApartmentState(ApartmentState.STA);
 				ct.Start();
@@ -309,7 +307,7 @@ namespace UIGraphLib
 		/// </summary>
 		private void ClipboardCopyThreadEmf()
 		{
-			using (Graphics g = this.CreateGraphics())
+			using (Graphics g = CreateGraphics())
 			{
 				IntPtr hdc = g.GetHdc();
 				Metafile metaFile = new Metafile(hdc, EmfType.EmfPlusOnly);
@@ -317,11 +315,11 @@ namespace UIGraphLib
 
 				using (Graphics gMeta = Graphics.FromImage(metaFile))
 				{
-					this._masterPane.Draw( gMeta );
+					_masterPane.Draw( gMeta );
 				}
 
 				//IntPtr hMeta = metaFile.GetHenhmetafile();
-				ClipboardMetafileHelper.PutEnhMetafileOnClipboard( this.Handle, metaFile );
+				ClipboardMetafileHelper.PutEnhMetafileOnClipboard( Handle, metaFile );
 				//System.Windows.Forms.Clipboard.SetDataObject(hMeta, true);
 
 				//g.Dispose();
@@ -334,7 +332,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected void MenuClick_SaveAs( System.Object sender, System.EventArgs e )
+		protected void MenuClick_SaveAs( Object sender, EventArgs e )
 		{
 			SaveAs();
 		}
@@ -380,7 +378,7 @@ namespace UIGraphLib
 
 				if ( DefaultFileName != null && DefaultFileName.Length > 0 )
 				{
-					String ext = System.IO.Path.GetExtension( DefaultFileName ).ToLower();
+					String ext = Path.GetExtension( DefaultFileName ).ToLower();
 					switch (ext)
 					{
 						case ".emf": _saveFileDialog.FilterIndex = 1; break;
@@ -511,7 +509,7 @@ namespace UIGraphLib
 		/// </remarks>
 		internal void SaveEmfFile( string fileName )
 		{
-			using (Graphics g = this.CreateGraphics())
+			using (Graphics g = CreateGraphics())
 			{
 				IntPtr hdc = g.GetHdc();
 				Metafile metaFile = new Metafile(hdc, EmfType.EmfPlusOnly);
@@ -523,7 +521,7 @@ namespace UIGraphLib
 					//gMeta.InterpolationMode = InterpolationMode.HighQualityBicubic;
 					//gMeta.SmoothingMode = SmoothingMode.AntiAlias;
 					//gMeta.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality; 
-					this._masterPane.Draw(gMeta);
+					_masterPane.Draw(gMeta);
 					//gMeta.Dispose();
 				}
 
@@ -546,7 +544,7 @@ namespace UIGraphLib
 			[DllImport("user32.dll")]
 			static extern bool CloseClipboard();
 			[DllImport("gdi32.dll")]
-			static extern IntPtr CopyEnhMetaFile(IntPtr hemfSrc, System.Text.StringBuilder hNULL);
+			static extern IntPtr CopyEnhMetaFile(IntPtr hemfSrc, StringBuilder hNULL);
 			[DllImport("gdi32.dll")]
 			static extern bool DeleteEnhMetaFile(IntPtr hemf);
 
@@ -617,11 +615,11 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected void MenuClick_ShowValues( object sender, System.EventArgs e )
+		protected void MenuClick_ShowValues( object sender, EventArgs e )
 		{
 			ToolStripMenuItem item = sender as ToolStripMenuItem;
 			if ( item != null )
-				this.IsShowPointValues = !item.Checked;
+				IsShowPointValues = !item.Checked;
 		}
 
 		/// <summary>
@@ -663,7 +661,7 @@ namespace UIGraphLib
 				//ZoomState oldState = primaryPane.ZoomStack.Push( primaryPane, ZoomState.StateType.Zoom );
 				ZoomState oldState = new ZoomState( primaryPane, ZoomState.StateType.Zoom );
 
-				using ( Graphics g = this.CreateGraphics() )
+				using ( Graphics g = CreateGraphics() )
 				{
 					if ( _isSynchronizeXAxes || _isSynchronizeYAxes )
 					{
@@ -680,8 +678,8 @@ namespace UIGraphLib
 					}
 
 					// Provide Callback to notify the user of zoom events
-					if ( this.ZoomEvent != null )
-						this.ZoomEvent( this, oldState, new ZoomState( primaryPane, ZoomState.StateType.Zoom ) );
+					if ( ZoomEvent != null )
+						ZoomEvent( this, oldState, new ZoomState( primaryPane, ZoomState.StateType.Zoom ) );
 
 					//g.Dispose();
 				}
@@ -778,7 +776,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected void MenuClick_ZoomOut( System.Object sender, System.EventArgs e )
+		protected void MenuClick_ZoomOut( Object sender, EventArgs e )
 		{
 			if ( _masterPane != null )
 			{
@@ -820,8 +818,8 @@ namespace UIGraphLib
 					newState = primaryPane.ZoomStack.Pop( primaryPane );
 
 				// Provide Callback to notify the user of zoom events
-				if ( this.ZoomEvent != null )
-					this.ZoomEvent( this, oldState, newState );
+				if ( ZoomEvent != null )
+					ZoomEvent( this, oldState, newState );
 
 				Refresh();
 			}
@@ -838,7 +836,7 @@ namespace UIGraphLib
 		/// </remarks>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected void MenuClick_ZoomOutAll( System.Object sender, System.EventArgs e )
+		protected void MenuClick_ZoomOutAll( Object sender, EventArgs e )
 		{
 			if ( _masterPane != null )
 			{
@@ -879,8 +877,8 @@ namespace UIGraphLib
 					newState = primaryPane.ZoomStack.PopAll( primaryPane );
 
 				// Provide Callback to notify the user of zoom events
-				if ( this.ZoomEvent != null )
-					this.ZoomEvent( this, oldState, newState );
+				if ( ZoomEvent != null )
+					ZoomEvent( this, oldState, newState );
 
 				Refresh();
 			}

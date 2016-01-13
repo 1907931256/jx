@@ -21,9 +21,6 @@
 
 using System;
 using System.Collections;
-using System.Text;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 #endregion
 
@@ -45,14 +42,7 @@ namespace UIGraphLib
 	[Serializable]
 	public class CollectionPlus : CollectionBase
 	{
-		/// <summary>
-		/// Default Constructor
-		/// </summary>
-		public CollectionPlus() : base()
-		{
-		}
-
-		/// <summary>
+	    /// <summary>
 		/// Return the zero-based position index of the specified object
 		/// in the collection.
 		/// </summary>

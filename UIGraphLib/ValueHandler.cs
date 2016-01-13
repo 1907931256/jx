@@ -16,8 +16,8 @@
 //License along with this library; if not, write to the Free Software
 //Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //=============================================================================
+
 using System;
-using System.Text;
 using System.Drawing;
 
 namespace UIGraphLib
@@ -140,16 +140,16 @@ namespace UIGraphLib
 
 							for ( int i=0; i<points.Count; i++ )
 							{
-								if ( ( baseAxis is XAxis || baseAxis is X2Axis ) && points[i].X == baseVal )
+							    if ( ( baseAxis is XAxis || baseAxis is X2Axis ) && points[i].X == baseVal )
 								{
 									curVal = points[i].Y;
 									break;
 								}
-								else if ( !(baseAxis is XAxis || baseAxis is X2Axis) && points[i].Y == baseVal )
-								{
-									curVal = points[i].X;
-									break;
-								}
+							    if ( !(baseAxis is XAxis || baseAxis is X2Axis) && points[i].Y == baseVal )
+							    {
+							        curVal = points[i].X;
+							        break;
+							    }
 							}
 						}
 						// otherwise, it's an ordinal type so use the value at the same ordinal position
@@ -225,52 +225,51 @@ namespace UIGraphLib
 				if ( baseVal == PointPair.Missing || lowVal == PointPair.Missing ||
 						hiVal == PointPair.Missing )
 					return false;
-				else
-					return true;
+			    return true;
 			}
 			// If the curve is a stacked line type, then sum up the values similar to the stacked bar type
-			else if ( curve is LineItem && pane.LineType == LineType.Stack )
-			{
-				double stack = 0;
-				double curVal;
+		    if ( curve is LineItem && pane.LineType == LineType.Stack )
+		    {
+		        double stack = 0;
+		        double curVal;
 
-				// loop through all the curves, summing up the values to get a total (only
-				// for the current ordinal position iPt)
-				foreach ( CurveItem tmpCurve in pane.CurveList )
-				{
-					// make sure the curve is a Line type
-					if ( tmpCurve is LineItem && tmpCurve.IsVisible )
-					{
-						curVal = PointPair.Missing;
-						// For non-ordinal curves, find a matching base value (must match exactly)
-						if ( curve.IsOverrideOrdinal || !baseAxis._scale.IsAnyOrdinal )
-						{
-							IPointList points = tmpCurve.Points;
+		        // loop through all the curves, summing up the values to get a total (only
+		        // for the current ordinal position iPt)
+		        foreach ( CurveItem tmpCurve in pane.CurveList )
+		        {
+		            // make sure the curve is a Line type
+		            if ( tmpCurve is LineItem && tmpCurve.IsVisible )
+		            {
+		                curVal = PointPair.Missing;
+		                // For non-ordinal curves, find a matching base value (must match exactly)
+		                if ( curve.IsOverrideOrdinal || !baseAxis._scale.IsAnyOrdinal )
+		                {
+		                    IPointList points = tmpCurve.Points;
 
-							for ( int i = 0; i < points.Count; i++ )
-							{
-								if ( points[i].X == baseVal )
-								{
-									curVal = points[i].Y;
-									break;
-								}
-							}
-						}
-						// otherwise, it's an ordinal type so use the value at the same ordinal position
-						else if ( iPt < tmpCurve.Points.Count )
-						{
-							// For line types, the Y axis is always the value axis
-							curVal = tmpCurve.Points[iPt].Y;
-						}
+		                    for ( int i = 0; i < points.Count; i++ )
+		                    {
+		                        if ( points[i].X == baseVal )
+		                        {
+		                            curVal = points[i].Y;
+		                            break;
+		                        }
+		                    }
+		                }
+		                // otherwise, it's an ordinal type so use the value at the same ordinal position
+		                else if ( iPt < tmpCurve.Points.Count )
+		                {
+		                    // For line types, the Y axis is always the value axis
+		                    curVal = tmpCurve.Points[iPt].Y;
+		                }
 
-						// if the current value is missing, then the rest of the stack is missing
-						if ( curVal == PointPair.Missing )
-							stack = PointPair.Missing;
+		                // if the current value is missing, then the rest of the stack is missing
+		                if ( curVal == PointPair.Missing )
+		                    stack = PointPair.Missing;
 
-						// if the current curve is the target curve, save the values
-						if ( tmpCurve == curve )
-						{
-							lowVal = stack;
+		                // if the current curve is the target curve, save the values
+		                if ( tmpCurve == curve )
+		                {
+		                    lowVal = stack;
 //							if ( curVal < 0 && stack == 0 )
 //							{
 //								stack = curVal;
@@ -278,38 +277,34 @@ namespace UIGraphLib
 //								hiVal = curVal;
 //							}
 //							else
-								hiVal = ( curVal == PointPair.Missing || stack == PointPair.Missing ) ?
-									PointPair.Missing : stack + curVal;
-						}
+		                    hiVal = ( curVal == PointPair.Missing || stack == PointPair.Missing ) ?
+		                        PointPair.Missing : stack + curVal;
+		                }
 
-						// sum all the curves to a single total.  This includes both positive and
-						// negative values (unlike the bar stack type).
-						stack = ( curVal == PointPair.Missing || stack == PointPair.Missing ) ?
-								PointPair.Missing : stack + curVal;
-					}
-				}
+		                // sum all the curves to a single total.  This includes both positive and
+		                // negative values (unlike the bar stack type).
+		                stack = ( curVal == PointPair.Missing || stack == PointPair.Missing ) ?
+		                    PointPair.Missing : stack + curVal;
+		            }
+		        }
 				
-				if ( baseVal == PointPair.Missing || lowVal == PointPair.Missing ||
-					hiVal == PointPair.Missing )
-					return false;
-				else
-					return true;
-			}
-			// otherwise, the curve is not a stacked type (not a stacked bar or stacked line)
-			else
-			{
-                if ((!(curve is HiLowBarItem)) && (!(curve is ErrorBarItem)))
-					lowVal = 0;
-				else
-					lowVal = curve.Points[iPt].LowValue;
+		        if ( baseVal == PointPair.Missing || lowVal == PointPair.Missing ||
+		             hiVal == PointPair.Missing )
+		            return false;
+		        return true;
+		    }
+		    // otherwise, the curve is not a stacked type (not a stacked bar or stacked line)
+		    if ((!(curve is HiLowBarItem)) && (!(curve is ErrorBarItem)))
+		        lowVal = 0;
+		    else
+		        lowVal = curve.Points[iPt].LowValue;
 
-				if ( baseAxis is XAxis || baseAxis is X2Axis )
-					hiVal = curve.Points[iPt].Y;
-				else
-					hiVal = curve.Points[iPt].X;
-			}
+		    if ( baseAxis is XAxis || baseAxis is X2Axis )
+		        hiVal = curve.Points[iPt].Y;
+		    else
+		        hiVal = curve.Points[iPt].X;
 
-			// Special Exception: Bars on log scales should always plot from the Min value upwards,
+		    // Special Exception: Bars on log scales should always plot from the Min value upwards,
 			// since they can never be zero
 			if ( curve is BarItem && valueAxis._scale.IsLog && lowVal == 0 )
 				lowVal = valueAxis._scale._min;
@@ -318,8 +313,7 @@ namespace UIGraphLib
 					( lowVal == PointPair.Missing && ( curve is ErrorBarItem ||
 						curve is HiLowBarItem ) ) )
 				return false;
-			else
-				return true;
+		    return true;
 		}
 
 		/// <summary>
@@ -348,25 +342,21 @@ namespace UIGraphLib
 			if ( curve is ErrorBarItem || curve is HiLowBarItem ||
 					curve is OHLCBarItem || curve is JapaneseCandleStickItem )
 			{
-				if ( baseAxis._scale.IsAnyOrdinal && iCluster >= 0 && !curve.IsOverrideOrdinal )
-					return (double) iCluster + 1.0;
-				else
-					return val;
+			    if ( baseAxis._scale.IsAnyOrdinal && iCluster >= 0 && !curve.IsOverrideOrdinal )
+					return iCluster + 1.0;
+			    return val;
 			}
-			else
-			{
-				float clusterWidth = _pane._barSettings.GetClusterWidth();
-				float clusterGap = _pane._barSettings.MinClusterGap * barWidth;
-				float barGap = barWidth * _pane._barSettings.MinBarGap;
+		    float clusterWidth = _pane._barSettings.GetClusterWidth();
+		    float clusterGap = _pane._barSettings.MinClusterGap * barWidth;
+		    float barGap = barWidth * _pane._barSettings.MinBarGap;
 
-				if ( curve.IsBar && _pane._barSettings.Type != BarType.Cluster )
-					iOrdinal = 0;
+		    if ( curve.IsBar && _pane._barSettings.Type != BarType.Cluster )
+		        iOrdinal = 0;
 
-				float centerPix = baseAxis.Scale.Transform( curve.IsOverrideOrdinal, iCluster, val )
-					- clusterWidth / 2.0F + clusterGap / 2.0F +
-					iOrdinal * ( barWidth + barGap ) + 0.5F * barWidth;
-				return baseAxis.Scale.ReverseTransform( centerPix );
-			}
+		    float centerPix = baseAxis.Scale.Transform( curve.IsOverrideOrdinal, iCluster, val )
+		                      - clusterWidth / 2.0F + clusterGap / 2.0F +
+		                      iOrdinal * ( barWidth + barGap ) + 0.5F * barWidth;
+		    return baseAxis.Scale.ReverseTransform( centerPix );
 		}
 	}
 }

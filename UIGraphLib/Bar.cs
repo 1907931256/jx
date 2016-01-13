@@ -19,8 +19,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -127,8 +125,8 @@ namespace UIGraphLib
 		/// <param name="rhs">The Bar object from which to copy</param>
 		public Bar( Bar rhs )
 		{
-			_border = (Border) rhs.Border.Clone();
-			_fill = (Fill) rhs.Fill.Clone();
+			_border = rhs.Border.Clone();
+			_fill = rhs.Fill.Clone();
 		}
 
 		/// <summary>
@@ -138,7 +136,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -179,7 +177,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -508,11 +506,11 @@ namespace UIGraphLib
 
 				// Draw the bar
 				if ( pane._barSettings.Base == BarBase.X )
-					this.Draw( g, pane, pixSide, pixSide + barWidth, pixLowVal,
+					Draw( g, pane, pixSide, pixSide + barWidth, pixLowVal,
 							pixHiVal, scaleFactor, true, curve.IsSelected,
 							curve.Points[index] );
 				else
-					this.Draw( g, pane, pixLowVal, pixHiVal, pixSide, pixSide + barWidth,
+					Draw( g, pane, pixLowVal, pixHiVal, pixSide, pixSide + barWidth,
 							scaleFactor, true, curve.IsSelected,
 							curve.Points[index] );
 			}

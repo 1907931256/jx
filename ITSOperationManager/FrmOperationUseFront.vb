@@ -39,7 +39,7 @@ Public Class FrmOperationUseFront
         m_oDbOperationManage = New DbOperationManage
         TableConstructor.CreateUseINS(m_dtPackage)
         BindInstrumentTable(m_dtPackage)
-        btnMed.Visible = False
+        pnlDrugFunc.Visible = False
         m_lstPackageCheck = New List(Of PackageCheck)
         LoadTodaySurList()
     End Sub
@@ -230,13 +230,13 @@ Public Class FrmOperationUseFront
         Next
         BindInstrumentTable(m_dtPackage)
     End Sub
-    Private Sub cmbSurList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSurList.SelectedIndexChanged
+    Private Sub cmbSurList_SelectedIndexChanged(sender As Object, e As EventArgs)
         m_dtPackage.Clear()
         m_lstPackageCheck.Clear()
         SetSureryNoteInfo(Me.cmbSurList.SelectedItem.Detail)
     End Sub
 
-    Private Sub btnInsConfirm_Click(sender As Object, e As EventArgs) Handles btnInsConfirm.Click
+    Private Sub btnInsConfirm_Click(sender As Object, e As EventArgs)
         Dim dr As DataRow = dgvInstrument.CurrentDataRow
         If dr Is Nothing Then Exit Sub
         Dim lPackageID As Long = CLng(dr.Item(TEXT_PACKAGE_ID))
@@ -269,7 +269,7 @@ Public Class FrmOperationUseFront
         Return True
     End Function
 
-    Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
+    Private Sub btnOK_Click(sender As Object, e As EventArgs)
         Dim operationManage As New DbOperationManage
         Dim dt As DataTable = dgvDrug.DataSource
 
@@ -290,7 +290,7 @@ Public Class FrmOperationUseFront
         Else
 
         End If
-       
+
     End Sub
     Private Sub txtScan_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtInsScan.KeyPress
         If e.KeyChar = Chr(Keys.Enter) Then
@@ -308,5 +308,11 @@ Public Class FrmOperationUseFront
         Dim strINSUnit As String = dr.Item(TEXT_INS_UNIT)
         Dim oFrmINSDetail As FrmINSDetail = New FrmINSDetail(strINSID, strINSName, strINSType, strINSUnit)
         oFrmINSDetail.ShowDialog()
+    End Sub
+
+
+    Private Sub FrmOperationUseFront_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Me.pnlSurInfo.Width = Me.Width / 4
+        Me.btnOK.Left = (Me.pnlCommit.Width - Me.btnOK.Width) / 2
     End Sub
 End Class

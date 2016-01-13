@@ -21,8 +21,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -152,7 +150,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -195,7 +193,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -234,8 +232,8 @@ namespace UIGraphLib
 		{
 			if ( _isVisible )
 			{
-				_stick.Draw( g, pane, this, this.BaseAxis( pane ),
-									this.ValueAxis( pane ), scaleFactor );
+				_stick.Draw( g, pane, this, BaseAxis( pane ),
+									ValueAxis( pane ), scaleFactor );
 			}
 		}
 

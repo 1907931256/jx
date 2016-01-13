@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -56,7 +55,7 @@ namespace UIGraphLib
 		{
 			foreach ( GraphPane item in rhs )
 			{
-				this.Add( item.Clone() );
+				Add( item.Clone() );
 			}
 		}
 
@@ -67,7 +66,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -106,7 +105,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -140,9 +139,8 @@ namespace UIGraphLib
 			{
 				int index = IndexOf( title );
 				if ( index >= 0 )
-					return( (GraphPane) this[index]  );
-				else
-					return null;
+					return this[index];
+			    return null;
 			}
 		}
 /*

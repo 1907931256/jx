@@ -132,7 +132,7 @@ Public Class FrmOperationRecycleReg
     End Function
     Private Sub BindDrugTable(ByVal tableDrug As DataTable)
         If tableDrug Is Nothing Then Return
-        Dim nArrWidth() As Short = {0, 0, 15, 15, 15, 15, 10, 10, 10, 10}
+        Dim nArrWidth() As Short = {0, 0, 16, 16, 16, 16, 12, 12, 12}
         Dim nRead() As Boolean = {True, True, True, True, True, True, True, False, False, False}
         Me.dgvDrug.ColumnReadOnlyCollection = nRead
         Me.dgvDrug.ColumnWidthCollection = nArrWidth
@@ -140,7 +140,7 @@ Public Class FrmOperationRecycleReg
     End Sub
     Private Sub BindInstrumentTable(ByVal tableIns As DataTable)
         If tableIns Is Nothing Then Return
-        Dim nArrWidth() As Short = {15, 15, 25, 20, 15, 10}
+        Dim nArrWidth() As Short = {15, 15, 24, 19, 15, 12}
         Me.dgvInstrument.ClearBoolColumn()
         Me.dgvInstrument.SetBoolColumn(TEXT_RETURN_IS_EXIST, TEXT_CHECK, String.Empty)
         Me.dgvInstrument.ColumnWidthCollection = nArrWidth
@@ -222,5 +222,10 @@ Public Class FrmOperationRecycleReg
         Dim strINSUnit As String = dr.Item(TEXT_INS_UNIT)
         Dim oFrmINSDetail As FrmINSDetail = New FrmINSDetail(strINSID, strINSName, strINSType, strINSUnit)
         oFrmINSDetail.ShowDialog()
+    End Sub
+
+    Private Sub FrmOperationRecycleReg_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Me.pnlSurInfo.Width = Me.Width / 4
+        Me.btnOK.Left = (Me.pnlCommit.Width - Me.btnOK.Width) / 2
     End Sub
 End Class

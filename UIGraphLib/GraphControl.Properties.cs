@@ -20,7 +20,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace UIGraphLib
@@ -347,10 +346,9 @@ namespace UIGraphLib
 				// Just return the first GraphPane in the list
 				lock ( this )
 				{
-					if ( _masterPane != null && _masterPane.PaneList.Count > 0 )
+				    if ( _masterPane != null && _masterPane.PaneList.Count > 0 )
 						return _masterPane[0];
-					else
-						return null;
+				    return null;
 				}
 			}
 
@@ -838,12 +836,11 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( _y2ScrollRangeList != null && _y2ScrollRangeList.Count > 0 )
+			    if ( _y2ScrollRangeList != null && _y2ScrollRangeList.Count > 0 )
 					return _y2ScrollRangeList[0].IsScrollable;
-				else
-					return false;
+			    return false;
 			}
-			set
+		    set
 			{
 				if ( _y2ScrollRangeList != null && _y2ScrollRangeList.Count > 0 )
 				{
@@ -949,12 +946,11 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( _yScrollRangeList != null && _yScrollRangeList.Count > 0 )
+			    if ( _yScrollRangeList != null && _yScrollRangeList.Count > 0 )
 					return _yScrollRangeList[0].Min;
-				else
-					return double.NaN;
+			    return double.NaN;
 			}
-			set
+		    set
 			{
 				if ( _yScrollRangeList != null && _yScrollRangeList.Count > 0 )
 				{
@@ -985,12 +981,11 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( _yScrollRangeList != null && _yScrollRangeList.Count > 0 )
+			    if ( _yScrollRangeList != null && _yScrollRangeList.Count > 0 )
 					return _yScrollRangeList[0].Max;
-				else
-					return double.NaN;
+			    return double.NaN;
 			}
-			set
+		    set
 			{
 				if ( _yScrollRangeList != null && _yScrollRangeList.Count > 0 )
 				{
@@ -1021,12 +1016,11 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( _y2ScrollRangeList != null && _y2ScrollRangeList.Count > 0 )
+			    if ( _y2ScrollRangeList != null && _y2ScrollRangeList.Count > 0 )
 					return _y2ScrollRangeList[0].Min;
-				else
-					return double.NaN;
+			    return double.NaN;
 			}
-			set
+		    set
 			{
 				if ( _y2ScrollRangeList != null && _y2ScrollRangeList.Count > 0 )
 				{
@@ -1057,12 +1051,11 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( _y2ScrollRangeList != null && _y2ScrollRangeList.Count > 0 )
+			    if ( _y2ScrollRangeList != null && _y2ScrollRangeList.Count > 0 )
 					return _y2ScrollRangeList[0].Max;
-				else
-					return double.NaN;
+			    return double.NaN;
 			}
-			set
+		    set
 			{
 				if ( _y2ScrollRangeList != null && _y2ScrollRangeList.Count > 0 )
 				{
@@ -1085,10 +1078,9 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( hScrollBar1 != null && vScrollBar1 != null )
+			    if ( hScrollBar1 != null && vScrollBar1 != null )
 					return hScrollBar1.Capture || vScrollBar1.Capture;
-				else
-					return false;
+			    return false;
 			}
 		}
 

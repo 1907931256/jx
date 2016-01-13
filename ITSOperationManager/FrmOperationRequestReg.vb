@@ -151,7 +151,7 @@ Public Class FrmOperationRequestReg
         End If
     End Sub
 
-    Private Sub cmbSurList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSurList.SelectedIndexChanged
+    Private Sub cmbSurList_SelectedIndexChanged(sender As Object, e As EventArgs)
         SetSureryNoteInfo(Me.cmbSurList.SelectedItem.Detail)
     End Sub
 
@@ -166,7 +166,7 @@ Public Class FrmOperationRequestReg
         Next
     End Sub
 
-    Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
+    Private Sub btnOK_Click(sender As Object, e As EventArgs)
         CType(Me.dgvDrug.DataSource, DataTable).AcceptChanges()
         CType(Me.dgvINS.DataSource, DataTable).AcceptChanges()
         Dim operationManage As New DbOperationManage
@@ -178,7 +178,7 @@ Public Class FrmOperationRequestReg
         End If
     End Sub
 
-    Private Sub btnDrugAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+    Private Sub btnDrugAdd_Click(sender As Object, e As EventArgs)
         If String.IsNullOrEmpty(cmbSurList.Text) Then Return
         Dim addDrugForm As New FrmAddDrug
         If addDrugForm.ShowDialog() = DialogResult.OK Then
@@ -187,14 +187,14 @@ Public Class FrmOperationRequestReg
     End Sub
 
 
-    Private Sub btnDrugRemove_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+    Private Sub btnDrugRemove_Click(sender As Object, e As EventArgs)
         If String.IsNullOrEmpty(cmbSurList.Text) Then Return
         If UIMsgBox.MSGBoxShowYesNo(MSG_DEL_HARDWARE_QUERY) = DialogResult.Yes Then
             DeleteDgvSelRows(Me.dgvDrug)
         End If
     End Sub
 
-    Private Sub btnInstrumentAdd_Click(sender As Object, e As EventArgs) Handles btnAddINS.Click
+    Private Sub btnInstrumentAdd_Click(sender As Object, e As EventArgs)
         If String.IsNullOrEmpty(cmbSurList.Text) Then Return
         Dim addInstrumentForm As New FrmAddInstrument
         If addInstrumentForm.ShowDialog() = DialogResult.OK Then
@@ -202,7 +202,7 @@ Public Class FrmOperationRequestReg
         End If
     End Sub
 
-    Private Sub btnInstrumentRemove_Click(sender As Object, e As EventArgs) Handles btnDeleteINS.Click
+    Private Sub btnInstrumentRemove_Click(sender As Object, e As EventArgs)
         If String.IsNullOrEmpty(cmbSurList.Text) Then Return
         If UIMsgBox.MSGBoxShowYesNo(MSG_DEL_HARDWARE_QUERY) = DialogResult.Yes Then
             DeleteDgvSelRows(Me.dgvINS)
@@ -218,6 +218,11 @@ Public Class FrmOperationRequestReg
         Dim strINSUnit As String = dr.Item(TEXT_INS_UNIT)
         Dim oFrmINSDetail As FrmINSDetail = New FrmINSDetail(strINSID, strINSName, strINSType, strINSUnit)
         oFrmINSDetail.ShowDialog()
+    End Sub
+
+    Private Sub FrmOperationRecycleReg_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Me.pnlSurInfo.Width = Me.Width / 4
+        Me.btnOK.Left = (Me.pnlCommit.Width - Me.btnOK.Width) / 2
     End Sub
 End Class
 

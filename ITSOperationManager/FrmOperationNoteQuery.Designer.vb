@@ -29,9 +29,9 @@ Partial Class FrmOperationNoteQuery
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnlQuery = New System.Windows.Forms.Panel()
+        Me.btnRefresh = New DevComponents.DotNetBar.ButtonX()
         Me.cmbStatus = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.btnRefresh = New UIControlLib.LabelEx()
         Me.cmbSurRoom = New System.Windows.Forms.ComboBox()
         Me.lblSurRoom = New System.Windows.Forms.Label()
         Me.dtpTimeEnd = New System.Windows.Forms.DateTimePicker()
@@ -45,6 +45,7 @@ Partial Class FrmOperationNoteQuery
         Me.btnRequest = New DevComponents.DotNetBar.ButtonX()
         Me.btnRequestAll = New DevComponents.DotNetBar.ButtonX()
         Me.dgv = New UIControlLib.UIDataGridView()
+        Me.btnClose = New DevComponents.DotNetBar.ButtonX()
         Me.pnlQuery.SuspendLayout()
         Me.pnlFunction.SuspendLayout()
         CType(Me.dgv, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -54,9 +55,9 @@ Partial Class FrmOperationNoteQuery
         '
         Me.pnlQuery.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
         Me.pnlQuery.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlQuery.Controls.Add(Me.btnRefresh)
         Me.pnlQuery.Controls.Add(Me.cmbStatus)
         Me.pnlQuery.Controls.Add(Me.Label1)
-        Me.pnlQuery.Controls.Add(Me.btnRefresh)
         Me.pnlQuery.Controls.Add(Me.cmbSurRoom)
         Me.pnlQuery.Controls.Add(Me.lblSurRoom)
         Me.pnlQuery.Controls.Add(Me.dtpTimeEnd)
@@ -64,18 +65,31 @@ Partial Class FrmOperationNoteQuery
         Me.pnlQuery.Controls.Add(Me.dtpTimeStart)
         Me.pnlQuery.Controls.Add(Me.lblSurTime)
         Me.pnlQuery.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pnlQuery.Location = New System.Drawing.Point(0, 28)
-        Me.pnlQuery.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.pnlQuery.Location = New System.Drawing.Point(0, 32)
+        Me.pnlQuery.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlQuery.Name = "pnlQuery"
         Me.pnlQuery.Size = New System.Drawing.Size(786, 39)
         Me.pnlQuery.TabIndex = 9
+        '
+        'btnRefresh
+        '
+        Me.btnRefresh.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnRefresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnRefresh.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
+        Me.btnRefresh.Location = New System.Drawing.Point(734, 11)
+        Me.btnRefresh.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnRefresh.Name = "btnRefresh"
+        Me.btnRefresh.Size = New System.Drawing.Size(47, 22)
+        Me.btnRefresh.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
+        Me.btnRefresh.TabIndex = 10
+        Me.btnRefresh.Text = "刷新"
         '
         'cmbStatus
         '
         Me.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbStatus.FormattingEnabled = True
         Me.cmbStatus.Location = New System.Drawing.Point(480, 12)
-        Me.cmbStatus.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cmbStatus.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbStatus.Name = "cmbStatus"
         Me.cmbStatus.Size = New System.Drawing.Size(92, 20)
         Me.cmbStatus.TabIndex = 8
@@ -90,27 +104,12 @@ Partial Class FrmOperationNoteQuery
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "状态"
         '
-        'btnRefresh
-        '
-        Me.btnRefresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnRefresh.BackColor = System.Drawing.Color.Transparent
-        Me.btnRefresh.Fore_Color = System.Drawing.Color.Black
-        Me.btnRefresh.ForeColor = System.Drawing.Color.Transparent
-        Me.btnRefresh.Location = New System.Drawing.Point(736, 9)
-        Me.btnRefresh.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.btnRefresh.Name = "btnRefresh"
-        Me.btnRefresh.Size = New System.Drawing.Size(46, 22)
-        Me.btnRefresh.TabIndex = 6
-        Me.btnRefresh.Text = "刷新"
-        Me.btnRefresh.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.btnRefresh.TipText = ""
-        '
         'cmbSurRoom
         '
         Me.cmbSurRoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbSurRoom.FormattingEnabled = True
         Me.cmbSurRoom.Location = New System.Drawing.Point(346, 11)
-        Me.cmbSurRoom.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cmbSurRoom.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbSurRoom.Name = "cmbSurRoom"
         Me.cmbSurRoom.Size = New System.Drawing.Size(92, 20)
         Me.cmbSurRoom.TabIndex = 5
@@ -128,7 +127,7 @@ Partial Class FrmOperationNoteQuery
         'dtpTimeEnd
         '
         Me.dtpTimeEnd.Location = New System.Drawing.Point(186, 10)
-        Me.dtpTimeEnd.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.dtpTimeEnd.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpTimeEnd.Name = "dtpTimeEnd"
         Me.dtpTimeEnd.Size = New System.Drawing.Size(102, 21)
         Me.dtpTimeEnd.TabIndex = 3
@@ -146,7 +145,7 @@ Partial Class FrmOperationNoteQuery
         'dtpTimeStart
         '
         Me.dtpTimeStart.Location = New System.Drawing.Point(61, 10)
-        Me.dtpTimeStart.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.dtpTimeStart.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpTimeStart.Name = "dtpTimeStart"
         Me.dtpTimeStart.Size = New System.Drawing.Size(102, 21)
         Me.dtpTimeStart.TabIndex = 1
@@ -164,6 +163,7 @@ Partial Class FrmOperationNoteQuery
         'pnlFunction
         '
         Me.pnlFunction.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.pnlFunction.Controls.Add(Me.btnClose)
         Me.pnlFunction.Controls.Add(Me.btnRecycle)
         Me.pnlFunction.Controls.Add(Me.btnUse)
         Me.pnlFunction.Controls.Add(Me.btnFrontUse)
@@ -171,17 +171,17 @@ Partial Class FrmOperationNoteQuery
         Me.pnlFunction.Controls.Add(Me.btnRequestAll)
         Me.pnlFunction.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlFunction.Location = New System.Drawing.Point(0, 0)
-        Me.pnlFunction.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.pnlFunction.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlFunction.Name = "pnlFunction"
-        Me.pnlFunction.Size = New System.Drawing.Size(786, 28)
+        Me.pnlFunction.Size = New System.Drawing.Size(786, 32)
         Me.pnlFunction.TabIndex = 10
         '
         'btnRecycle
         '
         Me.btnRecycle.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnRecycle.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnRecycle.Location = New System.Drawing.Point(244, 3)
-        Me.btnRecycle.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnRecycle.Location = New System.Drawing.Point(244, 6)
+        Me.btnRecycle.Margin = New System.Windows.Forms.Padding(2)
         Me.btnRecycle.Name = "btnRecycle"
         Me.btnRecycle.Size = New System.Drawing.Size(58, 22)
         Me.btnRecycle.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
@@ -192,8 +192,8 @@ Partial Class FrmOperationNoteQuery
         '
         Me.btnUse.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnUse.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnUse.Location = New System.Drawing.Point(184, 3)
-        Me.btnUse.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnUse.Location = New System.Drawing.Point(184, 6)
+        Me.btnUse.Margin = New System.Windows.Forms.Padding(2)
         Me.btnUse.Name = "btnUse"
         Me.btnUse.Size = New System.Drawing.Size(58, 22)
         Me.btnUse.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
@@ -204,8 +204,8 @@ Partial Class FrmOperationNoteQuery
         '
         Me.btnFrontUse.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnFrontUse.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnFrontUse.Location = New System.Drawing.Point(124, 3)
-        Me.btnFrontUse.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnFrontUse.Location = New System.Drawing.Point(124, 6)
+        Me.btnFrontUse.Margin = New System.Windows.Forms.Padding(2)
         Me.btnFrontUse.Name = "btnFrontUse"
         Me.btnFrontUse.Size = New System.Drawing.Size(58, 22)
         Me.btnFrontUse.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
@@ -216,8 +216,8 @@ Partial Class FrmOperationNoteQuery
         '
         Me.btnRequest.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnRequest.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnRequest.Location = New System.Drawing.Point(64, 3)
-        Me.btnRequest.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnRequest.Location = New System.Drawing.Point(64, 6)
+        Me.btnRequest.Margin = New System.Windows.Forms.Padding(2)
         Me.btnRequest.Name = "btnRequest"
         Me.btnRequest.Size = New System.Drawing.Size(58, 22)
         Me.btnRequest.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
@@ -228,8 +228,8 @@ Partial Class FrmOperationNoteQuery
         '
         Me.btnRequestAll.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnRequestAll.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnRequestAll.Location = New System.Drawing.Point(4, 3)
-        Me.btnRequestAll.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnRequestAll.Location = New System.Drawing.Point(4, 6)
+        Me.btnRequestAll.Margin = New System.Windows.Forms.Padding(2)
         Me.btnRequestAll.Name = "btnRequestAll"
         Me.btnRequestAll.Size = New System.Drawing.Size(58, 22)
         Me.btnRequestAll.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
@@ -271,8 +271,8 @@ Partial Class FrmOperationNoteQuery
         Me.dgv.DefaultCellStyle = DataGridViewCellStyle3
         Me.dgv.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgv.EnableHeadersVisualStyles = False
-        Me.dgv.Location = New System.Drawing.Point(0, 67)
-        Me.dgv.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.dgv.Location = New System.Drawing.Point(0, 71)
+        Me.dgv.Margin = New System.Windows.Forms.Padding(2)
         Me.dgv.MultiSelect = False
         Me.dgv.Name = "dgv"
         Me.dgv.NoItemAlter = ""
@@ -283,8 +283,20 @@ Partial Class FrmOperationNoteQuery
         Me.dgv.SelCombineKeyEnable = False
         Me.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv.ShowSelectionColor = True
-        Me.dgv.Size = New System.Drawing.Size(786, 436)
+        Me.dgv.Size = New System.Drawing.Size(786, 432)
         Me.dgv.TabIndex = 11
+        '
+        'btnClose
+        '
+        Me.btnClose.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnClose.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
+        Me.btnClose.Location = New System.Drawing.Point(304, 6)
+        Me.btnClose.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnClose.Name = "btnClose"
+        Me.btnClose.Size = New System.Drawing.Size(58, 22)
+        Me.btnClose.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
+        Me.btnClose.TabIndex = 10
+        Me.btnClose.Text = "关闭"
         '
         'FrmOperationNoteQuery
         '
@@ -293,7 +305,7 @@ Partial Class FrmOperationNoteQuery
         Me.Controls.Add(Me.dgv)
         Me.Controls.Add(Me.pnlQuery)
         Me.Controls.Add(Me.pnlFunction)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmOperationNoteQuery"
         Me.Size = New System.Drawing.Size(786, 503)
         Me.pnlQuery.ResumeLayout(False)
@@ -312,7 +324,6 @@ Partial Class FrmOperationNoteQuery
     Friend WithEvents lblTimeTo As System.Windows.Forms.Label
     Friend WithEvents dtpTimeStart As System.Windows.Forms.DateTimePicker
     Friend WithEvents lblSurTime As System.Windows.Forms.Label
-    Friend WithEvents btnRefresh As UIControlLib.LabelEx
     Friend WithEvents cmbStatus As System.Windows.Forms.ComboBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents btnRequestAll As DevComponents.DotNetBar.ButtonX
@@ -320,5 +331,7 @@ Partial Class FrmOperationNoteQuery
     Friend WithEvents btnRecycle As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnUse As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnFrontUse As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents btnRefresh As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents btnClose As DevComponents.DotNetBar.ButtonX
 
 End Class

@@ -281,7 +281,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -331,7 +331,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -370,7 +370,7 @@ namespace UIGraphLib
 		{
 			// Only draw if the symbol is visible
 			if ( _isVisible &&
-					this.Type != SymbolType.None &&
+					Type != SymbolType.None &&
 					x < 100000 && x > -100000 &&
 					y < 100000 && y > -100000 )
 			{
@@ -426,7 +426,7 @@ namespace UIGraphLib
 
 			// Only draw if the symbol is visible
 			if (	_isVisible &&
-					this.Type != SymbolType.None &&
+					Type != SymbolType.None &&
 					x < 100000 && x > -100000 &&
 					y < 100000 && y > -100000 )
 			{
@@ -435,8 +435,8 @@ namespace UIGraphLib
 					g.SmoothingMode = SmoothingMode.HighQuality;
 
 				using ( Pen pen = _border.GetPen( pane, scaleFactor, dataValue ) )
-				using ( GraphicsPath path = this.MakePath( g, scaleFactor ) )
-				using ( Brush brush = this.Fill.MakeBrush( path.GetBounds(), dataValue ) )
+				using ( GraphicsPath path = MakePath( g, scaleFactor ) )
+				using ( Brush brush = Fill.MakeBrush( path.GetBounds(), dataValue ) )
 				{
 					DrawSymbol( g, x, y, path, pen, brush );
 				}
@@ -460,7 +460,7 @@ namespace UIGraphLib
 		/// <returns>Returns the <see c_ref="GraphicsPath"/> for the current symbol</returns>
 		public GraphicsPath MakePath( Graphics g, float scaleFactor )
 		{
-			float	scaledSize = (float) ( _size * scaleFactor );
+			float	scaledSize = _size * scaleFactor;
 			float	hsize = scaledSize / 2,
 					hsize1 = hsize + 1;
 			
@@ -631,10 +631,10 @@ namespace UIGraphLib
 
 							if ( curX != PointPair.Missing &&
 									curY != PointPair.Missing &&
-									!System.Double.IsNaN( curX ) &&
-									!System.Double.IsNaN( curY ) &&
-									!System.Double.IsInfinity( curX ) &&
-									!System.Double.IsInfinity( curY ) &&
+									!Double.IsNaN( curX ) &&
+									!Double.IsNaN( curY ) &&
+									!Double.IsInfinity( curX ) &&
+									!Double.IsInfinity( curY ) &&
 									( curX > 0 || !xIsLog ) &&
 									( !yIsLog || curY > 0.0 ) &&
 									( xIsOrdinal || ( curX >= xMin && curX <= xMax ) ) )
@@ -657,13 +657,13 @@ namespace UIGraphLib
 								{
 									using ( Brush tBrush = _fill.MakeBrush( rect, points[i] ) )
 									using ( Pen tPen = _border.GetPen( pane, scaleFactor, points[i] ) )
-										this.DrawSymbol( g, tmpX, tmpY, path, tPen, tBrush );
+										DrawSymbol( g, tmpX, tmpY, path, tPen, tBrush );
 								}
 								else
 								{
 									// Otherwise, the brush is already defined
 									// Draw the symbol at the specified pixel location
-									this.DrawSymbol( g, tmpX, tmpY, path, pen, brush );
+									DrawSymbol( g, tmpX, tmpY, path, pen, brush );
 								}
 							}
 						}

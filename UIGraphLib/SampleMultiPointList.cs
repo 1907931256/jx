@@ -19,8 +19,6 @@
 
 using System;
 using System.Collections;
-using System.Text;
-using System.Drawing;
 
 namespace UIGraphLib
 {
@@ -195,7 +193,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -220,7 +218,7 @@ namespace UIGraphLib
 			get
 			{
 				double xVal, yVal;
-				if ( index >= 0 && index < this.Count )
+				if ( index >= 0 && index < Count )
 				{
 					// grab the specified PerformanceData struct
 					PerformanceData perfData = (PerformanceData) DataCollection[index];

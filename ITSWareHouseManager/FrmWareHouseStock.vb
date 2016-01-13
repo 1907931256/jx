@@ -89,14 +89,14 @@ Public Class FrmWareHouseStock
         End If
         Binding()
     End Sub
-    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
+    Private Sub btnRefresh_Click(sender As Object, e As EventArgs)
         RefreshData()
     End Sub
-    Private Sub btnDetail_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
-            If btnDetail.Text = TEXT_DETAIL Then
-                btnDetail.Text = TEXT_TOTAL
-            Else
-                btnDetail.Text = TEXT_DETAIL
+    Private Sub btnDetail_Click(sender As Object, e As EventArgs)
+        If btnDetail.Text = TEXT_DETAIL Then
+            btnDetail.Text = TEXT_TOTAL
+        Else
+            btnDetail.Text = TEXT_DETAIL
         End If
         If dgv.DataSource Is m_dtPackage Then
             btnChange.Enabled = True
@@ -104,7 +104,7 @@ Public Class FrmWareHouseStock
         RefreshData()
     End Sub
 
-    Private Sub btnTaking_Click(sender As Object, e As EventArgs) Handles btnTaking.Click
+    Private Sub btnTaking_Click(sender As Object, e As EventArgs)
         Dim dr As DataRow = dgv.CurrentDataRow
         If dr Is Nothing Then Exit Sub
         Dim oFrmStocking As FrmWareHouseStocking = New FrmWareHouseStocking(dr)
@@ -112,7 +112,7 @@ Public Class FrmWareHouseStock
         btnRefresh.PerformClick()
     End Sub
 
-    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs)
         Dim oPrint As ReportPrinter = ReportPrinter.GetInstanse
         Dim strName As String = "Please enter the name"
         If dgv.DataSource Is m_dtStock Then
@@ -132,7 +132,7 @@ Public Class FrmWareHouseStock
         End If
     End Sub
 
-    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
+    Private Sub btnExport_Click(sender As Object, e As EventArgs)
         Dim oExport As ExportManager = ExportManager.GetInstanse
         Dim strName As String = "Please enter the name"
         If dgv.DataSource Is m_dtStock Then
@@ -152,7 +152,7 @@ Public Class FrmWareHouseStock
         End If
     End Sub
 
-    Private Sub btnExpried_Click(sender As Object, e As EventArgs) Handles btnExpried.Click
+    Private Sub btnExpried_Click(sender As Object, e As EventArgs)
         Dim oFrmExpried As FrmExpried = New FrmExpried
         oFrmExpried.ShowDialog()
     End Sub
@@ -161,7 +161,7 @@ Public Class FrmWareHouseStock
         RefreshData()
     End Sub
 
-    Private Sub btnChange_Click(sender As Object, e As EventArgs) Handles btnChange.Click
+    Private Sub btnChange_Click(sender As Object, e As EventArgs)
         Dim dr As DataRow = dgv.CurrentDataRow
         If dr Is Nothing Then Exit Sub
         Dim lPackageID As Long = dr.Item(TEXT_PACKAGE_ID)

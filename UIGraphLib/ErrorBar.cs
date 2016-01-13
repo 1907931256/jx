@@ -21,8 +21,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -203,7 +201,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -246,7 +244,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -347,7 +345,7 @@ namespace UIGraphLib
 			float	pixBase, pixValue, pixLowValue;
 			double	scaleBase, scaleValue, scaleLowValue;
 		
-			if ( curve.Points != null && this.IsVisible )
+			if ( curve.Points != null && IsVisible )
 			{
 				using ( Pen pen = !curve.IsSelected ? new Pen( _color, _penWidth ) :
 						new Pen( Selection.Border.Color, Selection.Border.Width ) )
@@ -374,7 +372,7 @@ namespace UIGraphLib
 							//if ( this.fill.IsGradientValueType )
 							//	brush = fill.MakeBrush( _rect, _points[i] );
 
-							this.Draw( g, pane, baseAxis is XAxis || baseAxis is X2Axis, pixBase, pixValue,
+							Draw( g, pane, baseAxis is XAxis || baseAxis is X2Axis, pixBase, pixValue,
 											pixLowValue, scaleFactor, pen, curve.IsSelected,
 											curve.Points[i] );
 						}

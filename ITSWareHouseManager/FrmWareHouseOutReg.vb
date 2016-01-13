@@ -139,7 +139,7 @@ Public Class FrmWareHouseOutReg
         Return True
     End Function
 
-    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs)
         If CheckValid() Then
             Dim dtProduce As Date, dtExpried As Date
             If CheckExist(cmbINSName.IDContent, cmbCompany.IDContent, txtBatch.Text, cmbINSName.Text, cmbCompany.Text, dtProduce, dtExpried) Then
@@ -169,21 +169,21 @@ Public Class FrmWareHouseOutReg
         End If
     End Sub
 
-    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs)
         Clear()
     End Sub
-    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+    Private Sub btnClear_Click(sender As Object, e As EventArgs)
         Clear()
         m_dtWareHouse.Clear()
     End Sub
 
-    Private Sub btnDel_Click(sender As Object, e As EventArgs) Handles btnDel.Click
+    Private Sub btnDel_Click(sender As Object, e As EventArgs)
         Dim dr As DataRow = dgv.CurrentDataRow
         If dr Is Nothing Then Exit Sub
         m_dtWareHouse.Rows.Remove(dr)
     End Sub
 
-    Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
+    Private Sub btnOk_Click(sender As Object, e As EventArgs)
         If CheckValidTotal() Then
             For Each dr As DataRow In m_dtWareHouse.Rows
                 'If Not CheckExist(dr.Item(TEXT_WS_INS_ID), CInt(dr.Item(TEXT_WS_COMPANY_ID)), dr.Item(TEXT_WS_BATCH_ID), dr.Item(TEXT_WS_INS_NAME), dr.Item(TEXT_WS_COMPANY_NAME), dtProduce, dtExpried) Then

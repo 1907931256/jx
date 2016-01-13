@@ -21,9 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 #endregion
 
@@ -54,7 +51,7 @@ namespace UIGraphLib
 		public ScrollRangeList( ScrollRangeList rhs )
 		{
 			foreach ( ScrollRange item in rhs )
-				this.Add( new ScrollRange( item ) );
+				Add( new ScrollRange( item ) );
 		}
 
 		/// <summary>
@@ -64,7 +61,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -92,12 +89,11 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( index < 0 || index >= this.Count )
+			    if ( index < 0 || index >= Count )
 					return new ScrollRange( false );
-				else
-					return (ScrollRange) base[index];
+			    return base[index];
 			}
-			set { base[index] = value; }
+		    set { base[index] = value; }
 		}
 
 		/*		/// <summary>

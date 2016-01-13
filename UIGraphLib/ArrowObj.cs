@@ -20,7 +20,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -178,7 +177,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -220,7 +219,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -256,14 +255,14 @@ namespace UIGraphLib
 		{
 			// Convert the arrow coordinates from the user coordinate system
 			// to the screen coordinate system
-			PointF pix1 = this.Location.TransformTopLeft( pane );
-			PointF pix2 = this.Location.TransformBottomRight( pane );
+			PointF pix1 = Location.TransformTopLeft( pane );
+			PointF pix2 = Location.TransformBottomRight( pane );
 
 			if ( pix1.X > -10000 && pix1.X < 100000 && pix1.Y > -100000 && pix1.Y < 100000 &&
 				pix2.X > -10000 && pix2.X < 100000 && pix2.Y > -100000 && pix2.Y < 100000 )
 			{
 				// get a scaled size for the arrowhead
-				float scaledSize = (float)( _size * scaleFactor );
+				float scaledSize = _size * scaleFactor;
 
 				// calculate the length and the angle of the arrow "vector"
 				double dy = pix2.Y - pix1.Y;

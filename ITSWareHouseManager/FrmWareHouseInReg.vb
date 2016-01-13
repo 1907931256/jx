@@ -202,7 +202,7 @@ Public Class FrmWareHouseInReg
         Return True
     End Function
 
-    Private Sub btnMdfOk_Click(sender As Object, e As EventArgs) Handles btnMdfOk.Click
+    Private Sub btnMdfOk_Click(sender As Object, e As EventArgs)
         If CheckValid() Then
             For Each dr As DataRow In m_dtWareHouse.Rows
                 If dr.Item(TEXT_WS_INS_ID).Equals(cmbINSName.IDContent) AndAlso dr.Item(TEXT_WS_BATCH_ID).Equals(txtBatch.Text.Trim) Then
@@ -235,7 +235,7 @@ Public Class FrmWareHouseInReg
         End If
     End Sub
 
-    Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
+    Private Sub btnOk_Click(sender As Object, e As EventArgs)
         If m_dtWareHouse.Rows.Count > 0 AndAlso CheckSamBatchExpried() Then
             If Not m_oDBWareHouseManager.WareHouseInReg(m_dtWareHouse) = DBMEDITS_RESULT.SUCCESS Then
                 UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
@@ -245,7 +245,7 @@ Public Class FrmWareHouseInReg
             Clear()
         End If
     End Sub
-    Private Sub btnDel_Click(sender As Object, e As EventArgs) Handles btnDel.Click
+    Private Sub btnDel_Click(sender As Object, e As EventArgs)
         Dim dr As DataRow = dgv.CurrentDataRow
         If dr Is Nothing Then Exit Sub
         Dim strINSID As String = dr.Item(TEXT_WS_INS_ID).ToString
@@ -254,10 +254,10 @@ Public Class FrmWareHouseInReg
         End If
         Binding()
     End Sub
-    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs)
         Clear()
     End Sub
-    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+    Private Sub btnClear_Click(sender As Object, e As EventArgs)
         ClearAll()
     End Sub
 

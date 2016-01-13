@@ -41,22 +41,26 @@ Partial Class FrmLocationQuery
         Me.lblCategory = New System.Windows.Forms.Label()
         Me.dgv1 = New UIControlLib.UIDataGridView()
         Me.pnlTraceContainer = New System.Windows.Forms.Panel()
+        Me.pnlFunc = New System.Windows.Forms.Panel()
+        Me.btnClose = New DevComponents.DotNetBar.ButtonX()
         Me.pnlLayoutSetting.SuspendLayout()
         CType(Me.dgv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbCondition.SuspendLayout()
         CType(Me.dgv1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlTraceContainer.SuspendLayout()
+        Me.pnlFunc.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnlLayoutSetting
         '
+        Me.pnlLayoutSetting.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlLayoutSetting.Controls.Add(Me.dgv)
         Me.pnlLayoutSetting.Controls.Add(Me.gbCondition)
         Me.pnlLayoutSetting.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pnlLayoutSetting.Location = New System.Drawing.Point(458, 0)
+        Me.pnlLayoutSetting.Location = New System.Drawing.Point(458, 32)
         Me.pnlLayoutSetting.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlLayoutSetting.Name = "pnlLayoutSetting"
-        Me.pnlLayoutSetting.Size = New System.Drawing.Size(166, 360)
+        Me.pnlLayoutSetting.Size = New System.Drawing.Size(166, 328)
         Me.pnlLayoutSetting.TabIndex = 12
         '
         'dgv
@@ -79,7 +83,7 @@ Partial Class FrmLocationQuery
         Me.dgv.RowHeadersVisible = False
         Me.dgv.RowTemplate.Height = 23
         Me.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv.Size = New System.Drawing.Size(166, 244)
+        Me.dgv.Size = New System.Drawing.Size(164, 210)
         Me.dgv.TabIndex = 8
         '
         'gbCondition
@@ -97,7 +101,7 @@ Partial Class FrmLocationQuery
         Me.gbCondition.Margin = New System.Windows.Forms.Padding(2)
         Me.gbCondition.Name = "gbCondition"
         Me.gbCondition.Padding = New System.Windows.Forms.Padding(2)
-        Me.gbCondition.Size = New System.Drawing.Size(166, 116)
+        Me.gbCondition.Size = New System.Drawing.Size(164, 116)
         Me.gbCondition.TabIndex = 7
         Me.gbCondition.TabStop = False
         '
@@ -107,7 +111,7 @@ Partial Class FrmLocationQuery
         Me.tbNameFilter.Location = New System.Drawing.Point(2, 90)
         Me.tbNameFilter.Margin = New System.Windows.Forms.Padding(2)
         Me.tbNameFilter.Name = "tbNameFilter"
-        Me.tbNameFilter.Size = New System.Drawing.Size(162, 21)
+        Me.tbNameFilter.Size = New System.Drawing.Size(160, 21)
         Me.tbNameFilter.TabIndex = 11
         '
         'lblSep2
@@ -116,7 +120,7 @@ Partial Class FrmLocationQuery
         Me.lblSep2.Location = New System.Drawing.Point(2, 80)
         Me.lblSep2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblSep2.Name = "lblSep2"
-        Me.lblSep2.Size = New System.Drawing.Size(162, 10)
+        Me.lblSep2.Size = New System.Drawing.Size(160, 10)
         Me.lblSep2.TabIndex = 13
         '
         'lblNameFilter
@@ -136,7 +140,7 @@ Partial Class FrmLocationQuery
         Me.lblSep.Location = New System.Drawing.Point(2, 58)
         Me.lblSep.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblSep.Name = "lblSep"
-        Me.lblSep.Size = New System.Drawing.Size(162, 10)
+        Me.lblSep.Size = New System.Drawing.Size(160, 10)
         Me.lblSep.TabIndex = 8
         '
         'cmbCategory
@@ -147,7 +151,7 @@ Partial Class FrmLocationQuery
         Me.cmbCategory.Location = New System.Drawing.Point(2, 38)
         Me.cmbCategory.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbCategory.Name = "cmbCategory"
-        Me.cmbCategory.Size = New System.Drawing.Size(162, 20)
+        Me.cmbCategory.Size = New System.Drawing.Size(160, 20)
         Me.cmbCategory.TabIndex = 7
         '
         'lblSep1
@@ -156,7 +160,7 @@ Partial Class FrmLocationQuery
         Me.lblSep1.Location = New System.Drawing.Point(2, 28)
         Me.lblSep1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblSep1.Name = "lblSep1"
-        Me.lblSep1.Size = New System.Drawing.Size(162, 10)
+        Me.lblSep1.Size = New System.Drawing.Size(160, 10)
         Me.lblSep1.TabIndex = 12
         '
         'lblCategory
@@ -224,11 +228,33 @@ Partial Class FrmLocationQuery
         '
         Me.pnlTraceContainer.Controls.Add(Me.dgv1)
         Me.pnlTraceContainer.Dock = System.Windows.Forms.DockStyle.Left
-        Me.pnlTraceContainer.Location = New System.Drawing.Point(0, 0)
+        Me.pnlTraceContainer.Location = New System.Drawing.Point(0, 32)
         Me.pnlTraceContainer.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlTraceContainer.Name = "pnlTraceContainer"
-        Me.pnlTraceContainer.Size = New System.Drawing.Size(458, 360)
+        Me.pnlTraceContainer.Size = New System.Drawing.Size(458, 328)
         Me.pnlTraceContainer.TabIndex = 11
+        '
+        'pnlFunc
+        '
+        Me.pnlFunc.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.pnlFunc.Controls.Add(Me.btnClose)
+        Me.pnlFunc.Dock = System.Windows.Forms.DockStyle.Top
+        Me.pnlFunc.Location = New System.Drawing.Point(0, 0)
+        Me.pnlFunc.Name = "pnlFunc"
+        Me.pnlFunc.Size = New System.Drawing.Size(624, 32)
+        Me.pnlFunc.TabIndex = 13
+        '
+        'btnClose
+        '
+        Me.btnClose.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnClose.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
+        Me.btnClose.Location = New System.Drawing.Point(4, 3)
+        Me.btnClose.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnClose.Name = "btnClose"
+        Me.btnClose.Size = New System.Drawing.Size(58, 22)
+        Me.btnClose.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
+        Me.btnClose.TabIndex = 21
+        Me.btnClose.Text = "关闭"
         '
         'FrmLocationQuery
         '
@@ -236,6 +262,7 @@ Partial Class FrmLocationQuery
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.pnlLayoutSetting)
         Me.Controls.Add(Me.pnlTraceContainer)
+        Me.Controls.Add(Me.pnlFunc)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmLocationQuery"
         Me.Size = New System.Drawing.Size(624, 360)
@@ -245,6 +272,7 @@ Partial Class FrmLocationQuery
         Me.gbCondition.PerformLayout()
         CType(Me.dgv1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlTraceContainer.ResumeLayout(False)
+        Me.pnlFunc.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -260,5 +288,7 @@ Partial Class FrmLocationQuery
     Friend WithEvents lblSep2 As System.Windows.Forms.Label
     Friend WithEvents lblSep1 As System.Windows.Forms.Label
     Friend WithEvents dgv As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents pnlFunc As System.Windows.Forms.Panel
+    Friend WithEvents btnClose As DevComponents.DotNetBar.ButtonX
 
 End Class

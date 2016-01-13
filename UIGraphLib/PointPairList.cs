@@ -18,7 +18,6 @@
 //=============================================================================
 
 using System;
-using System.Drawing;
 using System.Collections.Generic;
 
 namespace UIGraphLib
@@ -129,7 +128,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -196,14 +195,14 @@ namespace UIGraphLib
 			{
 				PointPair	point = new PointPair( 0, 0, 0 );
 				if ( x == null )
-					point.X = (double) i + 1.0;
+					point.X = i + 1.0;
 				else if ( i < x.Length )
 					point.X = x[i];
 				else
 					point.X = PointPair.Missing;
 					
 				if ( y == null )
-					point.Y = (double) i + 1.0;
+					point.Y = i + 1.0;
 				else if ( i < y.Length )
 					point.Y = y[i];
 				else
@@ -244,21 +243,21 @@ namespace UIGraphLib
 				PointPair point = new PointPair();
 
 				if ( x == null )
-					point.X = (double) i + 1.0;
+					point.X = i + 1.0;
 				else if ( i < x.Length )
 					point.X = x[i];
 				else
 					point.X = PointPair.Missing;
 					
 				if ( y == null )
-					point.Y = (double) i + 1.0;
+					point.Y = i + 1.0;
 				else if ( i < y.Length )
 					point.Y = y[i];
 				else
 					point.Y = PointPair.Missing;
 					
 				if ( z == null )
-					point.Z = (double) i + 1.0;
+					point.Z = i + 1.0;
 				else if ( i < z.Length )
 					point.Z = z[i];
 				else
@@ -437,10 +436,10 @@ namespace UIGraphLib
 		public override bool Equals( object obj )
 		{
 			PointPairList rhs = obj as PointPairList;
-			if( this.Count != rhs.Count )
+			if( Count != rhs.Count )
 				return false;
 
-			for( int i=0; i<this.Count; i++ )
+			for( int i=0; i<Count; i++ )
 			{
 				if( !this[i].Equals(rhs[i]) )
 					return false;
@@ -487,7 +486,7 @@ namespace UIGraphLib
 			if ( _sorted )
 				return true;
 				
-			this.Sort( new PointPair.PointPairComparer( type ) );
+			Sort( new PointPair.PointPairComparer( type ) );
 			
 			return false;
 		}
@@ -511,7 +510,7 @@ namespace UIGraphLib
 		{
 			for ( int i=0; i<x.Length; i++ )
 			{
-				if ( i < this.Count )
+				if ( i < Count )
 					this[i].X = x[i];
 			}
 				
@@ -537,7 +536,7 @@ namespace UIGraphLib
 		{
 			for ( int i=0; i<y.Length; i++ )
 			{
-				if ( i < this.Count )
+				if ( i < Count )
 					this[i].Y = y[i];
 			}
 				
@@ -563,7 +562,7 @@ namespace UIGraphLib
 		{
 			for ( int i=0; i<z.Length; i++ )
 			{
-				if ( i < this.Count )
+				if ( i < Count )
 					this[i].Z = z[i];
 			}
 				
@@ -580,7 +579,7 @@ namespace UIGraphLib
 		/// be summed into the this <see c_ref="PointPairList"/>.</param>
 		public void SumY( PointPairList sumList )
 		{
-			for ( int i=0; i<this.Count; i++ )
+			for ( int i=0; i<Count; i++ )
 			{
 				if ( i < sumList.Count )
 					this[i].Y += sumList[i].Y;
@@ -599,7 +598,7 @@ namespace UIGraphLib
 		/// be summed into the this <see c_ref="PointPairList"/>.</param>
 		public void SumX( PointPairList sumList )
 		{
-			for ( int i=0; i<this.Count; i++ )
+			for ( int i=0; i<Count; i++ )
 			{
 				if ( i < sumList.Count )
 					this[i].X += sumList[i].X;
@@ -621,7 +620,7 @@ namespace UIGraphLib
 		public double InterpolateX( double xTarget )
 		{
 			int lo, mid, hi;
-			if ( this.Count < 2 )
+			if ( Count < 2 )
 				throw new Exception( "Error: Not enough points in curve to interpolate" );
 
 			if ( xTarget <= this[0].X )
@@ -629,17 +628,17 @@ namespace UIGraphLib
 				lo = 0;
 				hi = 1;
 			}
-			else if ( xTarget >= this[this.Count-1].X )
+			else if ( xTarget >= this[Count-1].X )
 			{
-				lo = this.Count - 2;
-				hi = this.Count - 1;
+				lo = Count - 2;
+				hi = Count - 1;
 			}
 			else
 			{
 				// if x is within the bounds of the x table, then do a binary search
 				// in the x table to find table entries that bound the x value
 				lo = 0;
-				hi = this.Count - 1;
+				hi = Count - 1;
 			    
 				// limit to 1000 loops to avoid an infinite loop problem
 				int j;
@@ -687,35 +686,32 @@ namespace UIGraphLib
 			tension /= 3.0;
 
 			int lo, mid, hi;
-			if ( this.Count < 2 )
+			if ( Count < 2 )
 				throw new Exception( "Error: Not enough points in curve to interpolate" );
 
 			// Extrapolation not allowed
-			if ( xTarget <= this[0].X || xTarget >= this[this.Count-1].X )
+			if ( xTarget <= this[0].X || xTarget >= this[Count-1].X )
 				return PointPair.Missing;
-			else
-			{
-				// if x is within the bounds of the x table, then do a binary search
-				// in the x table to find table entries that bound the x value
-				lo = 0;
-				hi = this.Count - 1;
+		    // if x is within the bounds of the x table, then do a binary search
+		    // in the x table to find table entries that bound the x value
+		    lo = 0;
+		    hi = Count - 1;
 			    
-				// limit to 1000 loops to avoid an infinite loop problem
-				int j;
-				for ( j=0; j<1000 && hi > lo + 1; j++ )
-				{
-					mid = ( hi + lo ) / 2;
-					if ( xTarget > this[mid].X )
-						lo = mid;
-					else
-						hi = mid;
-				}
+		    // limit to 1000 loops to avoid an infinite loop problem
+		    int j;
+		    for ( j=0; j<1000 && hi > lo + 1; j++ )
+		    {
+		        mid = ( hi + lo ) / 2;
+		        if ( xTarget > this[mid].X )
+		            lo = mid;
+		        else
+		            hi = mid;
+		    }
 
-				if ( j >= 1000 )
-					throw new Exception( "Error: Infinite loop in interpolation" );
-			}
+		    if ( j >= 1000 )
+		        throw new Exception( "Error: Infinite loop in interpolation" );
 
-			// At this point, we know the two bounding points around our point of interest
+		    // At this point, we know the two bounding points around our point of interest
 			// We need the four points that surround our point
 
 			double X0, X1, X2, X3;
@@ -740,7 +736,7 @@ namespace UIGraphLib
 				Y0 = this[lo-1].Y;
 			}
 
-			if ( hi == this.Count - 1 )
+			if ( hi == Count - 1 )
 			{
 				X3 = X2 + ( X2 - X1 )/3;
 				Y3 = Y2 + ( Y2 - Y1 )/3;
@@ -799,7 +795,7 @@ namespace UIGraphLib
 		public double InterpolateY( double yTarget )
 		{
 			int lo, mid, hi;
-			if ( this.Count < 2 )
+			if ( Count < 2 )
 				throw new Exception( "Error: Not enough points in curve to interpolate" );
 
 			if ( yTarget <= this[0].Y )
@@ -807,17 +803,17 @@ namespace UIGraphLib
 				lo = 0;
 				hi = 1;
 			}
-			else if ( yTarget >= this[this.Count-1].Y )
+			else if ( yTarget >= this[Count-1].Y )
 			{
-				lo = this.Count - 2;
-				hi = this.Count - 1;
+				lo = Count - 2;
+				hi = Count - 1;
 			}
 			else
 			{
 				// if y is within the bounds of the y table, then do a binary search
 				// in the y table to find table entries that bound the y value
 				lo = 0;
-				hi = this.Count - 1;
+				hi = Count - 1;
 			    
 				// limit to 1000 loops to avoid an infinite loop problem
 				int j;

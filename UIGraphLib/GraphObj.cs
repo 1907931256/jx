@@ -19,8 +19,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -304,7 +302,7 @@ namespace UIGraphLib
 		{
 			_isVisible = true;
 			_isClippedToChartRect = Default.IsClippedToChartRect;
-			this.Tag = null;
+			Tag = null;
 			_zOrder = ZOrder.A_InFront;
 			_location = new Location( x, y, coordType, alignH, alignV );
 			_link = new Link();
@@ -339,7 +337,7 @@ namespace UIGraphLib
 		{
 			_isVisible = true;
 			_isClippedToChartRect = Default.IsClippedToChartRect;
-			this.Tag = null;
+			Tag = null;
 			_zOrder = ZOrder.A_InFront;
 			_location = new Location( x, y, x2, y2, coordType, alignH, alignV );
 			_link = new Link();
@@ -358,9 +356,9 @@ namespace UIGraphLib
 
 			// copy reference types by cloning
 			if ( rhs.Tag is ICloneable )
-				this.Tag = ((ICloneable) rhs.Tag).Clone();
+				Tag = ((ICloneable) rhs.Tag).Clone();
 			else
-				this.Tag = rhs.Tag;
+				Tag = rhs.Tag;
 
 			_location = rhs.Location.Clone();
 			_link = rhs._link.Clone();
@@ -425,7 +423,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );

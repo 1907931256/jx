@@ -1,3 +1,6 @@
+using System.ComponentModel;
+using System.Windows.Forms;
+
 namespace UIGraphLib
 {
 	partial class GraphControl
@@ -5,7 +8,7 @@ namespace UIGraphLib
 		/// <summary> 
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components = null;
 
 		#region Component Designer generated code
 
@@ -70,9 +73,9 @@ namespace UIGraphLib
 
 		#endregion
 
-		private System.Windows.Forms.VScrollBar vScrollBar1;
-		private System.Windows.Forms.HScrollBar hScrollBar1;
-		private System.Windows.Forms.ToolTip pointToolTip;
-		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+		private VScrollBar vScrollBar1;
+		private HScrollBar hScrollBar1;
+		private ToolTip pointToolTip;
+		private ContextMenuStrip contextMenuStrip1;
 	}
 }

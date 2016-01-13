@@ -20,7 +20,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -62,7 +61,7 @@ namespace UIGraphLib
 		/// A default constructor that places the <see c_ref="EllipseObj"/> at location (0,0),
 		/// with width/height of (1,1).  Other properties are defaulted.
 		/// </summary>
-		public EllipseObj() : base()
+		public EllipseObj()
 		{
 		}
 		
@@ -128,7 +127,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -166,7 +165,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -200,7 +199,7 @@ namespace UIGraphLib
 		{
 			// Convert the arrow coordinates from the user coordinate system
 			// to the screen coordinate system
-			RectangleF pixRect = this.Location.TransformRect( pane );
+			RectangleF pixRect = Location.TransformRect( pane );
 
 			if (	Math.Abs( pixRect.Left ) < 100000 &&
 					Math.Abs( pixRect.Top ) < 100000 &&

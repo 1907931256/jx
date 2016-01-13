@@ -411,7 +411,7 @@ namespace UIGraphLib
 			_position = Default.Position;
 			_isHStack = Default.IsHStack;
 			_isVisible = Default.IsVisible;
-			this.Location = new Location( 0, 0, CoordType.PaneFraction );
+			Location = new Location( 0, 0, CoordType.PaneFraction );
 
 			_fontSpec = new FontSpec( Default.FontFamily, Default.FontSize,
 				Default.FontColor, Default.FontBold,
@@ -461,7 +461,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -515,7 +515,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -605,11 +605,11 @@ namespace UIGraphLib
 
 							x = _rect.Left + halfGap / 2.0F +
 								( iEntry % _hStack ) * _legendItemWidth;
-							y = _rect.Top + (int)( iEntry / _hStack ) * _legendItemHeight;
+							y = _rect.Top + iEntry / _hStack * _legendItemHeight;
 
 							// Draw the legend label for the current curve
 							FontSpec tmpFont = ( curve._label._fontSpec != null ) ?
-										curve._label._fontSpec : this.FontSpec;
+										curve._label._fontSpec : FontSpec;
 
 							// This is required because, for long labels, the centering can affect the
 							// position in GDI+.
@@ -645,14 +645,14 @@ namespace UIGraphLib
 
 				// Draw a border around the legend if required
 				if ( iEntry > 0 )
-					this.Border.Draw( g, pane, scaleFactor, _rect );
+					Border.Draw( g, pane, scaleFactor, _rect );
 			}
 		}
 
 		private float GetMaxHeight( PaneList paneList, Graphics g, float scaleFactor )
 		{
 			// Set up some scaled dimensions for calculating sizes and locations
-			float defaultCharHeight = this.FontSpec.GetHeight( scaleFactor );
+			float defaultCharHeight = FontSpec.GetHeight( scaleFactor );
 			float maxCharHeight = defaultCharHeight;
 
 			// Find the largest charHeight, just in case the curves have individual fonts defined
@@ -734,8 +734,7 @@ namespace UIGraphLib
 
 				return true;
 			}
-			else
-				return false;
+		    return false;
 		}
 
 		private PaneList GetPaneList( PaneBase pane )
@@ -821,7 +820,7 @@ namespace UIGraphLib
 					{
 						// Calculate the width of the label save the max width
 						FontSpec tmpFont = ( curve._label._fontSpec != null ) ?
-										curve._label._fontSpec : this.FontSpec;
+										curve._label._fontSpec : FontSpec;
 
 						tmpWidth = tmpFont.GetWidth( g, curve._label._text, scaleFactor );
 
@@ -926,10 +925,10 @@ namespace UIGraphLib
 			float totLegWidth = _hStack * _legendItemWidth;
 
 			// The total legend height
-			_legendItemHeight = _legendItemHeight * (float)scaleFactor + halfGap;
+			_legendItemHeight = _legendItemHeight * scaleFactor + halfGap;
 			if ( _tmpSize > _legendItemHeight )
 				_legendItemHeight = _tmpSize;
-			float totLegHeight = (float)Math.Ceiling( (double)nCurve / (double)_hStack )
+			float totLegHeight = (float)Math.Ceiling( nCurve / (double)_hStack )
 				* _legendItemHeight;
 
 			RectangleF newRect = new RectangleF();
@@ -1013,7 +1012,7 @@ namespace UIGraphLib
 						newRect.Y = tChartRect.Bottom - totLegHeight;
 						break;
 					case LegendPos.Float:
-						newRect.Location = this.Location.TransformTopLeft( pane, totLegWidth, totLegHeight );
+						newRect.Location = Location.TransformTopLeft( pane, totLegWidth, totLegHeight );
 						break;
 				}
 			}

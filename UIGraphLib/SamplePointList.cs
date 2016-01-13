@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Text;
 
 namespace UIGraphLib
 {
@@ -34,7 +33,7 @@ namespace UIGraphLib
 	/// <summary>
 	/// A simple storage class to maintain an individual sampling of data
 	/// </summary>
-	public class Sample : System.Object
+	public class Sample : Object
 	{
 		private DateTime	_time;
 		private double		_position;
@@ -131,9 +130,8 @@ namespace UIGraphLib
 					double timeDiff = sample.Time.ToOADate() - ( (Sample)list[0] ).Time.ToOADate();
 					if ( timeDiff <= 0 )
 						return PointPair.Missing;
-					else
-						return ( sample.Position - ( (Sample)list[0] ).Position ) / timeDiff;
-				case SampleType.VelocityInst:
+			        return ( sample.Position - ( (Sample)list[0] ).Position ) / timeDiff;
+			    case SampleType.VelocityInst:
 					return sample.Velocity;
 				default:
 					return PointPair.Missing;
@@ -153,7 +151,7 @@ namespace UIGraphLib
 		// generic Clone: just call the typesafe version
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -188,7 +186,7 @@ namespace UIGraphLib
 			YType = rhs.YType;
 
 			// Don't duplicate the data values, just copy the reference to the ArrayList
-			this.list = rhs.list;
+			list = rhs.list;
 
 			//foreach ( Sample sample in rhs )
 			//	list.Add( sample );

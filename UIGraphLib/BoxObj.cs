@@ -19,8 +19,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -122,8 +120,8 @@ namespace UIGraphLib
 		public BoxObj( double x, double y, double width, double height, Color borderColor, Color fillColor )
 			: base( x, y, width, height )
 		{
-			this.Border = new Border( borderColor, Default.PenWidth );
-			this.Fill = new Fill( fillColor );
+			Border = new Border( borderColor, Default.PenWidth );
+			Fill = new Fill( fillColor );
 		}
 
 		/// <summary>
@@ -142,8 +140,8 @@ namespace UIGraphLib
 			:
 			base( x, y, width, height )
 		{
-			this.Border = new Border( Default.BorderColor, Default.PenWidth );
-			this.Fill = new Fill( Default.FillColor );
+			Border = new Border( Default.BorderColor, Default.PenWidth );
+			Fill = new Fill( Default.FillColor );
 		}
 
 		/// <summary>
@@ -177,8 +175,8 @@ namespace UIGraphLib
 							Color fillColor1, Color fillColor2 ) :
 				base( x, y, width, height )
 		{
-			this.Border = new Border( borderColor, Default.PenWidth );
-			this.Fill = new Fill( fillColor1, fillColor2 );
+			Border = new Border( borderColor, Default.PenWidth );
+			Fill = new Fill( fillColor1, fillColor2 );
 		}
 
 		/// <summary>
@@ -187,8 +185,8 @@ namespace UIGraphLib
 		/// <param name="rhs">The <see c_ref="BoxObj"/> object from which to copy</param>
 		public BoxObj( BoxObj rhs ) : base( rhs )
 		{
-			this.Border = rhs.Border.Clone();
-			this.Fill = rhs.Fill.Clone();
+			Border = rhs.Border.Clone();
+			Fill = rhs.Fill.Clone();
 		}
 
 		/// <summary>
@@ -198,7 +196,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -239,7 +237,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -275,7 +273,7 @@ namespace UIGraphLib
 		{
 			// Convert the arrow coordinates from the user coordinate system
 			// to the screen coordinate system
-			RectangleF pixRect = this.Location.TransformRect( pane );
+			RectangleF pixRect = Location.TransformRect( pane );
 
 			// Clip the rect to just outside the PaneRect so we don't end up with wild coordinates.
 			RectangleF tmpRect = pane.Rect;

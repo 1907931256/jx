@@ -20,12 +20,9 @@
 #region Using directives
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Drawing.Text;
-using System.Collections;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -112,7 +109,7 @@ namespace UIGraphLib
 		/// private field that determines if anti-aliased drawing will be forced on.  Use the
 		/// public property <see c_ref="IsAntiAlias"/> to access this value.
 		/// </summary>
-		private bool _isAntiAlias = false;
+		private bool _isAntiAlias;
 
 	#endregion
 
@@ -317,7 +314,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -373,7 +370,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -416,7 +413,7 @@ namespace UIGraphLib
 		/// <value>A <see c_ref="GraphPane"/> object reference.</value>
 		public GraphPane this[ int index ]  
 		{
-			get { return( (GraphPane) _paneList[index] ); }
+			get { return _paneList[index]; }
 			set { _paneList[index] = value; }
 		}
 
@@ -686,9 +683,9 @@ namespace UIGraphLib
 			// See if the point is in a GraphObj
 			// If so, just save the object and index so we can see if other overlying objects were
 			// intersected as well.
-			if ( this.GraphObjList.FindPoint( mousePt, this, g, scaleFactor, out index ) )
+			if ( GraphObjList.FindPoint( mousePt, this, g, scaleFactor, out index ) )
 			{
-				saveGraphItem = this.GraphObjList[index];
+				saveGraphItem = GraphObjList[index];
 				saveIndex = index;
 
 				// If it's an "In-Front" item, then just return it
@@ -946,7 +943,7 @@ namespace UIGraphLib
 
 				int rows,
 						cols,
-						root = (int)( Math.Sqrt( (double)count ) + 0.9999999 );
+						root = (int)( Math.Sqrt( count ) + 0.9999999 );
 
 				//float[] widthList = new float[5];
 
@@ -1047,7 +1044,7 @@ namespace UIGraphLib
 			_legend.CalcRect( g, this, scaleFactor, ref innerRect );
 
 			// scaled InnerGap is the area between the GraphPane.Rect's
-			float scaledInnerGap = (float)( _innerPaneGap * scaleFactor );
+			float scaledInnerGap = _innerPaneGap * scaleFactor;
 
 			int iPane = 0;
 
@@ -1061,14 +1058,14 @@ namespace UIGraphLib
 				{
 					float propFactor = _prop == null ? 1.0f / rows : _prop[rowNum];
 
-					float height = ( innerRect.Height - (float)( rows - 1 ) * scaledInnerGap ) *
+					float height = ( innerRect.Height - (rows - 1) * scaledInnerGap ) *
 									propFactor;
 
 					int columns = countList[rowNum];
 					if ( columns <= 0 )
 						columns = 1;
-					float width = ( innerRect.Width - (float)( columns - 1 ) * scaledInnerGap ) /
-									(float)columns;
+					float width = ( innerRect.Width - (columns - 1) * scaledInnerGap ) /
+									columns;
 
 					for ( int colNum = 0; colNum < columns; colNum++ )
 					{
@@ -1096,13 +1093,13 @@ namespace UIGraphLib
 				{
 					float propFactor = _prop == null ? 1.0f / columns : _prop[colNum];
 
-					float width = ( innerRect.Width - (float)( columns - 1 ) * scaledInnerGap ) *
+					float width = ( innerRect.Width - (columns - 1) * scaledInnerGap ) *
 									propFactor;
 
 					int rows = countList[colNum];
 					if ( rows <= 0 )
 						rows = 1;
-					float height = ( innerRect.Height - (float)( rows - 1 ) * scaledInnerGap ) / (float)rows;
+					float height = ( innerRect.Height - (rows - 1) * scaledInnerGap ) / rows;
 
 					for ( int rowNum = 0; rowNum < rows; rowNum++ )
 					{

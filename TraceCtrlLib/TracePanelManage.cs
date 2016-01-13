@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -136,8 +135,7 @@ namespace TraceCtrlLib.PanelExtend
             TraceNodes(start, dest, ref traceNodes, new List<TracePanel>());
             if (traceNodes.Count <= 0 || !traceNodes.Contains(dest))
                 return false;
-            else
-                AddTrace(entity,traceNodes);
+            AddTrace(entity,traceNodes);
             return true;
         }
 
@@ -162,7 +160,6 @@ namespace TraceCtrlLib.PanelExtend
                     traceNodes.Clear();
                     traceNodes = new List<TracePanel>(curTraceNodes);
                 }
-                return;
             }
             else//遍历子节点
             {

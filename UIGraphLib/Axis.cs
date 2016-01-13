@@ -357,7 +357,7 @@ namespace UIGraphLib
 
 			_isAxisSegmentVisible = rhs._isAxisSegmentVisible;
 
-			_title = (AxisLabel) rhs.Title.Clone();
+			_title = rhs.Title.Clone();
 
 			_axisGap = rhs._axisGap;
 
@@ -440,7 +440,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -818,18 +818,18 @@ namespace UIGraphLib
 										bool isGrowOnly )
 		{
 			// save the original value of minSpace
-			float oldSpace = this.MinSpace;
+			float oldSpace = MinSpace;
 			// set minspace to zero, since we don't want it to affect the CalcSpace() result
-			this.MinSpace = 0;
+			MinSpace = 0;
 			// Calculate the space required for the current graph assuming scalefactor = 1.0
 			// and apply the bufferFraction
 			float fixedSpace;
-			float space = this.CalcSpace( g, pane, 1.0F, out fixedSpace ) * bufferFraction;
+			float space = CalcSpace( g, pane, 1.0F, out fixedSpace ) * bufferFraction;
 			// isGrowOnly indicates the minSpace can grow but not shrink
 			if ( isGrowOnly )
 				space = Math.Max( oldSpace, space );
 			// Set the minSpace
-			this.MinSpace = space;
+			MinSpace = space;
 		}
 
 		/// <summary>
@@ -903,17 +903,15 @@ namespace UIGraphLib
 
 			if ( _crossAuto )
 			{
-				if ( crossAxis._scale.IsReverse == ( this is Y2Axis || this is X2Axis ) )
+			    if ( crossAxis._scale.IsReverse == ( this is Y2Axis || this is X2Axis ) )
 					return max;
-				else
-					return min;
+			    return min;
 			}
-			else if ( _cross < min )
-				return min;
-			else if ( _cross > max )
-				return max;
-			else
-				return _scale.Linearize( _cross );
+            if ( _cross < min )
+                return min;
+            if ( _cross > max )
+                return max;
+            return _scale.Linearize( _cross );
 		}
 
 		/// <summary>
@@ -925,23 +923,20 @@ namespace UIGraphLib
 		{
 			if ( _crossAuto )
 				return false;
-			else
-			{
-				Axis crossAxis = GetCrossAxis( pane );
-				if ( ( ( this is XAxis || this is YAxis ) && !crossAxis._scale.IsReverse ) ||
-					( ( this is X2Axis || this is Y2Axis ) && crossAxis._scale.IsReverse ) )
-				{
-					if ( _cross <= crossAxis._scale._min )
-						return false;
-				}
-				else
-				{
-					if ( _cross >= crossAxis._scale._max )
-						return false;
-				}
-			}
+		    Axis crossAxis = GetCrossAxis( pane );
+		    if ( ( ( this is XAxis || this is YAxis ) && !crossAxis._scale.IsReverse ) ||
+		         ( ( this is X2Axis || this is Y2Axis ) && crossAxis._scale.IsReverse ) )
+		    {
+		        if ( _cross <= crossAxis._scale._min )
+		            return false;
+		    }
+		    else
+		    {
+		        if ( _cross >= crossAxis._scale._max )
+		            return false;
+		    }
 
-			return true;
+		    return true;
 		}
 
 		/// <summary>
@@ -953,18 +948,17 @@ namespace UIGraphLib
 		internal float CalcCrossFraction( GraphPane pane )
 		{
 			// if this axis is not shifted due to the Cross value
-			if ( !this.IsCrossShifted( pane ) )
+			if ( !IsCrossShifted( pane ) )
 			{
-				// if it's the primary axis and the scale labels are on the inside, then we
+			    // if it's the primary axis and the scale labels are on the inside, then we
 				// don't need to save any room for the axis labels (they will be inside the chart rect)
 				if ( IsPrimary( pane ) && _scale._isLabelsInside )
 					return 1.0f;
 				// otherwise, it's a secondary (outboard) axis and we always save room for the axis and labels.
-				else
-					return 0.0f;
+			    return 0.0f;
 			}
 
-			double effCross = EffectiveCrossValue( pane );
+		    double effCross = EffectiveCrossValue( pane );
 			Axis crossAxis = GetCrossAxis( pane );
 
 			// Use Linearize here instead of _minLinTemp because this method is called
@@ -1090,8 +1084,8 @@ namespace UIGraphLib
 			// Account for the Axis
 			if ( _isVisible )
 			{
-				bool hasTic = this.MajorTic.IsOutside || this.MajorTic._isCrossOutside ||
-									this.MinorTic.IsOutside || this.MinorTic._isCrossOutside;
+				bool hasTic = MajorTic.IsOutside || MajorTic._isCrossOutside ||
+									MinorTic.IsOutside || MinorTic._isCrossOutside;
 
 				// account for the tic space.  Leave the tic space for any type of outside tic (Outside Tic Space)
 				if ( hasTic )
@@ -1104,8 +1098,8 @@ namespace UIGraphLib
 					_tmpSpace += axisGap;
 
 					// if it has inside tics, leave another tic space (Inside Tic Space)
-					if ( this.MajorTic._isInside || this.MajorTic._isCrossInside ||
-							this.MinorTic._isInside || this.MinorTic._isCrossInside )
+					if ( MajorTic._isInside || MajorTic._isCrossInside ||
+							MinorTic._isInside || MinorTic._isCrossInside )
 						_tmpSpace += ticSize;
 				}
 
@@ -1126,7 +1120,7 @@ namespace UIGraphLib
 				if ( !string.IsNullOrEmpty( str ) && _title._isVisible )
 				{
 					//tmpSpace += this.TitleFontSpec.BoundingBox( g, str, scaleFactor ).Height;
-					fixedSpace = this.Title.FontSpec.BoundingBox( g, str, scaleFactor ).Height +
+					fixedSpace = Title.FontSpec.BoundingBox( g, str, scaleFactor ).Height +
 							scaledTitleGap;
 					_tmpSpace += fixedSpace;
 
@@ -1139,7 +1133,7 @@ namespace UIGraphLib
 
 			// for the Y axes, make sure that enough space is left to fit the first
 			// and last X axis scale label
-			if ( this.IsPrimary( pane ) && ( (
+			if ( IsPrimary( pane ) && ( (
 					( this is YAxis && (
 						( !pane.XAxis._scale._isSkipFirstLabel && !pane.XAxis._scale._isReverse ) ||
 						( !pane.XAxis._scale._isSkipLastLabel && pane.XAxis._scale._isReverse ) ) ) ||
@@ -1158,9 +1152,9 @@ namespace UIGraphLib
 			}
 
 			// Verify that the minSpace property was satisfied
-			_tmpSpace = Math.Max( _tmpSpace, _minSpace * (float)scaleFactor );
+			_tmpSpace = Math.Max( _tmpSpace, _minSpace * scaleFactor );
 
-			fixedSpace = Math.Max( fixedSpace, _minSpace * (float)scaleFactor );
+			fixedSpace = Math.Max( fixedSpace, _minSpace * scaleFactor );
 
 			return _tmpSpace;
 		}
@@ -1235,8 +1229,8 @@ namespace UIGraphLib
         public void DrawMinorTics( Graphics g, GraphPane pane, double baseVal, float shift,
 								float scaleFactor, float topPix )
 		{
-			if ( ( this.MinorTic.IsOutside || this.MinorTic.IsOpposite || this.MinorTic.IsInside ||
-					this.MinorTic._isCrossOutside || this.MinorTic._isCrossInside || _minorGrid._isVisible )
+			if ( ( MinorTic.IsOutside || MinorTic.IsOpposite || MinorTic.IsInside ||
+					MinorTic._isCrossOutside || MinorTic._isCrossInside || _minorGrid._isVisible )
 					&& _isVisible )
 			{
 				double	tMajor = _scale._majorStep * _scale.MajorUnitMultiplier,
@@ -1244,7 +1238,7 @@ namespace UIGraphLib
 
 				if ( _scale.IsLog || tMinor < tMajor )
 				{
-					float minorScaledTic = this.MinorTic.ScaledTic( scaleFactor );
+					float minorScaledTic = MinorTic.ScaledTic( scaleFactor );
 
 					// Minor tics start at the minimum value and step all the way thru
 					// the full scale.  This means that if the minor step size is not
@@ -1326,9 +1320,9 @@ namespace UIGraphLib
 			if ( _isVisible && _title._isVisible && !string.IsNullOrEmpty( str ) )
 			{
 				bool hasTic = ( _scale._isLabelsInside ?
-						( this.MajorTic.IsInside || this.MajorTic._isCrossInside ||
-								this.MinorTic.IsInside || this.MinorTic._isCrossInside ) :
-						( this.MajorTic.IsOutside || this.MajorTic._isCrossOutside || this.MinorTic.IsOutside || this.MinorTic._isCrossOutside ) );
+						( MajorTic.IsInside || MajorTic._isCrossInside ||
+								MinorTic.IsInside || MinorTic._isCrossInside ) :
+						( MajorTic.IsOutside || MajorTic._isCrossOutside || MinorTic.IsOutside || MinorTic._isCrossOutside ) );
 
 				// Calculate the title position in screen coordinates
 				float x = ( _scale._maxPix - _scale._minPix ) / 2;
@@ -1345,7 +1339,7 @@ namespace UIGraphLib
 				// rely on ChartRect).
 
 				float gap = scaledTic * ( hasTic ? 1.0f : 0.0f ) +
-							this.Title.FontSpec.BoundingBox( g, str, scaleFactor ).Height / 2.0F;
+							Title.FontSpec.BoundingBox( g, str, scaleFactor ).Height / 2.0F;
 				float y = ( _scale._isVisible ? _scale.GetScaleMaxSpace( g, pane, scaleFactor, true ).Height
 							+ scaledLabelGap : 0 );
 
@@ -1363,7 +1357,7 @@ namespace UIGraphLib
 				y += scaledTitleGap;
 
 				// Draw the title
-				this.Title.FontSpec.Draw( g, pane, str, x, y,
+				Title.FontSpec.Draw( g, pane, str, x, y,
 							AlignH.Center, alignV, scaleFactor );
 			}
 		}
@@ -1388,9 +1382,7 @@ namespace UIGraphLib
 			// then add the mag indicator to the title.
 			if ( _scale._mag != 0 && !_title._isOmitMag && !_scale.IsLog )
 				return _title._text + String.Format( " (10^{0})", _scale._mag );
-			else
-				return _title._text;
-
+		    return _title._text;
 		}
 
 		/// <summary>
@@ -1420,21 +1412,20 @@ namespace UIGraphLib
 		{
 			// if there is a valid ScaleFormatEvent, then try to use it to create the label
 			// the label will be non-null if it's to be used
-			if ( this.ScaleFormatEvent != null )
+			if ( ScaleFormatEvent != null )
 			{
 				string label;
 
-				label = this.ScaleFormatEvent( pane, this, dVal, index );
+				label = ScaleFormatEvent( pane, this, dVal, index );
 				if ( label != null )
 					return label;
 			}
 
 			// second try.  If there's no custom ScaleFormatEvent, then just call
 			// _scale.MakeLabel according to the type of scale
-			if ( this.Scale != null )
+			if ( Scale != null )
 				return _scale.MakeLabel( pane, index, dVal );
-			else
-				return "?";
+		    return "?";
 		}
 
 	#endregion

@@ -19,8 +19,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
 
 namespace UIGraphLib
 {
@@ -161,10 +159,9 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( !_isFiltered )
+			    if ( !_isFiltered )
 					return base.Count;
-				else
-					return _filteredCount;
+			    return _filteredCount;
 			}
 		}
 
@@ -207,7 +204,7 @@ namespace UIGraphLib
 		// generic Clone: just call the typesafe version
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>

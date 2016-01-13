@@ -18,12 +18,9 @@
 //=============================================================================
 
 using System;
-using System.Collections;
-using System.Text;
+using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace UIGraphLib
 {
@@ -101,7 +98,7 @@ namespace UIGraphLib
 		/// <summary> Private <see c_ref="System.Collections.ArrayList"/> field for the <see c_ref="Axis"/> array of text labels.
 		/// This property is only used if <see c_ref="Type"/> is set to
 		/// <see c_ref="AxisType.Text"/> </summary>
-		internal string[] _textLabels = null;
+		internal string[] _textLabels;
 
 		/// <summary> Private field for the format of the <see c_ref="Axis"/> tic labels.
 		/// Use the public property <see c_ref="Format"/> for access to this value. </summary>
@@ -739,7 +736,7 @@ namespace UIGraphLib
 			_align = rhs._align;
 			_alignH = rhs._alignH;
 
-			_fontSpec = (FontSpec) rhs._fontSpec.Clone();
+			_fontSpec = rhs._fontSpec.Clone();
 
 			_labelGap = rhs._labelGap;
 
@@ -898,7 +895,7 @@ namespace UIGraphLib
 		/// </remarks>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -987,7 +984,7 @@ namespace UIGraphLib
 		{
 			get
 			{
-				AxisType type = this.Type;
+				AxisType type = Type;
 
 				return	type == AxisType.Ordinal ||
 							type == AxisType.Text ||
@@ -1779,12 +1776,12 @@ namespace UIGraphLib
 		virtual internal string MakeLabel( GraphPane pane, int index, double dVal )
 		{
 			if ( _format == null )
-				_format = Scale.Default.Format;
+				_format = Default.Format;
 
 			// linear or ordinal is the default behavior
 			// this method is overridden for other Scale types
 
-			double scaleMult = Math.Pow( (double)10.0, _mag );
+			double scaleMult = Math.Pow( 10.0, _mag );
 
 			return ( dVal / scaleMult ).ToString( _format );
 		}
@@ -1817,10 +1814,10 @@ namespace UIGraphLib
 		internal SizeF GetScaleMaxSpace( Graphics g, GraphPane pane, float scaleFactor,
 							bool applyAngle )
 		{
-			if ( _isVisible )
+		    if ( _isVisible )
 			{
 				double dVal,
-					scaleMult = Math.Pow( (double)10.0, _mag );
+					scaleMult = Math.Pow( 10.0, _mag );
 				int i;
 
 				float saveAngle = _fontSpec.Angle;
@@ -1843,7 +1840,7 @@ namespace UIGraphLib
 					string tmpStr = _ownerAxis.MakeLabelEventWorks( pane, i, dVal );
 
 					SizeF sizeF;
-					if ( this.IsLog && _isUseTenPower )
+					if ( IsLog && _isUseTenPower )
 						sizeF = _fontSpec.BoundingBoxTenPower( g, tmpStr,
 							scaleFactor );
 					else
@@ -1860,11 +1857,10 @@ namespace UIGraphLib
 
 				return maxSpace;
 			}
-			else
-				return new SizeF(0,0);
+		    return new SizeF(0,0);
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Determine the value for any major tic.
 		/// </summary>
 		/// <remarks>
@@ -1883,7 +1879,7 @@ namespace UIGraphLib
 		virtual internal double CalcMajorTicValue( double baseVal, double tic )
 		{
 			// Default behavior is a normal linear scale (also works for ordinal types)
-			return baseVal + (double) _majorStep * tic;
+			return baseVal + _majorStep * tic;
 		}
 
 		/// <summary>
@@ -1906,7 +1902,7 @@ namespace UIGraphLib
 		virtual internal double CalcMinorTicValue( double baseVal, int iTic )
 		{
 			// default behavior is a linear axis (works for ordinal types too
-			return baseVal + (double) _minorStep * (double) iTic;
+			return baseVal + _minorStep * iTic;
 		}
 
 		/// <summary>
@@ -1940,23 +1936,20 @@ namespace UIGraphLib
 		/// </returns>
 		virtual internal double CalcBaseTic()
 		{
-			if ( _baseTic != PointPair.Missing )
+		    if ( _baseTic != PointPair.Missing )
 				return _baseTic;
-			else if ( IsAnyOrdinal )
-			{
-				// basetic is always 1 for ordinal types
-				return 1;
-			}
-			else
-			{
-				// default behavior is linear or ordinal type
-				// go to the nearest even multiple of the step size
-				return Math.Ceiling( (double)_min / (double)_majorStep - 0.00000001 )
-														* (double)_majorStep;
-			}
+		    if ( IsAnyOrdinal )
+		    {
+		        // basetic is always 1 for ordinal types
+		        return 1;
+		    }
+		    // default behavior is linear or ordinal type
+		    // go to the nearest even multiple of the step size
+		    return Math.Ceiling( _min / _majorStep - 0.00000001 )
+		           * _majorStep;
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Draw the value labels, tic marks, and grid lines as
 		/// required for this <see c_ref="Axis"/>.
 		/// </summary>
@@ -1998,7 +1991,7 @@ namespace UIGraphLib
 			float pixVal, pixVal2;
 			float scaledTic = tic.ScaledTic( scaleFactor );
 
-			double scaleMult = Math.Pow( (double)10.0, _mag );
+			double scaleMult = Math.Pow( 10.0, _mag );
 
 			using ( Pen ticPen = tic.GetPen( pane, scaleFactor ) )
 //			using ( Pen gridPen = grid.GetPen( pane, scaleFactor ) )
@@ -2052,7 +2045,7 @@ namespace UIGraphLib
 							}
 						}
 
-						dVal2 = CalcMajorTicValue( baseVal, (double)i + 0.5 );
+						dVal2 = CalcMajorTicValue( baseVal, i + 0.5 );
 						if ( dVal2 > _maxLinTemp )
 							break;
 						pixVal2 = LocalTransform( dVal2 );
@@ -2156,7 +2149,7 @@ namespace UIGraphLib
 							}
 						}
 
-						dVal2 = CalcMajorTicValue( baseVal, (double)i + 0.5 );
+						dVal2 = CalcMajorTicValue( baseVal, i + 0.5 );
 						if ( dVal2 > _maxLinTemp )
 							break;
 						pixVal2 = LocalTransform( dVal2 );
@@ -2184,7 +2177,7 @@ namespace UIGraphLib
 			string tmpStr = _ownerAxis.MakeLabelEventWorks( pane, i, dVal );
 
 			float height;
-			if ( this.IsLog && _isUseTenPower )
+			if ( IsLog && _isUseTenPower )
 				height = _fontSpec.BoundingBoxTenPower( g, tmpStr, scaleFactor ).Height;
 			else
 				height = _fontSpec.BoundingBox( g, tmpStr, scaleFactor ).Height;
@@ -2209,7 +2202,7 @@ namespace UIGraphLib
 			else
 				av = _alignH == AlignH.Left ? AlignV.Top : ( _alignH == AlignH.Right ? AlignV.Bottom : AlignV.Center );
 
-			if ( this.IsLog && _isUseTenPower )
+			if ( IsLog && _isUseTenPower )
 				_fontSpec.DrawTenPower( g, pane, tmpStr,
 					pixVal, textCenter,
 					ah, av,
@@ -2408,7 +2401,7 @@ namespace UIGraphLib
 			double range = maxVal - minVal;
 
 			// "Grace" is applied to the numeric axis types only
-			bool numType = !this.IsAnyOrdinal;
+			bool numType = !IsAnyOrdinal;
 
 			// For autoranged values, assign the value.  If appropriate, adjust the value by the
 			// "Grace" value.
@@ -2475,7 +2468,7 @@ namespace UIGraphLib
 		/// </param>
 		public int CalcMaxLabels( Graphics g, GraphPane pane, float scaleFactor )
 		{
-			SizeF size = this.GetScaleMaxSpace( g, pane, scaleFactor, false );
+			SizeF size = GetScaleMaxSpace( g, pane, scaleFactor, false );
 
 			// The font angles are already set such that the Width is parallel to the appropriate (X or Y)
 			// axis.  Therefore, we always use size.Width.
@@ -2556,7 +2549,7 @@ namespace UIGraphLib
 				int numDec = 0 - (int) ( Math.Floor( Math.Log10( _majorStep ) ) - _mag );
 				if ( numDec < 0 )
 					numDec = 0;
-				_format = "f" + numDec.ToString();
+				_format = "f" + numDec;
 			}
 		}
 
@@ -2583,7 +2576,7 @@ namespace UIGraphLib
 
 			// Get the magnitude of the step size
 			double mag = Math.Floor( Math.Log10( tempStep ) );
-			double magPow = Math.Pow( (double) 10.0, mag );
+			double magPow = Math.Pow( 10.0, mag );
 
 			// Calculate most significant digit of the new step size
 			double magMsd = ( (int) ( tempStep / magPow + .5 ) );
@@ -2621,7 +2614,7 @@ namespace UIGraphLib
 
 			// Get the magnitude of the step size
 			double mag = Math.Floor( Math.Log10( tempStep ) );
-			double magPow = Math.Pow( (double) 10.0, mag );
+			double magPow = Math.Pow( 10.0, mag );
 
 			// Calculate most significant digit of the new step size
 			double magMsd = Math.Ceiling( tempStep / magPow );
@@ -2784,8 +2777,7 @@ namespace UIGraphLib
 
 			if ( _isReverse == ( _ownerAxis is XAxis || _ownerAxis is X2Axis ) )
 				return (float) ( _maxPix - ( _maxPix - _minPix ) * ratio );
-			else
-				return (float) ( _minPix + ( _maxPix - _minPix ) * ratio );
+		    return (float) ( _minPix + ( _maxPix - _minPix ) * ratio );
 		}
 
 		/// <summary>
@@ -2814,8 +2806,8 @@ namespace UIGraphLib
 		public float Transform( bool isOverrideOrdinal, int i, double x )
 		{
 			// ordinal types ignore the X value, and just use the ordinal position
-			if ( this.IsAnyOrdinal && i >= 0 && !isOverrideOrdinal )
-				x = (double) i + 1.0;
+			if ( IsAnyOrdinal && i >= 0 && !isOverrideOrdinal )
+				x = i + 1.0;
 			return Transform( x );
 
 		}
@@ -2844,11 +2836,11 @@ namespace UIGraphLib
 
 			// see if the sign of the equation needs to be reversed
 			if ( ( _isReverse ) == ( _ownerAxis is XAxis || _ownerAxis is X2Axis ) )
-				val = (double) ( pixVal - _maxPix )
+				val = (pixVal - _maxPix)
 						/ (double) ( _minPix - _maxPix )
 						* ( _maxLinTemp - _minLinTemp ) + _minLinTemp;
 			else
-				val = (double) ( pixVal - _minPix )
+				val = (pixVal - _minPix)
 						/ (double) ( _maxPix - _minPix )
 						* ( _maxLinTemp - _minLinTemp ) + _minLinTemp;
 
@@ -2904,26 +2896,24 @@ namespace UIGraphLib
 		/// argument was negative or zero</returns>
 		public static double SafeLog( double x )
 		{
-			if ( x > 1.0e-20 )
+		    if ( x > 1.0e-20 )
 				return Math.Log10( x );
-			else
-				return 0.0;
+		    return 0.0;
 		}
 
-		///<summary>
+	    ///<summary>
 		///Calculate an exponential in a safe manner to avoid math exceptions
 		///</summary> 
 		/// <param name="x">The value for which the exponential is to be calculated</param>
 		/// <param name="exponent">The exponent value to use for calculating the exponential.</param>
 		public static double SafeExp( double x, double exponent )
-		{
-			if ( x > 1.0e-20 )
+	    {
+	        if ( x > 1.0e-20 )
 				return Math.Pow( x, exponent );
-			else
-				return 0.0;
-		}
+	        return 0.0;
+	    }
 
-	#endregion
+	    #endregion
 
 
 	}

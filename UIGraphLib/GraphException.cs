@@ -18,6 +18,7 @@
 //=============================================================================
 
 using System;
+using System.Runtime.Serialization;
 
 namespace UIGraphLib
 {
@@ -27,7 +28,7 @@ namespace UIGraphLib
 	///
 	/// <author> Jerry Vos modified by John Champion</author>
 	/// <version> $Revision: 3.2 $ $Date: 2006-06-24 20:26:44 $ </version>
-	public class GraphException : System.ApplicationException
+	public class GraphException : ApplicationException
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see c_ref="ZedGraphException"/>
@@ -37,8 +38,8 @@ namespace UIGraphLib
 		/// instance that holds the serialized object data about the exception being thrown.</param>
 		/// <param name="context">The <see c_ref="System.Runtime.Serialization.StreamingContext"/>
 		/// instance that contains contextual information about the source or destination.</param>
-		protected GraphException( System.Runtime.Serialization.SerializationInfo info, 
-										System.Runtime.Serialization.StreamingContext context )
+		protected GraphException( SerializationInfo info, 
+										StreamingContext context )
 			: base ( info, context )
 		{
 		}
@@ -51,7 +52,7 @@ namespace UIGraphLib
 		/// <param name="innerException">The exception that is the cause of the current exception.
 		/// If the innerException parameter is not a null reference, the current exception is raised
 		/// in a catch block that handles the inner exception.</param>
-		public GraphException( System.String message, System.Exception innerException )
+		public GraphException( String message, Exception innerException )
 			: base ( message, innerException )
 		{
 
@@ -61,7 +62,7 @@ namespace UIGraphLib
 		/// Initializes a new instance of the <see c_ref="Exception"/> class with a specified error message.
 		/// </summary>
 		/// <param name="message">The error message that explains the reason for the exception.</param>
-		public GraphException ( System.String message ) 
+		public GraphException ( String message ) 
 			: base( message )
 		{
 		}
@@ -69,8 +70,7 @@ namespace UIGraphLib
 		/// <summary>
 		/// Initializes a new instance of the <see c_ref="Exception"/> class.
 		/// </summary>
-		public GraphException() 
-			: base()
+		public GraphException()
 		{
 		}
 	}

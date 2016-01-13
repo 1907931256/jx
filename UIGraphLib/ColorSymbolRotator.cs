@@ -17,8 +17,7 @@
 //Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //=============================================================================
 
-using System;
-using Color		 = System.Drawing.Color;
+using System.Drawing;
 
 namespace UIGraphLib
 {
@@ -35,8 +34,7 @@ namespace UIGraphLib
 		/// The <see c_ref="Color"/>s <see c_ref="ColorSymbolRotator"/> 
 		/// rotates through.
 		/// </summary>
-		public static readonly Color[] COLORS = new Color[]
-		{
+		public static readonly Color[] COLORS = {
 			Color.Red,
 			Color.Blue,
 			Color.Green,
@@ -53,8 +51,7 @@ namespace UIGraphLib
 		/// The <see c_ref="SymbolType"/>s <see c_ref="ColorSymbolRotator"/> 
 		/// rotates through.
 		/// </summary>
-		public static readonly SymbolType[] SYMBOLS = new SymbolType[]
-		{
+		public static readonly SymbolType[] SYMBOLS = {
 			SymbolType.Circle,
 			SymbolType.Diamond,
 			SymbolType.Plus,
@@ -75,13 +72,13 @@ namespace UIGraphLib
 		/// The index of the next color to be used. Note: may be 
 		/// > COLORS.Length, it is reset to 0 on the next call if it is.
 		/// </summary>
-		protected int colorIndex = 0;
+		protected int colorIndex;
 
 		/// <summary>
 		/// The index of the next symbol to be used. Note: may be 
 		/// > SYMBOLS.Length, it is reset to 0 on the next call if it is.
 		/// </summary>
-		protected int symbolIndex = 0;
+		protected int symbolIndex;
 	#endregion
 
 	#region Properties

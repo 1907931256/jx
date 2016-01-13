@@ -18,8 +18,6 @@
 //=============================================================================
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -169,7 +167,7 @@ namespace UIGraphLib
 				if ( _isPreventLabelOverlap )
 				{
 					// Calculate the maximum number of labels
-					double maxLabels = (double) this.CalcMaxLabels( g, pane, scaleFactor );
+					double maxLabels = CalcMaxLabels( g, pane, scaleFactor );
 
 					if ( maxLabels < ( _max - _min ) / _majorStep )
 						_majorStep = CalcBoundedStepSize( _max - _min, maxLabels );
@@ -222,7 +220,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );

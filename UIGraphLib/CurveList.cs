@@ -18,8 +18,8 @@
 //=============================================================================
 
 using System;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace UIGraphLib
 {
@@ -125,12 +125,11 @@ namespace UIGraphLib
 				bool hasPie = false;
  				foreach ( CurveItem curve in this )
  				{
- 					if ( !curve.IsPie )
+ 				    if ( !curve.IsPie )
  						return false;
-					else
-						hasPie = true;
+ 				    hasPie = true;
  				}
-				return hasPie;
+ 			    return hasPie;
  			}
 		}
 
@@ -167,11 +166,11 @@ namespace UIGraphLib
 		/// <param name="rhs">The XAxis object from which to copy</param>
 		public CurveList( CurveList rhs )
 		{
-			this.maxPts = rhs.maxPts;
+			maxPts = rhs.maxPts;
 
 			foreach ( CurveItem item in rhs )
 			{
-				this.Add( (CurveItem) ((ICloneable)item).Clone() );
+				Add( (CurveItem) ((ICloneable)item).Clone() );
 			}
 		}
 
@@ -182,7 +181,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -207,7 +206,7 @@ namespace UIGraphLib
 		{
 			get
 			{
-				for ( int i = this.Count - 1; i >= 0; i-- )
+				for ( int i = Count - 1; i >= 0; i-- )
 					yield return this[i];
 			}
 		}
@@ -218,7 +217,7 @@ namespace UIGraphLib
 		{
 			get
 			{
-				for ( int i = 0; i < this.Count; i++ )
+				for ( int i = 0; i < Count; i++ )
 					yield return this[i];
 			}
 		}
@@ -254,8 +253,7 @@ namespace UIGraphLib
 				int index = IndexOf( label );
 				if ( index >= 0 )
 					return( this[index]  );
-				else
-					return null;
+			    return null;
 			}
 		}
 /*
@@ -351,7 +349,7 @@ namespace UIGraphLib
 		/// </summary>
 		public void Sort( SortType type, int index )
 		{
-			this.Sort( new CurveItem.Comparer( type, index ) );
+			Sort( new CurveItem.Comparer( type, index ) );
 		}
 
 		/// <summary>
@@ -377,7 +375,7 @@ namespace UIGraphLib
 				return -1;
 
 			CurveItem curve = this[index];
-			this.RemoveAt( index );
+			RemoveAt( index );
 
 			index += relativePos;
 			if ( index < 0 )
@@ -661,7 +659,7 @@ namespace UIGraphLib
 			//Bar.ResetBarStack();
        
 			// Count the number of BarItems in the curvelist
-			int pos = this.NumBars;
+			int pos = NumBars;
 			
 			// sorted overlay bars are a special case, since they are sorted independently at each
 			// ordinal position.
@@ -671,19 +669,19 @@ namespace UIGraphLib
 				CurveList tempList = new CurveList();
 				foreach ( CurveItem curve in this )
 					if ( curve.IsBar )
-						tempList.Add( (CurveItem) curve );
+						tempList.Add( curve );
 				
 				// Loop through the bars, graphing each ordinal position separately
-				for ( int i=0; i<this.maxPts; i++ )
+				for ( int i=0; i<maxPts; i++ )
 				{
 					// At each ordinal position, sort the curves according to the value axis value
 					tempList.Sort( pane._barSettings.Base == BarBase.X ? SortType.YValues : SortType.XValues, i );
 					// plot the bars for the current ordinal position, in sorted order
 					foreach ( BarItem barItem in tempList )
 						barItem.Bar.DrawSingleBar( g, pane, barItem,
-							((BarItem)barItem).BaseAxis( pane ),
-							((BarItem)barItem).ValueAxis( pane ),
-							0, i, ( (BarItem)barItem ).GetBarWidth( pane ), scaleFactor );
+							barItem.BaseAxis( pane ),
+							barItem.ValueAxis( pane ),
+							0, i, barItem.GetBarWidth( pane ), scaleFactor );
 				}
 			}
 
@@ -694,7 +692,7 @@ namespace UIGraphLib
 			// The reverse order is done so that curves that are later in the list are plotted behind
 			// curves that are earlier in the list
 
-			for ( int i = this.Count - 1; i >= 0; i-- )
+			for ( int i = Count - 1; i >= 0; i-- )
 			{
 				CurveItem curve = this[i];
 				
@@ -731,13 +729,13 @@ namespace UIGraphLib
 			int i = 0;
 			foreach ( CurveItem curve in this )
 			{
-				if ( curve == barItem )
+			    if ( curve == barItem )
 					return i;
-				else if ( curve is BarItem )
-					i++;
+			    if ( curve is BarItem )
+			        i++;
 			}
 
-			return -1;
+		    return -1;
 		}
 
 	#endregion

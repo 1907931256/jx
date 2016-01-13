@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 #endregion
 
@@ -61,7 +60,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -80,7 +79,7 @@ namespace UIGraphLib
 		/// <value>true for an empty stack, false otherwise</value>
 		public bool IsEmpty
 		{
-			get { return this.Count == 0; }
+			get { return Count == 0; }
 		}
 
 		/// <summary>
@@ -95,7 +94,7 @@ namespace UIGraphLib
 		public ZoomState Push( GraphPane pane, ZoomState.StateType type )
 		{
 			ZoomState state = new ZoomState( pane, type );
-			this.Add( state );
+			Add( state );
 			return state;
 		}
 
@@ -108,7 +107,7 @@ namespace UIGraphLib
 		/// parameter).</returns>
 		public ZoomState Push( ZoomState state )
 		{
-			this.Add( state );
+			Add( state );
 			return state;
 		}
 
@@ -123,19 +122,18 @@ namespace UIGraphLib
 		/// available (the stack was empty).</returns>
 		public ZoomState Pop( GraphPane pane )
 		{
-			if ( !this.IsEmpty )
+		    if ( !IsEmpty )
 			{
-				ZoomState state = (ZoomState) this[ this.Count - 1 ];
-				this.RemoveAt( this.Count - 1 );
+				ZoomState state = this[ Count - 1 ];
+				RemoveAt( Count - 1 );
 
 				state.ApplyState( pane );
 				return state;
 			}
-			else
-				return null;
+		    return null;
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Pop the <see c_ref="ZoomState"/> entry from the bottom of the stack, and apply the properties
 		/// to the specified <see c_ref="GraphPane"/> object.  Clear the stack completely.
 		/// </summary>
@@ -145,21 +143,20 @@ namespace UIGraphLib
 		/// to the specified <see c_ref="GraphPane"/>.  null if no <see c_ref="ZoomState"/> was
 		/// available (the stack was empty).</returns>
 		public ZoomState PopAll( GraphPane pane )
-		{
-			if ( !this.IsEmpty )
+	    {
+	        if ( !IsEmpty )
 			{
-				ZoomState state = (ZoomState) this[ 0 ];
-				this.Clear();
+				ZoomState state = this[ 0 ];
+				Clear();
 
 				state.ApplyState( pane );
 
 				return state;
 			}
-			else
-				return null;
-		}
+	        return null;
+	    }
 
-		/// <summary>
+	    /// <summary>
 		/// Gets a reference to the <see c_ref="ZoomState"/> object at the top of the stack,
 		/// without actually removing it from the stack.
 		/// </summary>
@@ -168,10 +165,9 @@ namespace UIGraphLib
 		{
 			get
 			{
-				if ( !this.IsEmpty )
-					return (ZoomState) this[ this.Count - 1 ];
-				else
-					return null;
+			    if ( !IsEmpty )
+					return this[ Count - 1 ];
+			    return null;
 			}
 		}
 	}

@@ -18,10 +18,8 @@
 //=============================================================================
 
 using System;
-using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-using IComparer = System.Collections.IComparer;
 
 namespace UIGraphLib
 {
@@ -50,9 +48,9 @@ namespace UIGraphLib
 		/// <summary>
 		/// Default Constructor
 		/// </summary>
-		public PointPair4() : base()
+		public PointPair4()
 		{
-			this.T = 0;
+			T = 0;
 		}
 
 		/// <summary>
@@ -64,7 +62,7 @@ namespace UIGraphLib
 		/// <param name="t">This pair's t coordinate.</param>
 		public PointPair4( double x, double y, double z, double t ) : base( x, y, z )
 		{
-			this.T = t;
+			T = t;
 		}
 
 		/// <summary>
@@ -79,7 +77,7 @@ namespace UIGraphLib
 		public PointPair4( double x, double y, double z, double t, string label ) :
 					base( x, y, z, label )
 		{
-			this.T = t;
+			T = t;
 		}
 
 		/// <summary>
@@ -88,7 +86,7 @@ namespace UIGraphLib
 		/// <param name="rhs">The basis for the copy.</param>
 		public PointPair4( PointPair4 rhs ) : base( rhs )
 		{
-			this.T = rhs.T;
+			T = rhs.T;
 		}
 
 	#endregion
@@ -120,7 +118,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -143,18 +141,18 @@ namespace UIGraphLib
 		{
 			get
 			{
-				return this.X == PointPair.Missing ||
-						this.Y == PointPair.Missing ||
-						this.Z == PointPair.Missing ||
-						this.T == PointPair.Missing ||
-						Double.IsInfinity( this.X ) ||
-						Double.IsInfinity( this.Y ) ||
-						Double.IsInfinity( this.Z ) ||
-						Double.IsInfinity( this.T ) ||
-						Double.IsNaN( this.X ) ||
-						Double.IsNaN( this.Y ) ||
-						Double.IsNaN( this.Z ) ||
-						Double.IsNaN( this.T );
+				return X == Missing ||
+						Y == Missing ||
+						Z == Missing ||
+						T == Missing ||
+						Double.IsInfinity( X ) ||
+						Double.IsInfinity( Y ) ||
+						Double.IsInfinity( Z ) ||
+						Double.IsInfinity( T ) ||
+						Double.IsNaN( X ) ||
+						Double.IsNaN( Y ) ||
+						Double.IsNaN( Z ) ||
+						Double.IsNaN( T );
 			}
 		}
 
@@ -170,7 +168,7 @@ namespace UIGraphLib
 		/// <returns>A string representation of the PointPair4</returns>
 		public new string ToString( bool isShowZT )
 		{
-			return this.ToString( PointPair.DefaultFormat, isShowZT );
+			return ToString( DefaultFormat, isShowZT );
 		}
 
 		/// <summary>
@@ -185,10 +183,10 @@ namespace UIGraphLib
 		/// <param name="isShowZT">true to show the third "Z" or low dependent value coordinate</param>
 		public new string ToString( string format, bool isShowZT )
 		{
-			return "( " + this.X.ToString( format ) +
-					", " + this.Y.ToString( format ) +
-					( isShowZT ? ( ", " + this.Z.ToString( format ) +
-							", " + this.T.ToString( format ) ): "" ) + " )";
+			return "( " + X.ToString( format ) +
+					", " + Y.ToString( format ) +
+					( isShowZT ? ( ", " + Z.ToString( format ) +
+							", " + T.ToString( format ) ): "" ) + " )";
 		}
 
 		/// <summary>
@@ -206,10 +204,10 @@ namespace UIGraphLib
 		/// <returns>A string representation of the PointPair</returns>
 		public string ToString( string formatX, string formatY, string formatZ, string formatT )
 		{
-			return "( " + this.X.ToString( formatX ) +
-					", " + this.Y.ToString( formatY ) +
-					", " + this.Z.ToString( formatZ ) +
-					", " + this.T.ToString( formatT ) +
+			return "( " + X.ToString( formatX ) +
+					", " + Y.ToString( formatY ) +
+					", " + Z.ToString( formatZ ) +
+					", " + T.ToString( formatT ) +
 					" )";
 		}
 

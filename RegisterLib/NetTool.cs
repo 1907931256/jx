@@ -5,11 +5,10 @@
     	Create Date:	2009-11-9
     	Description:    
 *********************************************************************/
+
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Management;
-
 
 namespace RegisterLib
 {

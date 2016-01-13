@@ -18,8 +18,6 @@
 //=============================================================================
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -116,14 +114,12 @@ namespace UIGraphLib
 		/// </returns>
 		override internal double CalcBaseTic()
 		{
-			if ( _baseTic != PointPair.Missing )
+		    if ( _baseTic != PointPair.Missing )
 				return _baseTic;
-			else
-				return 1.0;
-
+		    return 1.0;
 		}
-		
-		/// <summary>
+
+	    /// <summary>
 		/// Internal routine to determine the ordinals of the first and last major axis label.
 		/// </summary>
 		/// <returns>
@@ -228,7 +224,7 @@ namespace UIGraphLib
 				else if ( _textLabels != null )
 				{
 					// Calculate the maximum number of labels
-					double maxLabels = (double) this.CalcMaxLabels( g, pane, scaleFactor );
+					double maxLabels = CalcMaxLabels( g, pane, scaleFactor );
 
 					// Calculate a step size based on the width of the labels
 					double tmpStep = Math.Ceiling( ( _max - _min ) / maxLabels );
@@ -279,13 +275,12 @@ namespace UIGraphLib
 		override internal string MakeLabel( GraphPane pane, int index, double dVal )
 		{
 			if ( _format == null )
-				_format = Scale.Default.Format;
+				_format = Default.Format;
 
 			index *= (int) _majorStep;
 			if ( _textLabels == null || index < 0 || index >= _textLabels.Length )
 				return string.Empty;
-			else
-				return _textLabels[index];
+		    return _textLabels[index];
 		}
 
 
@@ -316,7 +311,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );

@@ -54,16 +54,6 @@ Public Class FrmLocationQuery
             Me.cmbCategory.SelectedIndex = Me.cmbCategory.Items.Count - 1
         End If
     End Sub
-
-    Private Sub BindEntityTableFormer()
-        If _entityInfoTable.IsNullOrEmpty() Then Return
-        Me.dgv1.ClearBoolColumn()
-        Me.dgv1.ClearFormatColumn()
-        Dim nArrWidth() As Short = {60, 40}
-        Me.dgv1.ColumnWidthCollection = nArrWidth
-        Me.dgv1.DataSource = GenerateFilterTable()
-        Me.dgv1.ClearSelection()
-    End Sub
     Private Sub BindEntityTable()
         If _entityInfoTable.IsNullOrEmpty() Then Return
         Me.dgv.DataSource = GenerateFilterTable()

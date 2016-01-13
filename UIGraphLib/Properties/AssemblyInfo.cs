@@ -1,8 +1,6 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Resources;
+using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -36,4 +34,4 @@ using System.Resources;
 [assembly: AssemblyVersion("3.0.0.3")]
 //[assembly2.0.1.7760" )]
 //[assembly: AllowPartiallyTrustedCallers ]
-[assembly: NeutralResourcesLanguageAttribute( "" )]
+[assembly: NeutralResourcesLanguage( "" )]

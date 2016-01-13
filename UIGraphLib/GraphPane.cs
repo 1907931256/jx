@@ -18,16 +18,10 @@
 //=============================================================================
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections;
-using System.Drawing.Imaging;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-using System.ComponentModel;
 
 namespace UIGraphLib
 {
@@ -230,7 +224,7 @@ namespace UIGraphLib
 		/// <seealso c_ref="Y2AxisList" />
 		public YAxis YAxis
 		{
-			get { return _yAxisList[0] as YAxis; }
+			get { return _yAxisList[0]; }
 		}
 		/// <summary>
 		/// Accesses the primary <see c_ref="Y2Axis"/> for this graph
@@ -240,7 +234,7 @@ namespace UIGraphLib
 		/// <seealso c_ref="Y2AxisList" />
 		public Y2Axis Y2Axis
 		{
-			get { return _y2AxisList[0] as Y2Axis; }
+			get { return _y2AxisList[0]; }
 		}
 
 		/// <summary>
@@ -459,7 +453,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -528,7 +522,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -608,16 +602,16 @@ namespace UIGraphLib
 				_isIgnoreInitial, _isBoundedRanges, this );
 
 			// Determine the scale factor
-			float scaleFactor = this.CalcScaleFactor();
+			float scaleFactor = CalcScaleFactor();
 
 			// For pie charts, go ahead and turn off the axis displays if it's only pies
-			if ( this.CurveList.IsPieOnly )
+			if ( CurveList.IsPieOnly )
 			{
 				//don't want to display axis or border if there's only pies
-				this.XAxis.IsVisible = false;
-				this.X2Axis.IsVisible = false;
-				this.YAxis.IsVisible = false;
-				this.Y2Axis.IsVisible = false;
+				XAxis.IsVisible = false;
+				X2Axis.IsVisible = false;
+				YAxis.IsVisible = false;
+				Y2Axis.IsVisible = false;
 				_chart.Border.IsVisible = false;
 				//this.Legend.Position = LegendPos.TopCenter;
 			}
@@ -646,8 +640,8 @@ namespace UIGraphLib
 			_barSettings.CalcClusterScaleWidth();
 
 			// Trigger the AxisChangeEvent
-			if ( this.AxisChangeEvent != null )
-				this.AxisChangeEvent( this );
+			if ( AxisChangeEvent != null )
+				AxisChangeEvent( this );
 
 		}
 
@@ -727,7 +721,7 @@ namespace UIGraphLib
 			g.SetClip( _rect );
 
 			// calculate scaleFactor on "normal" pane size (BaseDimension)
-			float scaleFactor = this.CalcScaleFactor();
+			float scaleFactor = CalcScaleFactor();
 
 
 			// if the size of the ChartRect is determined automatically, then do so
@@ -924,7 +918,7 @@ namespace UIGraphLib
 		{
 			// chart rect starts out at the full pane rect less the margins
 			//   and less space for the Pane title
-			RectangleF clientRect = this.CalcClientRect( g, scaleFactor );
+			RectangleF clientRect = CalcClientRect( g, scaleFactor );
 
 			//float minSpaceX = 0;
 			//float minSpaceY = 0;
@@ -1458,7 +1452,7 @@ namespace UIGraphLib
 		public PieItem AddPieSlice( double value, Color color, double displacement, string label )
 		{
 			PieItem slice = new PieItem( value, color, displacement, label );
-			this.CurveList.Add( slice );
+			CurveList.Add( slice );
 			return slice;
 		}
 
@@ -1478,7 +1472,7 @@ namespace UIGraphLib
 						double displacement, string label )
 		{
 			PieItem slice = new PieItem( value, color1, color2, fillAngle, displacement, label );
-			this.CurveList.Add( slice );
+			CurveList.Add( slice );
 			return slice;
 		}
 
@@ -1499,7 +1493,7 @@ namespace UIGraphLib
 			for ( int x = 0; x < values.Length; x++ )
 			{
 				slices[x] = new PieItem( values[x], labels[x] );
-				this.CurveList.Add( slices[x] );
+				CurveList.Add( slices[x] );
 			}
 			return slices;
 		}
@@ -1530,7 +1524,7 @@ namespace UIGraphLib
 			foreach ( Axis axis in _y2AxisList )
 				axis.Scale.SetupScaleData( this, axis );
 
-			return this.TransformCoord( ptF.X, ptF.Y, coord );
+			return TransformCoord( ptF.X, ptF.Y, coord );
 		}
 
 		/// <summary>
@@ -1560,7 +1554,7 @@ namespace UIGraphLib
 			foreach ( Axis axis in _y2AxisList )
 				axis.Scale.SetupScaleData( this, axis );
 
-			return this.TransformCoord( x, y, coord );
+			return TransformCoord( x, y, coord );
 		}
 
 		/// <summary>
@@ -1582,10 +1576,10 @@ namespace UIGraphLib
 		{
 			// Setup the scaling data based on the chart rect
 			_xAxis.Scale.SetupScaleData( this, _xAxis );
-			this.YAxis.Scale.SetupScaleData( this, this.YAxis );
+			YAxis.Scale.SetupScaleData( this, YAxis );
 
-			x = this.XAxis.Scale.ReverseTransform( ptF.X );
-			y = this.YAxis.Scale.ReverseTransform( ptF.Y );
+			x = XAxis.Scale.ReverseTransform( ptF.X );
+			y = YAxis.Scale.ReverseTransform( ptF.Y );
 		}
 
 		/// <summary>
@@ -1612,13 +1606,13 @@ namespace UIGraphLib
 			// Setup the scaling data based on the chart rect
 			_xAxis.Scale.SetupScaleData( this, _xAxis );
 			_x2Axis.Scale.SetupScaleData( this, _x2Axis );
-			this.YAxis.Scale.SetupScaleData( this, this.YAxis );
-			this.Y2Axis.Scale.SetupScaleData( this, this.Y2Axis );
+			YAxis.Scale.SetupScaleData( this, YAxis );
+			Y2Axis.Scale.SetupScaleData( this, Y2Axis );
 
-			x = this.XAxis.Scale.ReverseTransform( ptF.X );
-			x2 = this.X2Axis.Scale.ReverseTransform( ptF.X );
-			y = this.YAxis.Scale.ReverseTransform( ptF.Y );
-			y2 = this.Y2Axis.Scale.ReverseTransform( ptF.Y );
+			x = XAxis.Scale.ReverseTransform( ptF.X );
+			x2 = X2Axis.Scale.ReverseTransform( ptF.X );
+			y = YAxis.Scale.ReverseTransform( ptF.Y );
+			y2 = Y2Axis.Scale.ReverseTransform( ptF.Y );
 		}
 
 		/// <summary>
@@ -1695,9 +1689,9 @@ namespace UIGraphLib
 		{
 			// Setup the scaling data based on the chart rect
 			_xAxis.Scale.SetupScaleData( this, _xAxis );
-			x = this.XAxis.Scale.ReverseTransform( ptF.X );
+			x = XAxis.Scale.ReverseTransform( ptF.X );
 			_x2Axis.Scale.SetupScaleData( this, _x2Axis );
-			x2 = this.X2Axis.Scale.ReverseTransform( ptF.X );
+			x2 = X2Axis.Scale.ReverseTransform( ptF.X );
 
 			y = new double[_yAxisList.Count];
 			y2 = new double[_y2AxisList.Count];
@@ -1820,18 +1814,18 @@ namespace UIGraphLib
 				// See if the point is in a GraphObj
 				// If so, just save the object and index so we can see if other overlying objects were
 				// intersected as well.
-				if ( this.GraphObjList.FindPoint( mousePt, this, g, scaleFactor, out index ) )
+				if ( GraphObjList.FindPoint( mousePt, this, g, scaleFactor, out index ) )
 				{
-					saveGraphItem = this.GraphObjList[index];
+					saveGraphItem = GraphObjList[index];
 					saveIndex = index;
 					saveZOrder = saveGraphItem.ZOrder;
 				}
 
 				// See if the point is in the legend
 				if ( saveZOrder <= ZOrder.B_BehindLegend &&
-					this.Legend.FindPoint( mousePt, this, scaleFactor, out index ) )
+					Legend.FindPoint( mousePt, this, scaleFactor, out index ) )
 				{
-					nearestObj = this.Legend;
+					nearestObj = Legend;
 					return true;
 				}
 
@@ -1901,7 +1895,7 @@ namespace UIGraphLib
 
 				if ( saveZOrder <= ZOrder.D_BehindAxis && tmpRect.Contains( mousePt ) )
 				{
-					nearestObj = this.XAxis;
+					nearestObj = XAxis;
 					return true;
 				}
 
@@ -1914,7 +1908,7 @@ namespace UIGraphLib
 						height );
 				if ( saveZOrder <= ZOrder.D_BehindAxis && tmpRect.Contains( mousePt ) )
 				{
-					nearestObj = this.X2Axis;
+					nearestObj = X2Axis;
 					return true;
 				}
 
@@ -2066,8 +2060,6 @@ namespace UIGraphLib
 						nearestBar = curve;
 						iNearestBar = 0;
 					}
-
-					continue;
 				}
 				else if ( curve.IsVisible )
 				{
@@ -2109,13 +2101,13 @@ namespace UIGraphLib
 						{
 							// xVal is the user scale X value of the current point
 							if ( xAxis._scale.IsAnyOrdinal && !curve.IsOverrideOrdinal )
-								xVal = (double)iPt + 1.0;
+								xVal = iPt + 1.0;
 							else
 								xVal = points[iPt].X;
 
 							// yVal is the user scale Y value of the current point
 							if ( yAxis._scale.IsAnyOrdinal && !curve.IsOverrideOrdinal )
-								yVal = (double)iPt + 1.0;
+								yVal = iPt + 1.0;
 							else
 								yVal = points[iPt].Y;
 
@@ -2196,8 +2188,8 @@ namespace UIGraphLib
 
 			if ( nearestCurve is LineItem )
 			{
-				float halfSymbol = (float)( ( (LineItem)nearestCurve ).Symbol.Size *
-					CalcScaleFactor() / 2 );
+				float halfSymbol = ( (LineItem)nearestCurve ).Symbol.Size *
+				                   CalcScaleFactor() / 2;
 				minDist -= halfSymbol * halfSymbol;
 				if ( minDist < 0 )
 					minDist = 0;
@@ -2210,14 +2202,13 @@ namespace UIGraphLib
 				iNearest = iNearestBar;
 				return true;
 			}
-			else if ( minDist < tolSquared )
-			{
-				// Did we find a close point, and is it within the tolerance?
-				// (minDist is the square of the distance in pixel units)
-				return true;
-			}
-			else  // otherwise, no valid point found
-				return false;
+		    if ( minDist < tolSquared )
+		    {
+		        // Did we find a close point, and is it within the tolerance?
+		        // (minDist is the square of the distance in pixel units)
+		        return true;
+		    }
+		    return false;
 		}
 
 		/// <summary>
@@ -2311,7 +2302,7 @@ namespace UIGraphLib
 		{
 			containedObjs = new CurveList();
 
-			foreach ( CurveItem ci in this.CurveList )
+			foreach ( CurveItem ci in CurveList )
 			{
 				for ( int i = 0; i < ci.Points.Count; i++ )
 				{

@@ -18,8 +18,6 @@
 //=============================================================================
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -174,13 +172,13 @@ namespace UIGraphLib
 				//baseVal is got from CalBase..., and it is exp..
 				return Math.Pow( Math.Pow( baseVal, 1 / _exponent ) + _majorStep * tic, _exponent );
 			}
-			else if ( _exponent < 0.0 )
-			{
-				//baseVal is got from CalBase..., and it is exp..
-				return Math.Pow( Math.Pow( baseVal, 1 / _exponent ) + _majorStep * tic, _exponent );
-			}
+		    if ( _exponent < 0.0 )
+		    {
+		        //baseVal is got from CalBase..., and it is exp..
+		        return Math.Pow( Math.Pow( baseVal, 1 / _exponent ) + _majorStep * tic, _exponent );
+		    }
 
-			return 1.0;
+		    return 1.0;
 		}
 
 		/// <summary>
@@ -202,7 +200,7 @@ namespace UIGraphLib
 		/// </returns>
 		override internal double CalcMinorTicValue( double baseVal, int iTic )
 		{
-			return baseVal + Math.Pow( (double) _majorStep * (double) iTic, _exponent );
+			return baseVal + Math.Pow( _majorStep * iTic, _exponent );
 		}
 
 		/// <summary>
@@ -284,7 +282,7 @@ namespace UIGraphLib
 				if ( _isPreventLabelOverlap )
 				{
 					// Calculate the maximum number of labels
-					double maxLabels = (double) this.CalcMaxLabels( g, pane, scaleFactor );
+					double maxLabels = CalcMaxLabels( g, pane, scaleFactor );
 
 					if ( maxLabels < ( _max - _min ) / _majorStep )
 						_majorStep = CalcBoundedStepSize( _max - _min, maxLabels );
@@ -334,7 +332,7 @@ namespace UIGraphLib
 				int numDec = 0 - (int) ( Math.Floor( Math.Log10( _majorStep ) ) - _mag );
 				if ( numDec < 0 )
 					numDec = 0;
-				_format = "f" + numDec.ToString();
+				_format = "f" + numDec;
 			}
 		}
 
@@ -357,9 +355,9 @@ namespace UIGraphLib
 		override internal string MakeLabel( GraphPane pane, int index, double dVal )
 		{
 			if ( _format == null )
-				_format = Scale.Default.Format;
+				_format = Default.Format;
 
-			double scaleMult = Math.Pow( (double) 10.0, _mag );
+			double scaleMult = Math.Pow( 10.0, _mag );
 			double val = Math.Pow( dVal, 1 / _exponent ) / scaleMult;
 			return val.ToString( _format );
 		}
@@ -392,7 +390,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );

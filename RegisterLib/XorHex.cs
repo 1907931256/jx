@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Security.Cryptography;
-using System.IO;
+using System.Text;
 
 namespace RegisterLib
 {
@@ -20,8 +18,8 @@ namespace RegisterLib
             try
             {
                 StringBuilder sb = new StringBuilder();
-                byte[] bs = System.Text.Encoding.Default.GetBytes(txt);        // 原字符串转换成字节数组
-                byte[] keys = System.Text.Encoding.Default.GetBytes(KEY);        // 密钥转换成字节数组
+                byte[] bs = Encoding.Default.GetBytes(txt);        // 原字符串转换成字节数组
+                byte[] keys = Encoding.Default.GetBytes(KEY);        // 密钥转换成字节数组
 
                 // 异或
                 for (int i = 0; i < bs.Length; i++)
@@ -36,7 +34,7 @@ namespace RegisterLib
                 }
                 return sb.ToString();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return string.Empty;
             }          
@@ -60,7 +58,7 @@ namespace RegisterLib
                    bs[i] = (byte)(Convert.ToInt32(txt.Substring(i * 2, 2), 16));
                }
 
-               byte[] keys = System.Text.Encoding.Default.GetBytes(KEY);        // 密钥转换成字节数组
+               byte[] keys = Encoding.Default.GetBytes(KEY);        // 密钥转换成字节数组
 
                // 异或
                for (int i = 0; i < bs.Length; i++)
@@ -69,9 +67,9 @@ namespace RegisterLib
                }
 
                // byte数组还原成字符串
-               return System.Text.Encoding.Default.GetString(bs);
+               return Encoding.Default.GetString(bs);
            }
-           catch (System.Exception)
+           catch (Exception)
            {
                return string.Empty;
            }

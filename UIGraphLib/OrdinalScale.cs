@@ -18,8 +18,6 @@
 //=============================================================================
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -157,14 +155,14 @@ namespace UIGraphLib
 				if ( scale._majorStepAuto )
 				{
 					// Calculate the step size based on targetSteps
-					scale._majorStep = Scale.CalcStepSize( scale._max - scale._min,
+					scale._majorStep = CalcStepSize( scale._max - scale._min,
 						( scale._ownerAxis is XAxis || scale._ownerAxis is X2Axis ) ?
 								Default.TargetXSteps : Default.TargetYSteps );
 
 					if ( scale.IsPreventLabelOverlap )
 					{
 						// Calculate the maximum number of labels
-						double maxLabels = (double) scale.CalcMaxLabels( g, pane, scaleFactor );
+						double maxLabels = scale.CalcMaxLabels( g, pane, scaleFactor );
 
 						// Calculate a step size based on the width of the labels
 						double tmpStep = Math.Ceiling( ( scale._max - scale._min ) / maxLabels );
@@ -182,7 +180,7 @@ namespace UIGraphLib
 
 				// Calculate the new minor step size
 				if ( scale._minorStepAuto )
-					scale._minorStep = Scale.CalcStepSize( scale._majorStep,
+					scale._minorStep = CalcStepSize( scale._majorStep,
 						( scale._ownerAxis is XAxis || scale._ownerAxis is X2Axis ) ?
 								Default.TargetMinorXSteps : Default.TargetMinorYSteps );
 
@@ -221,7 +219,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );

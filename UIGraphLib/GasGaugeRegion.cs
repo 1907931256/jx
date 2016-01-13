@@ -16,11 +16,11 @@
 //License along with this library; if not, write to the Free Software
 //Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //=============================================================================
-using System.Runtime.Serialization;
-using System.Drawing.Drawing2D;
+
 using System;
-using System.Text;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Runtime.Serialization;
 using System.Security.Permissions;
 
 namespace UIGraphLib
@@ -131,7 +131,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -195,7 +195,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -420,7 +420,7 @@ namespace UIGraphLib
 
 					g.FillPie( Fill.MakeBrush( _boundingRectangle ), tRect.X, tRect.Y, tRect.Width, tRect.Height, -StartAngle, -SweepAngle );
 
-					if ( this.Border.IsVisible )
+					if ( Border.IsVisible )
 					{
 						Pen borderPen = _border.GetPen( pane, scaleFactor );
 						g.DrawPie( borderPen, tRect.X, tRect.Y, tRect.Width, tRect.Height,
@@ -576,9 +576,9 @@ namespace UIGraphLib
 			//nonExpRect.Y += -(float)0.025F * nonExpRect.Height;
 			//nonExpRect.Y += ((chartRect.Height) - (nonExpRect.Height / 2)) - 10.0f;
 
-			nonExpRect.Inflate( -(float)0.05F * nonExpRect.Height, -(float)0.05 * nonExpRect.Width );
+			nonExpRect.Inflate( -0.05F * nonExpRect.Height, -(float)0.05 * nonExpRect.Width );
 
-			GasGaugeRegion.CalculateGasGuageParameters( pane );
+			CalculateGasGuageParameters( pane );
 
 			foreach ( CurveItem curve in pane.CurveList )
 			{

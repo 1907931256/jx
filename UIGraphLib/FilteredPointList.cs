@@ -16,6 +16,7 @@
 //License along with this library; if not, write to the Free Software
 //Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //=============================================================================using System;
+
 using System;
 
 namespace UIGraphLib
@@ -117,7 +118,7 @@ namespace UIGraphLib
 					if ( nPts > _maxPts )
 					{
 						// if we're skipping points, then calculate the new index
-						index = _minBoundIndex + (int) ( (double) index * (double) nPts / (double) _maxPts );
+						index = _minBoundIndex + (int) ( index * (double) nPts / _maxPts );
 					}
 					else
 					{
@@ -153,7 +154,7 @@ namespace UIGraphLib
 					if ( nPts > _maxPts )
 					{
 						// if we're skipping points, then calculate the new index
-						index = _minBoundIndex + (int) ( (double) index * (double) nPts / (double) _maxPts );
+						index = _minBoundIndex + (int) ( index * (double) nPts / _maxPts );
 					}
 					else
 					{

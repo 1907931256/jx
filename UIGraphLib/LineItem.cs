@@ -19,7 +19,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -189,7 +188,7 @@ namespace UIGraphLib
 		/// type of symbol to use for this <see c_ref="LineItem"/>.  Use <see c_ref="SymbolType.None"/>
 		/// to hide the symbols.</param>
 		public LineItem( string label, IPointList points, Color color, SymbolType symbolType )
-			: this( label, points, color, symbolType, UIGraphLib.LineBase.Default.Width )
+			: this( label, points, color, symbolType, LineBase.Default.Width )
 		{
 		}
 
@@ -210,7 +209,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -251,7 +250,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -343,8 +342,8 @@ namespace UIGraphLib
 		/// </param>
 		override public void MakeUnique( ColorSymbolRotator rotator )
 		{
-			this.Color			= rotator.NextColor;
-			this.Symbol.Type	= rotator.NextSymbol;
+			Color			= rotator.NextColor;
+			Symbol.Type	= rotator.NextSymbol;
 		}
 
 		/// <summary>

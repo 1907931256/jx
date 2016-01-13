@@ -48,13 +48,14 @@ Partial Class FrmAlertQuery
         'pnlSetting
         '
         Me.pnlSetting.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.pnlSetting.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlSetting.Controls.Add(Me.btnQuery)
         Me.pnlSetting.Controls.Add(Me.dtpEnd)
         Me.pnlSetting.Controls.Add(Me.lblEnd)
         Me.pnlSetting.Controls.Add(Me.dtpStart)
         Me.pnlSetting.Controls.Add(Me.lblStartTime)
         Me.pnlSetting.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pnlSetting.Location = New System.Drawing.Point(0, 28)
+        Me.pnlSetting.Location = New System.Drawing.Point(0, 32)
         Me.pnlSetting.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlSetting.Name = "pnlSetting"
         Me.pnlSetting.Size = New System.Drawing.Size(624, 37)
@@ -65,7 +66,7 @@ Partial Class FrmAlertQuery
         Me.btnQuery.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnQuery.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnQuery.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnQuery.Location = New System.Drawing.Point(563, 7)
+        Me.btnQuery.Location = New System.Drawing.Point(561, 7)
         Me.btnQuery.Margin = New System.Windows.Forms.Padding(2)
         Me.btnQuery.Name = "btnQuery"
         Me.btnQuery.Size = New System.Drawing.Size(58, 22)
@@ -173,28 +174,28 @@ Partial Class FrmAlertQuery
         Me.dgv.DefaultCellStyle = DataGridViewCellStyle5
         Me.dgv.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgv.GridColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(215, Byte), Integer), CType(CType(229, Byte), Integer))
-        Me.dgv.Location = New System.Drawing.Point(0, 65)
+        Me.dgv.Location = New System.Drawing.Point(0, 69)
         Me.dgv.Name = "dgv"
         Me.dgv.ReadOnly = True
         Me.dgv.RowTemplate.Height = 23
         Me.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv.Size = New System.Drawing.Size(624, 295)
+        Me.dgv.Size = New System.Drawing.Size(624, 291)
         Me.dgv.TabIndex = 11
         '
         'pnlFunc
         '
         Me.pnlFunc.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.pnlFunc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlFunc.Controls.Add(Me.btnClose)
         Me.pnlFunc.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlFunc.Location = New System.Drawing.Point(0, 0)
         Me.pnlFunc.Name = "pnlFunc"
-        Me.pnlFunc.Size = New System.Drawing.Size(624, 28)
+        Me.pnlFunc.Size = New System.Drawing.Size(624, 32)
         Me.pnlFunc.TabIndex = 12
         '
         'btnClose
         '
         Me.btnClose.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClose.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
         Me.btnClose.Location = New System.Drawing.Point(4, 3)
         Me.btnClose.Margin = New System.Windows.Forms.Padding(2)

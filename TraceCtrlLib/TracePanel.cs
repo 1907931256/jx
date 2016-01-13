@@ -40,7 +40,7 @@ namespace TraceCtrlLib.PanelExtend
 
         public DoorStyle DoorStyle { get; set; }
 
-        private double _openRatio = 0.0;
+        private double _openRatio;
         [DefaultValue(0.0)]
         public double OpenRatio {
             get { return _openRatio; }
@@ -50,7 +50,7 @@ namespace TraceCtrlLib.PanelExtend
                 _openRatio = value;
             } 
         }
-        private double _openStart = 0.0;
+        private double _openStart;
         [DefaultValue(0.0)]
         public double OpenStart
         {
@@ -373,7 +373,7 @@ namespace TraceCtrlLib.PanelExtend
 
         private void DrawText()
         {
-            Font f = new Font("SimSun", DrawTextWidth, System.Drawing.FontStyle.Regular);
+            Font f = new Font("SimSun", DrawTextWidth, FontStyle.Regular);
             SolidBrush b = new SolidBrush(_traceText);
             Graphics g = CreateGraphics();
 
@@ -425,7 +425,7 @@ namespace TraceCtrlLib.PanelExtend
                         previous.Offset(-Location.X,-Location.Y);
                         anglePoint.Offset(-Location.X, -Location.Y);
                         next.Offset(-Location.X, -Location.Y);
-                        g.DrawLines(linePen, new Point[] { previous , anglePoint , next });
+                        g.DrawLines(linePen, new[] { previous , anglePoint , next });
                         if (tc.PreviousCtrl != tc.NextCtrl)
                             g.FillEllipse(brushTraceBy, new Rectangle(anglePoint.X - TracePointRadius, anglePoint.Y - TracePointRadius, TracePointRadius*2, TracePointRadius*2));
                         else
@@ -447,7 +447,7 @@ namespace TraceCtrlLib.PanelExtend
                         centerAnglePointNext.Offset(-Location.X, -Location.Y);
                         next.Offset(-Location.X, -Location.Y);
                         intermediatePoint.Offset(-Location.X, -Location.Y);
-                        g.DrawLines(linePen,new Point[] { previous, centerAnglePointPrev, centerAnglePointNext, next });
+                        g.DrawLines(linePen,new[] { previous, centerAnglePointPrev, centerAnglePointNext, next });
                         
                         g.FillEllipse(brushTraceBy, new Rectangle(intermediatePoint.X - TracePointRadius, intermediatePoint.Y - TracePointRadius, TracePointRadius * 2, TracePointRadius * 2));
                     }
@@ -468,7 +468,7 @@ namespace TraceCtrlLib.PanelExtend
                     anchorPoint.Offset(-Location.X, -Location.Y);
                     anglePoint.Offset(-Location.X, -Location.Y);
                     intermediatePoint.Offset(-Location.X, -Location.Y);
-                    g.DrawLines(linePen, new Point[] { anchorPoint , anglePoint , intermediatePoint });
+                    g.DrawLines(linePen, new[] { anchorPoint , anglePoint , intermediatePoint });
                     g.FillEllipse(brushSourceDest, new Rectangle(intermediatePoint.X - TracePointRadius, intermediatePoint.Y - TracePointRadius, TracePointRadius * 2, TracePointRadius * 2));
                     brushSourceDest.Dispose();
                 }
@@ -485,7 +485,7 @@ namespace TraceCtrlLib.PanelExtend
             {
                 Pen p = new Pen(monitorPoint.Color, DrawMonitorWidth);
                 SolidBrush sb = new SolidBrush(monitorPoint.Color);
-                Point center = this.Bounds.CenterPoint();
+                Point center = Bounds.CenterPoint();
                 center.Offset(-Location.X, -Location.Y);
                 g.FillEllipse(sb, new Rectangle(center.X - MonitorPointRadius, center.Y - MonitorPointRadius, MonitorPointRadius * 2, MonitorPointRadius * 2));
                 g.DrawEllipse(p, center.X - MonitorPointRadius - 2 * DrawMonitorWidth, center.Y - MonitorPointRadius - 2 * DrawMonitorWidth, (2 * DrawMonitorWidth + MonitorPointRadius) * 2, (2 * DrawMonitorWidth + MonitorPointRadius) * 2);
@@ -500,25 +500,25 @@ namespace TraceCtrlLib.PanelExtend
             Point anchorPoint = new Point();
             if (null != anchor)
             {
-                if (AnchorTop.Contains(new AnchorEntity(){Anchor = anchor,Intersectioned = true}))
+                if (AnchorTop.Contains(new AnchorEntity {Anchor = anchor,Intersectioned = true}))
                 {
                     int overlapLeft = Math.Max(Offset.X + Left + (int)(OpenStart * Width), anchor.Offset.X + anchor.Left + (int)(anchor.OpenStart * anchor.Width));
                     int overlapRight = Math.Min(Offset.X + Left + (int)((OpenStart + OpenRatio) * Width), anchor.Offset.X+anchor.Left + (int)((anchor.OpenStart + anchor.OpenRatio) * anchor.Width));
                     anchorPoint = new Point(overlapLeft + (overlapRight - overlapLeft) / 2 - Offset.X, Top);
                 }
-                else if (AnchorBottom.Contains(new AnchorEntity() { Anchor = anchor, Intersectioned = true }))
+                else if (AnchorBottom.Contains(new AnchorEntity { Anchor = anchor, Intersectioned = true }))
                 {
                     int overlapLeft = Math.Max(Offset.X + Left + (int)(OpenStart * Width), anchor.Offset.X + anchor.Left + (int)(anchor.OpenStart * anchor.Width));
                     int overlapRight = Math.Min(Offset.X + Left + (int)((OpenStart + OpenRatio) * Width), anchor.Offset.X + anchor.Left + (int)((anchor.OpenStart + anchor.OpenRatio) * anchor.Width));
                     anchorPoint = new Point(overlapLeft + (overlapRight - overlapLeft) / 2 - Offset.X, Bottom);
                 }
-                else if (AnchorLeft.Contains(new AnchorEntity() { Anchor = anchor, Intersectioned = true }))
+                else if (AnchorLeft.Contains(new AnchorEntity { Anchor = anchor, Intersectioned = true }))
                 {
                     int overlapTop = Math.Max(Offset.Y + Top + (int)(OpenStart * Height), anchor.Offset.Y + anchor.Top + (int)(anchor.OpenStart * anchor.Height));
                     int overlapBottom = Math.Min(Offset.Y + Top + (int)((OpenStart + OpenRatio) * Height), anchor.Offset.Y + anchor.Top + (int)((anchor.OpenStart + anchor.OpenRatio) * anchor.Height));
                     anchorPoint = new Point(Left, overlapTop + (overlapBottom - overlapTop) / 2 - Offset.Y);
                 }
-                else if (AnchorRight.Contains(new AnchorEntity() { Anchor = anchor, Intersectioned = true }))
+                else if (AnchorRight.Contains(new AnchorEntity { Anchor = anchor, Intersectioned = true }))
                 {
                     int overlapTop = Math.Max(Offset.Y + Top + (int)(OpenStart * Height), anchor.Offset.Y + anchor.Top + (int)(anchor.OpenStart * anchor.Height));
                     int overlapBottom = Math.Min(Offset.Y + Top + (int)((OpenStart + OpenRatio) * Height), anchor.Offset.Y + anchor.Top + (int)((anchor.OpenStart + anchor.OpenRatio) * anchor.Height));
@@ -532,7 +532,7 @@ namespace TraceCtrlLib.PanelExtend
         {
             if ((null == pre && null == next) || string.IsNullOrEmpty(entity))
                 return;
-            TraceChain tc = new TraceChain() { PreviousCtrl=pre, NextCtrl = next,Entity = entity };
+            TraceChain tc = new TraceChain { PreviousCtrl=pre, NextCtrl = next,Entity = entity };
             if (!_traceChains.Contains(tc))
                 _traceChains.Add(tc);
         }
@@ -543,19 +543,19 @@ namespace TraceCtrlLib.PanelExtend
                 return;
             if (orientation == AnchorStyles.Left)
             {
-                AnchorLeft.Add(new AnchorEntity() { Anchor = tc,Intersectioned = intersectioned});
+                AnchorLeft.Add(new AnchorEntity { Anchor = tc,Intersectioned = intersectioned});
             }
             else if (orientation == AnchorStyles.Right)
             {
-                AnchorRight.Add(new AnchorEntity() { Anchor = tc, Intersectioned = intersectioned });
+                AnchorRight.Add(new AnchorEntity { Anchor = tc, Intersectioned = intersectioned });
             }
             else if (orientation == AnchorStyles.Top)
             {
-                AnchorTop.Add(new AnchorEntity() { Anchor = tc, Intersectioned = intersectioned });
+                AnchorTop.Add(new AnchorEntity { Anchor = tc, Intersectioned = intersectioned });
             }
             else if (orientation == AnchorStyles.Bottom)
             {
-                AnchorBottom.Add(new AnchorEntity() { Anchor = tc, Intersectioned = intersectioned });
+                AnchorBottom.Add(new AnchorEntity { Anchor = tc, Intersectioned = intersectioned });
             }
         }
         #endregion
@@ -597,10 +597,10 @@ namespace TraceCtrlLib.PanelExtend
         {
             if (!_monitorPoints.IsNullOrEmpty())
             {
-                Point center = this.Bounds.CenterPoint();
+                Point center = Bounds.CenterPoint();
                 center.Offset(-Location.X, -Location.Y);
                 Rectangle hintRegion = new Rectangle(center.X - MonitorPointRadius - 2 * DrawMonitorWidth, center.Y - MonitorPointRadius - 2 * DrawMonitorWidth, (2 * DrawMonitorWidth + MonitorPointRadius) * 2, (2 * DrawMonitorWidth + MonitorPointRadius) * 2);
-                if (hintRegion.Contains(this.PointToClient(MousePosition)))
+                if (hintRegion.Contains(PointToClient(MousePosition)))
                 {
                     TraceMonitorPoint tmp = _monitorPoints[0];
                     String hint = String.Format("名      称：{0}\r\n进入时间：{1}", tmp.Name, tmp.Arrive);
@@ -654,7 +654,7 @@ namespace TraceCtrlLib.PanelExtend
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((AnchorEntity) obj);
         }
     }

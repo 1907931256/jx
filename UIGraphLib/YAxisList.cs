@@ -21,9 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 #endregion
 
@@ -56,7 +53,7 @@ namespace UIGraphLib
 		{
 			foreach ( YAxis item in rhs )
 			{
-				this.Add( item.Clone() );
+				Add( item.Clone() );
 			}
 		}
 
@@ -67,7 +64,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -92,7 +89,7 @@ namespace UIGraphLib
 		/// <value>An <see c_ref="Axis"/> object reference.</value>
 		public new YAxis this[int index]
 		{
-			get { return ( ( ( index < 0 || index >= this.Count ) ? null : base[index] ) ); }
+			get { return ( ( ( index < 0 || index >= Count ) ? null : base[index] ) ); }
 		}
 
 		/// <summary>
@@ -109,8 +106,7 @@ namespace UIGraphLib
 				int index = IndexOf( title );
 				if ( index >= 0 )
 					return this[index];
-				else
-					return null;
+			    return null;
 			}
 		}
 

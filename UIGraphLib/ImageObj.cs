@@ -22,7 +22,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -192,7 +191,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -232,7 +231,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+		[SecurityPermission(SecurityAction.Demand,SerializationFormatter=true)]
 		public override void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			base.GetObjectData( info, context );
@@ -307,7 +306,7 @@ namespace UIGraphLib
 		/// <returns>true if the point lies in the bounding box, false otherwise</returns>
 		override public bool PointInBox( PointF pt, PaneBase pane, Graphics g, float scaleFactor )
 		{
-			if ( _image != null )
+		    if ( _image != null )
 			{
 				if ( ! base.PointInBox(pt, pane, g, scaleFactor ) )
 					return false;
@@ -318,11 +317,10 @@ namespace UIGraphLib
 
 				return tmpRect.Contains( pt );
 			}
-			else
-				return false;
+		    return false;
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Determines the shape type and Coords values for this GraphObj
 		/// </summary>
 		override public void GetCoords( PaneBase pane, Graphics g, float scaleFactor,

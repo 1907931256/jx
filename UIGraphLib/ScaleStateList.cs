@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 #endregion
 
@@ -44,7 +43,7 @@ namespace UIGraphLib
 		public ScaleStateList( YAxisList list )
 		{
 			foreach ( Axis axis in list )
-				this.Add( new ScaleState( axis ) );
+				Add( new ScaleState( axis ) );
 		}
 
 		/// <summary>
@@ -57,7 +56,7 @@ namespace UIGraphLib
 		public ScaleStateList( Y2AxisList list )
 		{
 			foreach ( Axis axis in list )
-				this.Add( new ScaleState( axis ) );
+				Add( new ScaleState( axis ) );
 		}
 
 		/// <summary>
@@ -68,7 +67,7 @@ namespace UIGraphLib
 		{
 			foreach ( ScaleState item in rhs )
 			{
-				this.Add( item.Clone() );
+				Add( item.Clone() );
 			}
 		}
 
@@ -79,7 +78,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -102,7 +101,7 @@ namespace UIGraphLib
 		/// <returns>true if a difference is found, false otherwise</returns>
 		public bool IsChanged( YAxisList list )
 		{
-			int count = Math.Min( list.Count, this.Count );
+			int count = Math.Min( list.Count, Count );
 			for ( int i = 0; i < count; i++ )
 				if ( this[i].IsChanged( list[i] ) )
 					return true;
@@ -121,7 +120,7 @@ namespace UIGraphLib
 		/// <returns>true if a difference is found, false otherwise</returns>
 		public bool IsChanged( Y2AxisList list )
 		{
-			int count = Math.Min( list.Count, this.Count );
+			int count = Math.Min( list.Count, Count );
 			for ( int i = 0; i < count; i++ )
 				if ( this[i].IsChanged( list[i] ) )
 					return true;
@@ -159,7 +158,7 @@ namespace UIGraphLib
 		/// <param name="list"></param>
 		public void ApplyScale( YAxisList list )
 		{
-			int count = Math.Min( list.Count, this.Count );
+			int count = Math.Min( list.Count, Count );
 			for ( int i = 0; i < count; i++ )
 				this[i].ApplyScale( list[i] );
 		}
@@ -170,7 +169,7 @@ namespace UIGraphLib
 		/// <param name="list"></param>
 		public void ApplyScale( Y2AxisList list )
 		{
-			int count = Math.Min( list.Count, this.Count );
+			int count = Math.Min( list.Count, Count );
 			for ( int i = 0; i < count; i++ )
 				this[i].ApplyScale( list[i] );
 		}

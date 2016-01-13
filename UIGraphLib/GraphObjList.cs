@@ -18,8 +18,8 @@
 //=============================================================================
 
 using System;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace UIGraphLib
 {
@@ -48,7 +48,7 @@ namespace UIGraphLib
 		public GraphObjList( GraphObjList rhs )
 		{
 			foreach ( GraphObj item in rhs )
-				this.Add( (GraphObj) ((ICloneable)item).Clone() );
+				Add( (GraphObj) ((ICloneable)item).Clone() );
 		}
 
 		/// <summary>
@@ -58,7 +58,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -103,8 +103,7 @@ namespace UIGraphLib
 				int index = IndexOfTag( tag );
 				if ( index >= 0 )
 					return( this[index]  );
-				else
-					return null;
+			    return null;
 			}
 		}
 /*
@@ -183,7 +182,7 @@ namespace UIGraphLib
 				return -1;
 
 			GraphObj graphObj = this[index];
-			this.RemoveAt( index );
+			RemoveAt( index );
 
 			index += relativePos;
 			if ( index < 0 )
@@ -232,7 +231,7 @@ namespace UIGraphLib
 			// Draw the items in reverse order, so the last items in the
 			// list appear behind the first items (consistent with
 			// CurveList)
-			for ( int i=this.Count-1; i>=0; i-- )
+			for ( int i=Count-1; i>=0; i-- )
 			{
 				GraphObj item = this[i];
 				if ( item.ZOrder == zOrder && item.IsVisible )
@@ -294,8 +293,7 @@ namespace UIGraphLib
 
 			if ( index >= 0 )
 				return true;
-			else
-				return false;
+		    return false;
 		}
 		
 

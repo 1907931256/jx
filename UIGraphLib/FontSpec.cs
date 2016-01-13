@@ -269,7 +269,7 @@ namespace UIGraphLib
 				if ( value != _family )
 				{
 					_family = value;
-					Remake( _scaledSize / _size, this.Size, ref _scaledSize, ref _font );
+					Remake( _scaledSize / _size, Size, ref _scaledSize, ref _font );
 				}
 			}
 		}
@@ -286,7 +286,7 @@ namespace UIGraphLib
 				if ( value != _isBold )
 				{
 					_isBold = value;
-					Remake( _scaledSize / _size, this.Size, ref _scaledSize, ref _font );
+					Remake( _scaledSize / _size, Size, ref _scaledSize, ref _font );
 				}
 			}
 		}
@@ -303,7 +303,7 @@ namespace UIGraphLib
 				if ( value != _isItalic )
 				{
 					_isItalic = value;
-					Remake( _scaledSize / _size, this.Size, ref _scaledSize, ref _font );
+					Remake( _scaledSize / _size, Size, ref _scaledSize, ref _font );
 				}
 			}
 		}
@@ -320,7 +320,7 @@ namespace UIGraphLib
 				if ( value != _isUnderline )
 				{
 					_isUnderline = value;
-					Remake( _scaledSize / _size, this.Size, ref _scaledSize, ref _font );
+					Remake( _scaledSize / _size, Size, ref _scaledSize, ref _font );
 				}
 			}
 		}
@@ -579,7 +579,7 @@ namespace UIGraphLib
 		/// <returns>A deep copy of this object</returns>
 		object ICloneable.Clone()
 		{
-			return this.Clone();
+			return Clone();
 		}
 
 		/// <summary>
@@ -640,7 +640,7 @@ namespace UIGraphLib
 		/// </summary>
 		/// <param name="info">A <see c_ref="SerializationInfo"/> instance that defines the serialized data</param>
 		/// <param name="context">A <see c_ref="StreamingContext"/> instance that contains the serialized data</param>
-		[SecurityPermissionAttribute( SecurityAction.Demand, SerializationFormatter = true )]
+		[SecurityPermission( SecurityAction.Demand, SerializationFormatter = true )]
 		public virtual void GetObjectData( SerializationInfo info, StreamingContext context )
 		{
 			info.AddValue( "schema", schema );
@@ -688,7 +688,7 @@ namespace UIGraphLib
 			// Regenerate the font only if the size has changed significantly
 			if ( font == null ||
 					Math.Abs( newSize - oldSize ) > 0.1 ||
-					font.Name != this.Family ||
+					font.Name != Family ||
 					font.Bold != _isBold ||
 					font.Italic != _isItalic ||
 					font.Underline != _isUnderline )
@@ -698,7 +698,7 @@ namespace UIGraphLib
 							( _isItalic ? FontStyle.Italic : style ) |
 							 ( _isUnderline ? FontStyle.Underline : style );
 
-				scaledSize = size * (float)scaleFactor;
+				scaledSize = size * scaleFactor;
 				font = new Font( _family, scaledSize, style, GraphicsUnit.World );
 			}
 		}
@@ -717,7 +717,7 @@ namespace UIGraphLib
 		/// </returns>
 		public Font GetFont( float scaleFactor )
 		{
-			Remake( scaleFactor, this.Size, ref _scaledSize, ref _font );
+			Remake( scaleFactor, Size, ref _scaledSize, ref _font );
 			return _font;
 		}
 	#endregion
@@ -759,7 +759,7 @@ namespace UIGraphLib
 			float y, AlignH alignH, AlignV alignV,
 			float scaleFactor )
 		{
-			this.Draw( g, pane, text, x, y, alignH, alignV,
+			Draw( g, pane, text, x, y, alignH, alignV,
 						scaleFactor, new SizeF() );
 		}
 
@@ -927,9 +927,9 @@ namespace UIGraphLib
 			}
 
 			// make sure the font size is properly scaled
-			Remake( scaleFactor, this.Size, ref _scaledSize, ref _font );
+			Remake( scaleFactor, Size, ref _scaledSize, ref _font );
 			float scaledSuperSize = _scaledSize * Default.SuperSize;
-			Remake( scaleFactor, this.Size * Default.SuperSize, ref scaledSuperSize,
+			Remake( scaleFactor, Size * Default.SuperSize, ref scaledSuperSize,
 				ref _superScriptFont );
 
 			// Get the width and height of the text
@@ -999,7 +999,7 @@ namespace UIGraphLib
 		/// <returns>The scaled font height, in pixels</returns>
 		public float GetHeight( float scaleFactor )
 		{
-			Remake( scaleFactor, this.Size, ref _scaledSize, ref _font );
+			Remake( scaleFactor, Size, ref _scaledSize, ref _font );
 			float height = _font.Height;
 			if ( _isDropShadow )
 				height += (float)( Math.Sin( _dropShadowAngle ) * _dropShadowOffset * _font.Height );
@@ -1022,7 +1022,7 @@ namespace UIGraphLib
 		/// <returns>The scaled font width, in pixels</returns>
 		public float GetWidth( Graphics g, float scaleFactor )
 		{
-			Remake( scaleFactor, this.Size, ref _scaledSize, ref _font );
+			Remake( scaleFactor, Size, ref _scaledSize, ref _font );
 			return g.MeasureString( "x", _font ).Width;
 		}
 
@@ -1044,7 +1044,7 @@ namespace UIGraphLib
 		/// <returns>The scaled text width, in pixels</returns>
 		public float GetWidth( Graphics g, string text, float scaleFactor )
 		{
-			Remake( scaleFactor, this.Size, ref _scaledSize, ref _font );
+			Remake( scaleFactor, Size, ref _scaledSize, ref _font );
 			float width = g.MeasureString( text, _font ).Width;
 			if ( _isDropShadow )
 				width += (float)( Math.Cos( _dropShadowAngle ) * _dropShadowOffset * _font.Height );
@@ -1070,7 +1070,7 @@ namespace UIGraphLib
 		/// a <see c_ref="SizeF"/> struct</returns>
 		public SizeF MeasureString( Graphics g, string text, float scaleFactor )
 		{
-			Remake( scaleFactor, this.Size, ref _scaledSize, ref _font );
+			Remake( scaleFactor, Size, ref _scaledSize, ref _font );
 			SizeF size = g.MeasureString( text, _font );
 			if ( _isDropShadow )
 			{
@@ -1110,7 +1110,7 @@ namespace UIGraphLib
 		/// a <see c_ref="SizeF"/> struct</returns>
 		public SizeF MeasureString( Graphics g, string text, float scaleFactor, SizeF layoutArea )
 		{
-			Remake( scaleFactor, this.Size, ref _scaledSize, ref _font );
+			Remake( scaleFactor, Size, ref _scaledSize, ref _font );
 			SizeF size = g.MeasureString( text, _font, layoutArea );
 			if ( _isDropShadow )
 			{
@@ -1224,7 +1224,7 @@ namespace UIGraphLib
 		{
 			//Remake( scaleFactor, this.Size, ref this.scaledSize, ref this.font );
 			float scaledSuperSize = _scaledSize * Default.SuperSize;
-			Remake( scaleFactor, this.Size * Default.SuperSize, ref scaledSuperSize,
+			Remake( scaleFactor, Size * Default.SuperSize, ref scaledSuperSize,
 				ref _superScriptFont );
 
 			// Get the width and height of the text
@@ -1326,7 +1326,7 @@ namespace UIGraphLib
 			float scaleFactor, SizeF layoutArea )
 		{
 			// make sure the font size is properly scaled
-			Remake( scaleFactor, this.Size, ref _scaledSize, ref _font );
+			Remake( scaleFactor, Size, ref _scaledSize, ref _font );
 
 			// Get the width and height of the text
 			SizeF sizeF;
@@ -1472,7 +1472,7 @@ namespace UIGraphLib
 				float scaleFactor, SizeF layoutArea )
 		{
 			// make sure the font size is properly scaled
-			Remake( scaleFactor, this.Size, ref _scaledSize, ref _font );
+			Remake( scaleFactor, Size, ref _scaledSize, ref _font );
 
 			// Get the width and height of the text
 			SizeF sizeF;
