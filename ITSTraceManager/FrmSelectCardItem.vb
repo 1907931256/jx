@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports DBManager
+Imports DevComponents.DotNetBar.Controls
 Imports ITSBase
-Imports UIControlLib
 
 Public Class FrmSelectCardItem
     Public Property SelItemsTable As DataTable
@@ -45,13 +45,8 @@ Public Class FrmSelectCardItem
         BindEntityTable(dgvSel, GenerateFilterTable(tbSel.Text, SelItemsTable))
     End Sub
 
-    Private Sub BindEntityTable(ByVal dgv As UIDataGridView, ByVal dataSource As DataTable)
+    Private Sub BindEntityTable(ByVal dgv As DataGridViewX, ByVal dataSource As DataTable)
         If dgv Is Nothing OrElse dataSource Is Nothing Then Return
-
-        dgv.ClearBoolColumn()
-        dgv.ClearFormatColumn()
-        Dim nArrWidth() As Short = {60, 40}
-        dgv.ColumnWidthCollection = nArrWidth
         dgv.DataSource = dataSource
         dgv.ClearSelection()
     End Sub
@@ -130,4 +125,5 @@ Public Class FrmSelectCardItem
     Private Sub dgvSel_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvSel.CellDoubleClick
         btnUnsel.PerformClick()
     End Sub
+
 End Class

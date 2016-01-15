@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using ITSBase;
 using VTRACK;
+using ZhiFa.Base.MessageControl;
 
 namespace Test
 {
@@ -103,6 +104,11 @@ namespace Test
         private void btnInOutStatistics_Click(object sender, EventArgs e)
         {
             TrackFactory.SwitchToPage(EnumDef.PageSelector.WareHouseInOutStatisc);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Question, "nihao","确定要关闭吗？");
         }
 
     }

@@ -5,6 +5,7 @@ Imports DBManager
 Imports ITSBase
 Imports TraceCtrlLib.PanelExtend
 Imports UIControlLib
+Imports ZhiFa.Base.MessageControl
 
 Public Class FrmLocationQuery
     Private _entityInfoTable As DataTable
@@ -20,12 +21,12 @@ Public Class FrmLocationQuery
     Private Sub FrmLocationQuery_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.pnlTraceContainer.Width = Me.Width * 0.8
         If (Not TraceFoundation.LoadLayout(ConstDef.TEXT_LBS_LAYOUT_DEMO, Me.pnlTraceContainer)) Then
-            UIMsgBox.Show(MSG_LBS_LOAD_LAYOUT_FIAL)
+            BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_LBS_LOAD_LAYOUT_FIAL, 10)
         Else
             _tracePanelManage = New TracePanelManage(Me.pnlTraceContainer)
         End If
         If Not LoadCardEntityInfo() Then
-            UIMsgBox.Show(MSG_LBS_LOAD_ENTITY_FIAL)
+            BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_LBS_LOAD_ENTITY_FIAL, 10)
         End If
         InitialCategory()
     End Sub
@@ -98,7 +99,7 @@ Public Class FrmLocationQuery
             Dim code As String = dgv.SelectedRows(0).Cells(TEXT_ID_INFO_CODE).Value.ToString()
             Dim retMsg As String = String.Empty
             If Not LocationMinitor(code, retMsg) Then
-                UIMsgBox.Show(retMsg)
+                BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", retMsg, 10)
             End If
         End If
     End Sub

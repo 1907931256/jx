@@ -5,6 +5,7 @@ Imports System.Windows.Forms
 Imports DBManager
 Imports ITSBase
 Imports UIControlLib
+Imports ZhiFa.Base.MessageControl
 
 Enum WorkloadPage
     Outline
@@ -26,7 +27,7 @@ Public Class FrmWorkloadAccount
         UpdateAccountEnable()
         Dim errMsg As String = String.Empty
         If Not CheckParameter(errMsg) Then
-            UIMsgBox.Show(errMsg)
+            BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", errMsg, 10)
             UpdateAccountEnable()
         Else
             Try
@@ -38,7 +39,7 @@ Public Class FrmWorkloadAccount
                 AddHandler backAccount.RunWorkerCompleted, AddressOf BackAccountCompleted
                 backAccount.RunWorkerAsync(New With {.StartTime = startTime, .EndTime = endTime, .CodeCol = codeColl})
             Catch ex As Exception
-                UIMsgBox.Show(ex.Message)
+                BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", ex.Message, 10)
                 UpdateAccountEnable()
             End Try
 

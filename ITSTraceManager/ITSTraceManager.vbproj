@@ -169,6 +169,10 @@
       <Project>{7D89BF2B-1BD1-4787-AB32-2AEEE38FF3E4}</Project>
       <Name>TraceCtrlLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UiControlLibCS\UiControlLibCS.csproj">
+      <Project>{C3915CDA-2F6E-4900-B5D8-C1A6BAFC6E4E}</Project>
+      <Name>UiControlLibCS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UIControlLib\UIControlLib.vbproj">
       <Project>{91E4F7E2-5797-4365-B74F-E748D2115D42}</Project>
       <Name>UIControlLib</Name>

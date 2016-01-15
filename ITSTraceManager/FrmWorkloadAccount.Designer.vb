@@ -197,7 +197,7 @@ Partial Class FrmWorkloadAccount
         '
         'lblItemsSel
         '
-        Me.lblItemsSel.BackColor = System.Drawing.Color.Transparent
+        Me.lblItemsSel.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
         Me.lblItemsSel.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblItemsSel.Fore_Color = System.Drawing.Color.Black
         Me.lblItemsSel.ForeColor = System.Drawing.Color.Transparent
@@ -302,7 +302,7 @@ Partial Class FrmWorkloadAccount
         Me.btnAccount.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnAccount.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnAccount.Location = New System.Drawing.Point(53, 4)
+        Me.btnAccount.Location = New System.Drawing.Point(53, 2)
         Me.btnAccount.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAccount.Name = "btnAccount"
         Me.btnAccount.Size = New System.Drawing.Size(58, 22)

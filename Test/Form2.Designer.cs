@@ -52,6 +52,8 @@ namespace Test
             this.pnlPatInfo = new System.Windows.Forms.Panel();
             this.lblScretch = new System.Windows.Forms.Label();
             this.pnlContainer = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.pnlFunc.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -61,6 +63,8 @@ namespace Test
             // 
             // pnlFunc
             // 
+            this.pnlFunc.Controls.Add(this.button1);
+            this.pnlFunc.Controls.Add(this.groupBox1);
             this.pnlFunc.Controls.Add(this.groupBox2);
             this.pnlFunc.Controls.Add(this.groupBox3);
             this.pnlFunc.Controls.Add(this.gbOper);
@@ -282,6 +286,26 @@ namespace Test
             this.pnlContainer.Size = new System.Drawing.Size(673, 496);
             this.pnlContainer.TabIndex = 2;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 300);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(228, 100);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "维护";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(15, 422);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -326,5 +350,7 @@ namespace Test
         private Panel pnlPatInfo;
         private Label lblScretch;
         private Panel pnlContainer;
+        private Button button1;
+        private GroupBox groupBox1;
     }
 }

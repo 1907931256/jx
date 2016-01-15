@@ -7,6 +7,7 @@ Imports ITSBase
 Imports ITSBase.Accessory
 Imports TraceCtrlLib.PanelExtend
 Imports UIControlLib
+Imports ZhiFa.Base.MessageControl
 
 Public Class FrmTraceQuery
     Private _entityInfoTable As DataTable
@@ -22,12 +23,12 @@ Public Class FrmTraceQuery
     Private Sub FrmLocationQuery_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.pnlTraceContainer.Width = Me.Width * 0.8
         If (Not TraceFoundation.LoadLayout(TEXT_LBS_LAYOUT_DEMO, Me.pnlTraceContainer)) Then
-            UIMsgBox.Show(MSG_LBS_LOAD_LAYOUT_FIAL)
+            BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_LBS_LOAD_LAYOUT_FIAL, 10)
         Else
             _tracePanelManage = New TracePanelManage(Me.pnlTraceContainer)
         End If
         If Not LoadCardEntityInfo() Then
-            UIMsgBox.Show(MSG_LBS_LOAD_ENTITY_FIAL)
+            BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_LBS_LOAD_ENTITY_FIAL, 10)
         End If
         InitialCategory()
     End Sub
@@ -98,7 +99,7 @@ Public Class FrmTraceQuery
 
     Private Sub btnPlay_Click(sender As Object, e As EventArgs) Handles btnPlay.Click
         If dgv.SelectedRows.Count <> 1 Then
-            UIMsgBox.Show(MSG_ERROR_DGV_SEL_ONE)
+            BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Information, "", MSG_ERROR_DGV_SEL_ONE, 10)
             Return
         Else
             Dim traceDb As New DbTraceLayout, traceTable As New DataTable
@@ -106,7 +107,7 @@ Public Class FrmTraceQuery
             Dim dateRangeStart As DateTime = dtpStart.Value.Date
             Dim dateRangeEnd As DateTime = dtpEnd.Value.Date.AddDays(1).AddSeconds(-1)
             If DBMEDITS_RESULT.SUCCESS <> traceDb.QueryTraceInfo(traceTable, code, dateRangeStart, dateRangeEnd) OrElse traceTable.IsNullOrEmpty() Then
-                UIMsgBox.Show(String.Format(MSG_LBS_LOAD_CARD_LOCATION_TIME_RANGE_FIAL, dateRangeStart, dateRangeEnd, code))
+                BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", String.Format(MSG_LBS_LOAD_CARD_LOCATION_TIME_RANGE_FIAL, dateRangeStart, dateRangeEnd, code), 10)
                 Return
             Else
                 playProgress.Value = 0
