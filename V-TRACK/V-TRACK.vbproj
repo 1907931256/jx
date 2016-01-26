@@ -129,6 +129,10 @@
       <Project>{CC5E39F5-66FE-401E-BB81-4F9E47F1B190}</Project>
       <Name>ITSBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ITSMaintainmentManager\ITSMaintainmentManager.csproj">
+      <Project>{E777FDE2-B133-4397-BDB5-7C29E4E9FA75}</Project>
+      <Name>ITSMaintainmentManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ITSOperationManager\ITSOperationManager.vbproj">
       <Project>{99761D48-35DB-4546-A77A-53C2B5B9E6BE}</Project>
       <Name>ITSOperationManager</Name>

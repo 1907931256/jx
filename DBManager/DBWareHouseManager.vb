@@ -2,10 +2,11 @@
 Imports DBAdapter
 Imports ITSBase.Accessory
 Imports System.Data.OleDb
+Imports System.Reflection
 
-Public Class DBWareHouseManager
+Public Class DbWareHouseManager
     Inherits DbOperateSummery
-    Public Function QueryINSInfo(ByRef dt As DataTable, ByVal ParamArray arrType() As INS_KINDS) As Long
+    Public Function QueryInsInfo(ByRef dt As DataTable, ByVal ParamArray arrType() As INS_KINDS) As Long
         Dim strSQl, strCon, strCols As String
         strCon = CreateArrayCondition(INS_KIND, SqlDbType.SmallInt, True, arrType)
         strCols = String.Format("{0},{1},{2},{3},{4}", INS_CODE, INS_NAME_INPUTCODE, INS_NAME, INS_TYPE, INS_UNIT)

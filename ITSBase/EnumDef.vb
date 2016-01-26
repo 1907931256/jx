@@ -113,6 +113,16 @@
 
         TraceManagement = &H3F
 
+        '40~4F Maintainment
+        InsMaintainment = &H40
+        DrugMaintainment = &H41
+        AutoPackageMaintainment = &H42
+        FactoryMaintainment = &H43
+        SterileAreaMaintainment = &H44
+        IdCardMaintainment = &H45
+
+        MaintainmentManagement = &H4F
+
         PageMax = &HFF
     End Enum
 
@@ -147,6 +157,7 @@
         OP_INSTRUMENTS = 201
         HIGH_VALUE = 301
         HIGH_VALUE_SU = 302
+
     End Enum
     '无菌区出入库类型
     Public Enum SR_LOG_INOUT_TYPE As Short
@@ -223,6 +234,12 @@
         高值器械 = 1
         排班医生 = 2
         排班护士 = 3
+    End Enum
+
+    Public Enum STERILE_ROOM_TYPE As Integer
+        CSSD = 1
+        OP = 2
+        FACILITY = 3
     End Enum
 
 End Module

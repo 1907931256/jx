@@ -186,4 +186,17 @@
         End Select
 
     End Function
+
+    Public Function MatchInsKindToString(ByVal insKind As INS_KINDS) As String
+        Select Case insKind
+            Case INS_KINDS.WAREHOUSE_SU
+                Return TEXT_WAREHOUSE_IN_REG_TYPE_WAREHOUSE_INS
+            Case INS_KINDS.HIGH_VALUE
+                Return TEXT_WAREHOUSE_IN_REG_TYPE_HIGN_VALUE
+            Case INS_KINDS.OP_INSTRUMENTS
+                Return TEXT_WAREHOUSE_IN_REG_TYPE_DRUG
+            Case Else
+                Return String.Empty
+        End Select
+    End Function
 End Module

@@ -2,10 +2,10 @@
 Imports System.Windows.Forms
 Imports ITSBase
 Imports ITSBase.Accessory
+Imports ITSMaintainmentManager
 Imports ITSOperationManager
 Imports ITSTraceManager
 Imports ITSWareHouseManager
-Imports UIControlLib
 
 Friend Class VTrackManage
 
@@ -24,6 +24,8 @@ Friend Class VTrackManage
     Private _traceQuery As FrmTraceQuery
     Private _workloadAccount As FrmWorkloadAccount
     Private _alertQuery As FrmAlertQuery
+    Private _insMaintain As FrmInsM
+    Private _drugMaintain As FrmDrugM
 #End Region
     Public Property PageHost() As Control
 
@@ -83,7 +85,9 @@ Friend Class VTrackManage
             page = PageSelector.LocationQuery, GetType(FrmLocationQuery), _
             page = PageSelector.TraceQuery, GetType(FrmTraceQuery), _
             page = PageSelector.TraceWorkloadAccount, GetType(FrmWorkloadAccount), _
-            page = PageSelector.TraceAlertQuery, GetType(FrmAlertQuery))
+            page = PageSelector.TraceAlertQuery, GetType(FrmAlertQuery), _
+            page = PageSelector.InsMaintainment, GetType(FrmInsM), _
+            page = PageSelector.DrugMaintainment, GetType(FrmDrugM))
     End Function
 
     Private Sub InstanceEventBind(ByVal instance As Object)

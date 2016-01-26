@@ -9,11 +9,11 @@ Public Class FrmWareHouseStock
     Private m_dtStockDetail As DataTable
     Private m_dtPackage As DataTable
     Private m_dtPackageDetail As DataTable
-    Private m_oDBWarehouseStock As DBWareHouseManager
+    Private m_oDBWarehouseStock As DbWareHouseManager
 
     Private Sub FrmWareHouseStock_Load(sender As Object, e As EventArgs) Handles Me.Load
         InitialTable()
-        m_oDBWarehouseStock = New DBWareHouseManager
+        m_oDBWarehouseStock = New DbWareHouseManager
         Reset()
         btnTaking.Enabled = False
         btnChange.Enabled = False

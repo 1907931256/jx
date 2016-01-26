@@ -8,7 +8,7 @@ Public Class FrmWareHouseOutReg
     Private m_dtWareHouse As DataTable
     Private oEnterProcessManager As EnterProcessManager
     Private m_dtWareHouseINS As DataTable
-    Private m_oDBWareHouseManager As DBWareHouseManager
+    Private m_oDBWareHouseManager As DbWareHouseManager
     Private Sub FrmOperationNoteQuery_Load(sender As Object, e As EventArgs) Handles Me.Load
         InitialControls()
     End Sub
@@ -18,7 +18,7 @@ Public Class FrmWareHouseOutReg
         oEnterProcessManager.Add(txtBatch)
         oEnterProcessManager.Add(cmbCompany)
         oEnterProcessManager.Add(txtCount)
-        m_oDBWareHouseManager = New DBWareHouseManager
+        m_oDBWareHouseManager = New DbWareHouseManager
         TableConstructor.CreateWareHouseTable(m_dtWareHouse)
         TableConstructor.CreateINSColumns(m_dtWareHouseINS)
         InitialINS()
@@ -29,7 +29,7 @@ Public Class FrmWareHouseOutReg
     End Sub
     Private Sub InitialINS()
         Dim arrINSKind() As INS_KINDS = New INS_KINDS() {INS_KINDS.WAREHOUSE_SU, INS_KINDS.WAREHOUSE_INSTRUMENTS}
-        If m_oDBWareHouseManager.QueryINSInfo(m_dtWareHouseINS, arrINSKind) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
+        If m_oDBWareHouseManager.QueryInsInfo(m_dtWareHouseINS, arrINSKind) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
             UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
         Else
             If m_dtWareHouseINS.Rows.Count > 0 Then

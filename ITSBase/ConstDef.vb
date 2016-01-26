@@ -193,8 +193,10 @@ Public Module ConstDef
     Public Const TEXT_INS_CONTAINER As String = "盛装容器"
     Public Const TEXT_INS_ID As String = "物品编号"
     Public Const TEXT_INS_NAME As String = "物品名称"
+    Public Const TEXT_INS_PRODUCTNAME As String = "物品商品名"
     Public Const TEXT_INS_TYPE As String = "物品规格"
     Public Const TEXT_CONST_IND_KIND As String = "物品类别"
+    Public Const TEXT_INS_INPUTCODE As String = "物品输入码"
     Public Const TEXT_UNIT As String = "单位"
     Public Const TEXT_INS_UNITPRICE As String = "物品单价"
     Public Const TEXT_INS_COST_PRICE As String = "成本价格"
@@ -1270,11 +1272,12 @@ Public Module ConstDef
     Public Const TEXT_CONBOBOX_CLINIC_DEPARTMENT As String = "门诊科室"
 
 
-    Public Const TEXT_COMBOBOX_STERILEROOM As String = "供应室无菌区"
+    Public Const TEXT_CSSD_STERILEROOM As String = "供应室无菌区"
     Public Const TEXT_COMBOBOX_OP_ROOM As String = "手术室使用间"
     Public Const TEXT_COMBOBOX_SECONDARY_STOCK As String = "二级库"
     Public Const TEXT_COMBOBOX_KNIFE_REST As String = "停刀架"
-    Public Const TEXT_COMBOBOX_OP_STERILEROOM As String = "手术室无菌区"
+    Public Const TEXT_OP_STERILEROOM As String = "手术室无菌区"
+    Public Const TEXT_FACILITY_STERILEROOM As String = "设备科库房"
 
     Public Const TEXT_COMBOBOX_LABEL_6_4 As String = "6CM*4CM"
     Public Const TEXT_COMBOBOX_LABEL_8_6 As String = "8CM*6CM"
@@ -1642,7 +1645,6 @@ Public Module ConstDef
     Public Const LOGGER_ERROR_DATA_NOT_EXIST As String = "{0}中{1}的数据为空。"
     Public Const LOGGER_ERROR_FILE_NOT_EXIST As String = "{0}可能不存在，请确认。"
     Public Const LOGGER_ERROR_OVER_ONEROW As String = "{0}中第{1}行与第{2}行重复，请修改。"
-    Public Const TEXT_INS_UNIT As String = "物品单位"
     Public Const TEXT_TYPE_DESCRIPTION As String = "类型描述"
     Public Const TEXT_AVILID_DATE_NUMBER As String = "有效期数值"
     Public Const TEXT_AVILID_DATE_UNIT As String = "有效期单位"
@@ -1846,6 +1848,21 @@ Public Module ConstDef
     Public Const TEXT_LBS_LAYOUT_DEMO = "VICO_DEMO"
     Public Const INT_INTERSECATION_DEVIATION As Integer = 2
 #End Region
+
+#Region "Drug"
+    Public Const TEXT_DRUG_NAME As String = "药品名称"
+    Public Const TEXT_DRUG_INPUTCODE As String = "药品拼音码"
+    Public Const TEXT_DRUG_COMMON_INPUTCODE As String = "商品名拼音码"
+    Public Const TEXT_DRUG_MANUFACTUER As String = "生产厂家"
+    Public Const TEXT_DRUG_CODE As String = "药品编码"
+    Public Const TEXT_DRUG_PACK_UNIT As String = "药品小单位"
+    Public Const TEXT_DRUG_UNIT_RATIO As String = "药品单位比率"
+
+    Public Const TEXT_DRUG_COMPANY_CODE As String = "生产厂家编码"
+    Public Const TEXT_DRUG_COMPANY_NAME As String = "生产厂家名称"
+#End Region
+
+
 
 #Region "General"
 #End Region

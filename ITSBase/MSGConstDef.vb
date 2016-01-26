@@ -531,6 +531,8 @@
     Public Const MSG_OPERATOR_USE_PACKAGE_CANNOT_USE As String = "{0}治疗包已过期,不允许使用"
     Public Const MSG_RETURN_SUCESS As String = "回收登记成功。"
 
+    Public Const MSG_DEL_QUESTION As String = "确定删除吗?"
+
     'Durg
     Public Const MSG_DURG_IN_STOCK As String = "药品信息无效，请重新输入。"
     Public Const MSG_USE_FRONT_REASON As String = "请选择原因"
@@ -544,4 +546,21 @@
     Public Const MSG_LBS_LOAD_CARD_LOCATION_TIME_RANGE_FIAL As String = "找不到{0}至{1}期间编号:{2}的位置信息，请联系管理员。"
     Public Const MSG_LBS_FIND_LOCATION_FIAL As String = "找不到位置信息:{0}。"
 
+    'Maintain
+    Public Const MSG_INS_TYPE_EMPTY As String = "物品类型不能为空。"
+    Public Const MSG_INS_NAME_EMPTY As String = "物品名称不能为空。"
+    Public Const MSG_INS_CODE_EMPTY As String = "物品编码不能为空。"
+    Public Const MSG_INS_CODE_EXIST As String = "物品编码已经存在。"
+    Public Const MSG_INS_INPUTCODE_EMPTY As String = "物品拼音码不能为空。"
+
+    Public Const MSG_DRUG_NAME_EMPTY As String = "药品名称不能为空。"
+    Public Const MSG_DRUG_COMMON_NAME_EMPTY As String = "药品商品名不能为空。"
+    Public Const MSG_DRUG_CODE_EMPTY As String = "药品编码不能为空。"
+    Public Const MSG_DRUG_CODE_EXIST As String = "药品编码已经存在。"
+    Public Const MSG_DRUG_INPUTCODE_EMPTY As String = "药品拼音码不能为空。"
+    Public Const MSG_DRUG_COMMON_INPUTCODE_EMPTY As String = "商品名拼音码不能为空。"
+
+    Public Const MSG_DRUG_MANUFACTURES_NAME_EMPTY As String = "药品生厂厂家不能为空。"
+    Public Const MSG_DRUG_MANUFACTURES_INPUTCODE_EMPTY As String = "药品生厂厂家编码不能为空。"
+    Public Const MSG_DRUG_MANUFACTURES_NAME_EXIST As String = "药品生厂厂家已经存在。"
 End Module

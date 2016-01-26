@@ -3,7 +3,7 @@ Imports UIControlLib
 Imports DBManager
 Imports ITSProcess
 Public Class FrmWareHouseInOutQuery
-    Private m_oDBWareHouseManager As DBWareHouseManager
+    Private m_oDBWareHouseManager As DbWareHouseManager
     Private m_dtWareHouseInOutDetail As DataTable
     Private m_dtInOutTotal As datatable
     Private m_dtWareHouse As DataTable
@@ -14,7 +14,7 @@ Public Class FrmWareHouseInOutQuery
         InitialControls()
     End Sub
     Private Sub InitialControls()
-        m_oDBWareHouseManager = New DBWareHouseManager
+        m_oDBWareHouseManager = New DbWareHouseManager
         TableConstructor.CreateWareHouseINSInOut(m_dtWareHouseInOutTotal)
         TableConstructor.CreateWareHouseInOutDetail(m_dtWareHouseInOutDetail)
         TableConstructor.CreateWareHouseINSInOutTotal(m_dtInOutTotal)
@@ -72,7 +72,7 @@ Public Class FrmWareHouseInOutQuery
     End Sub
     Private Sub InitialINS()
         Dim arrINSKind() As INS_KINDS = New INS_KINDS() {INS_KINDS.WAREHOUSE_SU, INS_KINDS.WAREHOUSE_INSTRUMENTS}
-        If m_oDBWareHouseManager.QueryINSInfo(m_dtWareHouse, arrINSKind) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
+        If m_oDBWareHouseManager.QueryInsInfo(m_dtWareHouse, arrINSKind) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
             UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
         End If
     End Sub

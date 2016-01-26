@@ -248,7 +248,7 @@ Partial Class FrmLocationQuery
         '
         Me.btnClose.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnClose.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnClose.Location = New System.Drawing.Point(4, 3)
+        Me.btnClose.Location = New System.Drawing.Point(4, 5)
         Me.btnClose.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(58, 22)

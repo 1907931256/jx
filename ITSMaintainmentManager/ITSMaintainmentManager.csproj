@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E777FDE2-B133-4397-BDB5-7C29E4E9FA75}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ITSMaintainmentManager</RootNamespace>
+    <AssemblyName>ITSMaintainmentManager</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar2, Version=10.9.0.1, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrmBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmBase.Designer.cs">
+      <DependentUpon>FrmBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSterileAreaM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmSterileAreaM.Designer.cs">
+      <DependentUpon>FrmSterileAreaM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDrugManufacturesM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmDrugManufacturesM.Designer.cs">
+      <DependentUpon>FrmDrugManufacturesM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDrugM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmDrugM.Designer.cs">
+      <DependentUpon>FrmDrugM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmInsM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmInsM.Designer.cs">
+      <DependentUpon>FrmInsM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FrmBase.resx">
+      <DependentUpon>FrmBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSterileAreaM.resx">
+      <DependentUpon>FrmSterileAreaM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDrugManufacturesM.resx">
+      <DependentUpon>FrmDrugManufacturesM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDrugM.resx">
+      <DependentUpon>FrmDrugM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmInsM.resx">
+      <DependentUpon>FrmInsM.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBManager\DBManager.vbproj">
+      <Project>{72AF3398-E8E6-422D-A6CA-205A4018DF3D}</Project>
+      <Name>DBManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ITSBase\ITSBase.vbproj">
+      <Project>{CC5E39F5-66FE-401E-BB81-4F9E47F1B190}</Project>
+      <Name>ITSBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UiControlLibCS\UiControlLibCS.csproj">
+      <Project>{C3915CDA-2F6E-4900-B5D8-C1A6BAFC6E4E}</Project>
+      <Name>UiControlLibCS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

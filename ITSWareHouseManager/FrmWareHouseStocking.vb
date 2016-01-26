@@ -45,7 +45,7 @@ Public Class FrmWareHouseStocking
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
         If m_lWSID = CONST_INVALID_DATA Then Exit Sub
-        Dim oDBWareHouse As DBWareHouseManager = New DBWareHouseManager
+        Dim oDBWareHouse As DbWareHouseManager = New DbWareHouseManager
         If Not Judgement.IsPlusInteger(txtCount.Text) Then
             UIMsgBox.MSGBoxShow(MSG_OP_INS_RQUEST_ERROR_INS_COUNT)
             txtCount.Focus()

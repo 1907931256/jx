@@ -32,6 +32,13 @@ namespace Test
         private void InitializeComponent()
         {
             this.pnlFunc = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnIdCardM = new System.Windows.Forms.Button();
+            this.btnSterileAreaM = new System.Windows.Forms.Button();
+            this.btnFactoryM = new System.Windows.Forms.Button();
+            this.btnAutoPackageM = new System.Windows.Forms.Button();
+            this.btnDrugM = new System.Windows.Forms.Button();
+            this.btnInsM = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnAlertQuery = new System.Windows.Forms.Button();
             this.btnWorkVolumnStatistic = new System.Windows.Forms.Button();
@@ -52,9 +59,10 @@ namespace Test
             this.pnlPatInfo = new System.Windows.Forms.Panel();
             this.lblScretch = new System.Windows.Forms.Label();
             this.pnlContainer = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.pnlFunc.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.gbOper.SuspendLayout();
@@ -63,7 +71,6 @@ namespace Test
             // 
             // pnlFunc
             // 
-            this.pnlFunc.Controls.Add(this.button1);
             this.pnlFunc.Controls.Add(this.groupBox1);
             this.pnlFunc.Controls.Add(this.groupBox2);
             this.pnlFunc.Controls.Add(this.groupBox3);
@@ -73,6 +80,84 @@ namespace Test
             this.pnlFunc.Name = "pnlFunc";
             this.pnlFunc.Size = new System.Drawing.Size(228, 496);
             this.pnlFunc.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btnIdCardM);
+            this.groupBox1.Controls.Add(this.btnSterileAreaM);
+            this.groupBox1.Controls.Add(this.btnFactoryM);
+            this.groupBox1.Controls.Add(this.btnAutoPackageM);
+            this.groupBox1.Controls.Add(this.btnDrugM);
+            this.groupBox1.Controls.Add(this.btnInsM);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 300);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(228, 133);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "维护";
+            // 
+            // btnIdCardM
+            // 
+            this.btnIdCardM.Location = new System.Drawing.Point(116, 75);
+            this.btnIdCardM.Name = "btnIdCardM";
+            this.btnIdCardM.Size = new System.Drawing.Size(108, 23);
+            this.btnIdCardM.TabIndex = 21;
+            this.btnIdCardM.Text = "ID信息维护";
+            this.btnIdCardM.UseVisualStyleBackColor = true;
+            this.btnIdCardM.Click += new System.EventHandler(this.btnIdCardM_Click);
+            // 
+            // btnSterileAreaM
+            // 
+            this.btnSterileAreaM.Location = new System.Drawing.Point(4, 75);
+            this.btnSterileAreaM.Name = "btnSterileAreaM";
+            this.btnSterileAreaM.Size = new System.Drawing.Size(108, 23);
+            this.btnSterileAreaM.TabIndex = 20;
+            this.btnSterileAreaM.Text = "无菌区场所维护";
+            this.btnSterileAreaM.UseVisualStyleBackColor = true;
+            this.btnSterileAreaM.Click += new System.EventHandler(this.btnSterileAreaM_Click);
+            // 
+            // btnFactoryM
+            // 
+            this.btnFactoryM.Location = new System.Drawing.Point(116, 46);
+            this.btnFactoryM.Name = "btnFactoryM";
+            this.btnFactoryM.Size = new System.Drawing.Size(108, 23);
+            this.btnFactoryM.TabIndex = 19;
+            this.btnFactoryM.Text = "厂家信息维护";
+            this.btnFactoryM.UseVisualStyleBackColor = true;
+            this.btnFactoryM.Click += new System.EventHandler(this.btnFactoryM_Click);
+            // 
+            // btnAutoPackageM
+            // 
+            this.btnAutoPackageM.Location = new System.Drawing.Point(4, 46);
+            this.btnAutoPackageM.Name = "btnAutoPackageM";
+            this.btnAutoPackageM.Size = new System.Drawing.Size(108, 23);
+            this.btnAutoPackageM.TabIndex = 18;
+            this.btnAutoPackageM.Text = "智能配包维护";
+            this.btnAutoPackageM.UseVisualStyleBackColor = true;
+            this.btnAutoPackageM.Click += new System.EventHandler(this.btnAutoPackageM_Click);
+            // 
+            // btnDrugM
+            // 
+            this.btnDrugM.Location = new System.Drawing.Point(116, 18);
+            this.btnDrugM.Name = "btnDrugM";
+            this.btnDrugM.Size = new System.Drawing.Size(108, 23);
+            this.btnDrugM.TabIndex = 17;
+            this.btnDrugM.Text = "药品维护";
+            this.btnDrugM.UseVisualStyleBackColor = true;
+            this.btnDrugM.Click += new System.EventHandler(this.btnDrugM_Click);
+            // 
+            // btnInsM
+            // 
+            this.btnInsM.Location = new System.Drawing.Point(4, 18);
+            this.btnInsM.Name = "btnInsM";
+            this.btnInsM.Size = new System.Drawing.Size(108, 23);
+            this.btnInsM.TabIndex = 16;
+            this.btnInsM.Text = "物品维护";
+            this.btnInsM.UseVisualStyleBackColor = true;
+            this.btnInsM.Click += new System.EventHandler(this.btnInsM_Click);
             // 
             // groupBox2
             // 
@@ -286,25 +371,23 @@ namespace Test
             this.pnlContainer.Size = new System.Drawing.Size(673, 496);
             this.pnlContainer.TabIndex = 2;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 300);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(228, 100);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "维护";
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(15, 422);
+            this.button1.Location = new System.Drawing.Point(4, 104);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
+            this.button1.Size = new System.Drawing.Size(108, 23);
+            this.button1.TabIndex = 22;
+            this.button1.Text = "阅读器信息维护";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(116, 104);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(108, 23);
+            this.button2.TabIndex = 23;
+            this.button2.Text = "布局信息维护";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // Form2
             // 
@@ -319,6 +402,7 @@ namespace Test
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form2_Load);
             this.pnlFunc.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.gbOper.ResumeLayout(false);
@@ -350,7 +434,14 @@ namespace Test
         private Panel pnlPatInfo;
         private Label lblScretch;
         private Panel pnlContainer;
-        private Button button1;
         private GroupBox groupBox1;
+        private Button btnIdCardM;
+        private Button btnSterileAreaM;
+        private Button btnFactoryM;
+        private Button btnAutoPackageM;
+        private Button btnDrugM;
+        private Button btnInsM;
+        private Button button2;
+        private Button button1;
     }
 }

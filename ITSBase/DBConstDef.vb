@@ -198,6 +198,7 @@ Public Module DBConstDef
     Public Const PC_ID As String = "PC_ID"
     Public Const PC_CHINESECODE As String = "PC_CHINESECODE"
     Public Const PC_NAME As String = "PC_NAME"
+    Public Const SEQ_MST_PRODUCT_COMPANY_INFO As String = "SEQ_MST_PRODUCT_COMPANY_INFO"
 
     '物品单位表
     Public Const MST_INS_UNIT As String = "MST_INS_UNIT"
@@ -1421,6 +1422,7 @@ Public Module DBConstDef
 
     '手术器械申请表
     Public Const TEXT_INS_CODE As String = "物品编号"
+    Public Const TEXT_INS_UNIT As String = "物品单位"
     Public Const TEXT_INS_SPECIFICATION As String = "物品规格"
     Public Const TEXT_INS_AMOUNT As String = "物品数量"
     Public Const TEXT_INS_STATUS As String = "确认"
@@ -1448,6 +1450,7 @@ Public Module DBConstDef
     Public Const INS_SPEC As String = "INS_SPEC"
     Public Const INS_PRODUCT_NAME As String = "INS_PRODUCT_NAME"
     Public Const INS_NAME_INPUTCODE As String = "INS_NAME_INPUTCODE"
+    Public Const SEQ_MST_INSTRUMENT_INFO As String = "SEQ_MST_INSTRUMENT_INFO"
 
     '药品信息表
     Public Const MST_DRUG_INFO As String = "MST_DRUG_INFO"
@@ -1460,9 +1463,11 @@ Public Module DBConstDef
     Public Const DRUG_SPECIFICATION As String = "DRUG_SPECIFICATION"
     Public Const DRUG_MANUFACTURERS As String = "DRUG_MANUFACTURERS"
     Public Const DRUG_MEASUER_UNITS As String = "DRUG_MEASUER_UNITS"
-    Public Const DRUG_PACK_UNIT As String = "DROG_PACK_UNIT"
+    Public Const DRUG_PACK_UNIT As String = "DRUG_PACK_UNIT"
+    Public Const DRUG_PACK_UNITS As String = "DRUG_PACK_UNITS"
     Public Const DRUG_UNITS As String = "DRUG_UNITS"
     Public Const DRUG_TO_PACK_CONVERSION_RATIO As String = "DRUG_TO_PACK_CONVERSION_RATIO"
+    Public Const SEQ_MST_DRUG_INFO As String = "SEQ_MST_DRUG_INFO"
 
     '手术使用表
     Public Const TBL_OPERATION_USE_MASTER As String = "TBL_OPERATION_USE_MASTER"
@@ -2016,5 +2021,6 @@ Public Module DBConstDef
     Public Const TRACE_PANEL_NAME As String = "PANEL_NAME"
     Public Const TEXT_TRACE_LOCATION_NAME As String = "地址"
     Public Const TEXT_TRACE_CARD_NAME As String = "名称"
+
 #End Region
 End Module

@@ -21,6 +21,10 @@ namespace Test
                 TrackFactory.SetUserInfo("User_001", "管理员");
                 TrackFactory.Host = pnlContainer;
             }
+            else
+            {
+                BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Exclamation, "警告", "系统初始化失败!");
+            }
             _patInfoWidth = pnlPatInfo.Width;
         }
 
@@ -106,9 +110,34 @@ namespace Test
             TrackFactory.SwitchToPage(EnumDef.PageSelector.WareHouseInOutStatisc);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnInsM_Click(object sender, EventArgs e)
         {
-            BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Question, "nihao","确定要关闭吗？");
+            TrackFactory.SwitchToPage(EnumDef.PageSelector.InsMaintainment);
+        }
+
+        private void btnDrugM_Click(object sender, EventArgs e)
+        {
+            TrackFactory.SwitchToPage(EnumDef.PageSelector.DrugMaintainment);
+        }
+
+        private void btnAutoPackageM_Click(object sender, EventArgs e)
+        {
+            TrackFactory.SwitchToPage(EnumDef.PageSelector.AutoPackageMaintainment);
+        }
+
+        private void btnFactoryM_Click(object sender, EventArgs e)
+        {
+            TrackFactory.SwitchToPage(EnumDef.PageSelector.FactoryMaintainment);
+        }
+
+        private void btnSterileAreaM_Click(object sender, EventArgs e)
+        {
+            TrackFactory.SwitchToPage(EnumDef.PageSelector.SterileAreaMaintainment);
+        }
+
+        private void btnIdCardM_Click(object sender, EventArgs e)
+        {
+            TrackFactory.SwitchToPage(EnumDef.PageSelector.IdCardMaintainment);
         }
 
     }

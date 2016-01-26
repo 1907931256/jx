@@ -8,7 +8,7 @@ Public Class FrmWareHouseInReg
     Private oEnterProcessManager As EnterProcessManager
     Private m_dtWareHouseINS As DataTable
     Private m_dtHighValueINS As DataTable
-    Private m_oDBWareHouseManager As DBWareHouseManager
+    Private m_oDBWareHouseManager As DbWareHouseManager
     Public Sub InitialControls()
 
         ' This call is required by the designer.
@@ -28,7 +28,7 @@ Public Class FrmWareHouseInReg
         cmbINSType.Items.Add(TEXT_WAREHOUSE_IN_REG_TYPE_DRUG)
         cmbINSType.Text = TEXT_WAREHOUSE_IN_REG_TYPE_WAREHOUSE_INS
 
-        m_oDBWareHouseManager = New DBWareHouseManager
+        m_oDBWareHouseManager = New DbWareHouseManager
         InitialINS()
         InitialCompany()
         InitialINSName()
@@ -104,11 +104,11 @@ Public Class FrmWareHouseInReg
     End Sub
     Private Sub InitialINS()
         Dim arrINSKind() As INS_KINDS = New INS_KINDS() {INS_KINDS.WAREHOUSE_SU, INS_KINDS.WAREHOUSE_INSTRUMENTS}
-        If m_oDBWareHouseManager.QueryINSInfo(m_dtWareHouseINS, arrINSKind) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
+        If m_oDBWareHouseManager.QueryInsInfo(m_dtWareHouseINS, arrINSKind) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
             UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
         End If
         arrINSKind = {INS_KINDS.HIGH_VALUE_SU}
-        If m_oDBWareHouseManager.QueryINSInfo(m_dtHighValueINS, arrINSKind) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
+        If m_oDBWareHouseManager.QueryInsInfo(m_dtHighValueINS, arrINSKind) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
             UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
         End If
     End Sub

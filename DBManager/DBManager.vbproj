@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="DbDrugManage.vb" />
     <Compile Include="DBExpried.vb" />
+    <Compile Include="DbMaintainment.vb" />
     <Compile Include="DBOperate.vb" />
     <Compile Include="DBOperateOle.vb" />
     <Compile Include="DbOperateSummery.vb" />
