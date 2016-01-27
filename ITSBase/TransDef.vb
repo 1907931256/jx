@@ -199,4 +199,19 @@
                 Return String.Empty
         End Select
     End Function
+
+    Public Function MatchSterileRoomTypeToString(ByVal type As STERILE_ROOM_TYPE) As String
+        Select Case type
+            Case STERILE_ROOM_TYPE.CSSD
+                Return TEXT_CSSD_STERILEROOM
+            Case STERILE_ROOM_TYPE.OP
+                Return TEXT_OP_STERILEROOM
+            Case STERILE_ROOM_TYPE.FACILITY
+                Return TEXT_FACILITY_STERILEROOM
+            Case Else
+                Return String.Empty
+        End Select
+    End Function
+
+
 End Module

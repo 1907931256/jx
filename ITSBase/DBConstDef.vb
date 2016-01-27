@@ -247,6 +247,7 @@ Public Module DBConstDef
     Public Const SI_DP_NAME As String = "SI_DP_NAME"
     Public Const SI_ROOM_ID As String = "SI_ROOM_ID"
     Public Const SI_ROOM_NAME As String = "SI_ROOM_NAME"
+    Public Const SEQ_MST_STERILEROOM_INFO As String = "SEQ_MST_STERILEROOM_INFO"
 
     '无菌区组合信息表
     Public Const MST_STERILEROOM_GROUP As String = "MST_STERILEROOM_GROUP"
@@ -255,6 +256,7 @@ Public Module DBConstDef
     Public Const MSG_TYPE As String = "MSG_TYPE"
 
     '手术房号表
+    Public Const OPERATING_ROOM As String = "OPERATING_ROOM"
     Public Const MST_OP_ROOM_INFO As String = "MST_OP_ROOM_INFO"
     Public Const OPRM_ID As String = "OPRM_ID"
     Public Const OPRM_DP_ID As String = "OPRM_DP_ID"
@@ -1370,6 +1372,8 @@ Public Module DBConstDef
     '科室字典表
     Public Const DIC_DEPT_INFO As String = "DEPT_INFO"
     Public Const DEPT_ID As String = "DEPT_ID"
+    Public Const DEPT_CODE As String = "DEPT_CODE"
+    Public Const SIMPLE_NAME As String = "SIMPLE_NAME"
     Public Const FULL_NAME As String = "FULL_NAME"
 
     '用户字典表
@@ -1428,7 +1432,9 @@ Public Module DBConstDef
     Public Const TEXT_INS_STATUS As String = "确认"
 
     '手术所需固定药品表
+    Public Const SEQ_MST_OPERATION_DRUG_DETAIL As String = "SEQ_MST_OPERATION_DRUG_DETAIL"
     Public Const MST_OPERATION_DRUG_DETAIL As String = "MST_OPERATION_DRUG_DETAIL"
+    Public Const OPDD_ID As String = "OPDD_ID"
     Public Const OPDD_REG_ID As String = "OPDD_REG_ID"
     Public Const OPDD_DRUG_CODE As String = "OPDD_DRUG_CODE"
     Public Const OPDD_COMMON_NAME As String = "OPDD_COMMON_NAME"
@@ -1439,7 +1445,9 @@ Public Module DBConstDef
     Public Const OPDD_AMOUNT As String = "OPDD_AMOUNT"
 
     '手术所需固定物品表
+    Public Const SEQ_MST_OPERATION_INS_DETAIL As String = "SEQ_MST_OPERATION_INS_DETAIL"
     Public Const MST_OPERATION_INS_DETAIL As String = "MST_OPERATION_INS_DETAIL"
+    Public Const OPID_ID As String = "OPID_ID"
     Public Const OPID_REG_ID As String = "OPID_REG_ID"
     Public Const OPID_INS_ID As String = "OPID_INS_ID"
     Public Const OPID_INS_COUNT As String = "OPID_INS_COUNT"
@@ -1987,6 +1995,7 @@ Public Module DBConstDef
     Public Const LAYOUT_DETAIL_DOOR_STYLE As String = "DOOR_STYLE"
 
     'Trace Id Info
+    Public Const SEQ_TRACE_ID_INFO As String = "SEQ_TRACE_ID_INFO"
     Public Const TRACE_ID_INFO As String = "TRACE_ID_INFO"
     Public Const ID_INFO_ID As String = "ID"
     Public Const ID_INFO_CODE As String = "CODE"
@@ -1995,9 +2004,10 @@ Public Module DBConstDef
     Public Const ID_INFO_ROLE As String = "ROLE"
     Public Const ID_INFO_CATEGORY As String = "CATEGORY"
     Public Const ID_INFO_VALID As String = "VALID"
-    Public Const TEXT_ID_INFO_NAME As String = "名称"
-    Public Const TEXT_ID_INFO_CATEGORY As String = "类别"
-    Public Const TEXT_ID_INFO_CODE As String = "编号"
+    Public Const TEXT_ID_INFO_NAME As String = "ID卡名称"
+    Public Const TEXT_ID_INFO_CATEGORY As String = "ID卡类别"
+    Public Const TEXT_ID_INFO_CODE As String = "ID卡编码"
+    Public Const TEXT_ID_INFO_NO As String = "ID卡号"
 
     'Trace_Trail_Record
     Public Const TRACE_TRAIL_RECORD As String = "TRACE_TRAIL_RECORD"

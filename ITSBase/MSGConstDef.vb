@@ -552,6 +552,8 @@
     Public Const MSG_INS_CODE_EMPTY As String = "物品编码不能为空。"
     Public Const MSG_INS_CODE_EXIST As String = "物品编码已经存在。"
     Public Const MSG_INS_INPUTCODE_EMPTY As String = "物品拼音码不能为空。"
+    Public Const MSG_INS_AMOUNT_EMPTY As String = "物品数量不能为空。"
+    Public Const MSG_INS_EXIST As String = "物品已经存在。"
 
     Public Const MSG_DRUG_NAME_EMPTY As String = "药品名称不能为空。"
     Public Const MSG_DRUG_COMMON_NAME_EMPTY As String = "药品商品名不能为空。"
@@ -559,8 +561,23 @@
     Public Const MSG_DRUG_CODE_EXIST As String = "药品编码已经存在。"
     Public Const MSG_DRUG_INPUTCODE_EMPTY As String = "药品拼音码不能为空。"
     Public Const MSG_DRUG_COMMON_INPUTCODE_EMPTY As String = "商品名拼音码不能为空。"
+    Public Const MSG_DRUG_AMOUNT_EMPTY As String = "药品数量不能为空。"
+    Public Const MSG_DRUG_EXIST As String = "药品已经存在。"
 
     Public Const MSG_DRUG_MANUFACTURES_NAME_EMPTY As String = "药品生厂厂家不能为空。"
     Public Const MSG_DRUG_MANUFACTURES_INPUTCODE_EMPTY As String = "药品生厂厂家编码不能为空。"
     Public Const MSG_DRUG_MANUFACTURES_NAME_EXIST As String = "药品生厂厂家已经存在。"
+
+    Public Const MSG_STERILE_AREA_NAME_EMPTY As String = "无菌室名称不能为空。"
+    Public Const MSG_STERILE_AREA_TYPE_EMPTY As String = "无菌室类型不能为空。"
+    Public Const MSG_STERILE_AREA_DEPT_EMPTY As String = "无菌室所属科室不能为空。"
+    Public Const MSG_STERILE_AREA_ROOM_EMPTY As String = "无菌室所属手术间不能为空。"
+    Public Const MSG_STERILE_AREA_EXIST As String = "无菌室的信息已经存在。"
+
+    Public Const MSG_IDCARD_TYPE_EMPTY As String = "ID卡类型不能为空。"
+    Public Const MSG_IDCARD_NAME_EMPTY As String = "ID卡名称不能为空。"
+    Public Const MSG_IDCARD_CODE_EMPTY As String = "ID卡编码不能为空。"
+    Public Const MSG_IDCARD_NO_EMPTY As String = "ID卡号不能为空。"
+    Public Const MSG_IDCARD_CODE_EXIST As String = "ID卡编码已经存在。"
+    Public Const MSG_IDCARD_NO_EXIST As String = "ID卡号已经存在。"
 End Module

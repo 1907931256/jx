@@ -1862,7 +1862,17 @@ Public Module ConstDef
     Public Const TEXT_DRUG_COMPANY_NAME As String = "生产厂家名称"
 #End Region
 
+#Region "Dept"
+    Public Const TEXT_DEPT_CODE As String = "科室编码"
+    Public Const TEXT_DEPT_SIMPLE_NAME As String = "科室简称"
+    Public Const TEXT_DEPT_FULL_NAME As String = "科室全称"
+    Public Const TEXT_DEPT_NAME As String = "科室名称"
+#End Region
 
+#Region "Sterile Area"
+    Public Const TEXT_STERILE_AREA_NAME As String = "无菌室名称"
+    Public Const TEXT_STERILE_AREA_TYPE As String = "无菌室类型"
+#End Region
 
 #Region "General"
 #End Region

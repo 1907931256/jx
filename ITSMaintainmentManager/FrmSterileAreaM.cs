@@ -42,6 +42,8 @@ namespace ITSMaintainmentManager
                     string name = Judgement.JudgeDBNullValue(row[ConstDef.TEXT_DEPT_SIMPLE_NAME],EnumDef.ENUM_DATA_TYPE.DATA_TYPE_STRING).ToString();
                     cmbDept.Items.Add(new { Key = id, Value = name });
                 }
+                cmbDept.ValueMember = "Key";
+                cmbDept.DisplayMember = "Value";
             }
         }
 
@@ -51,6 +53,14 @@ namespace ITSMaintainmentManager
             DataTable queryTable = new DataTable();
             if (operDb.QuerySterileAreaInfo(ref queryTable) == EnumDef.DBMEDITS_RESULT.SUCCESS)
             {
+                if (null != queryTable.Columns[ConstDef.TEXT_STERILE_AREA_TYPE])
+                {
+                    foreach (DataRow row in queryTable.Rows)
+                    {
+                        int type = Convert.ToInt32(Judgement.JudgeDBNullValue(row[ConstDef.TEXT_STERILE_AREA_TYPE].ToString(), EnumDef.ENUM_DATA_TYPE.DATA_TYPE_INTEGER));
+                        row[ConstDef.TEXT_STERILE_AREA_TYPE] = TransDef.MatchSterileRoomTypeToString((EnumDef.STERILE_ROOM_TYPE)type);
+                    }
+                }
                 dgv.DataSource = queryTable;
                 if (null != dgv.Columns[DBConstDef.SI_ID])
                     dgv.Columns[DBConstDef.SI_ID].Visible = false;
@@ -77,8 +87,8 @@ namespace ITSMaintainmentManager
         {
             cmbType.Text = dgv.SelectedRows[0].Cells[ConstDef.TEXT_STERILE_AREA_TYPE].Value.ToString();
             tbName.Text = dgv.SelectedRows[0].Cells[ConstDef.TEXT_STERILE_AREA_NAME].Value.ToString();
-            cmbDept.Text = dgv.SelectedRows[0].Cells[ConstDef.TEXT_STERILE_AREA_DEPT].Value.ToString();
-            cmbRoom.Text = dgv.SelectedRows[0].Cells[ConstDef.TEXT_STERILE_AREA_ROOM].Value.ToString();
+            cmbDept.Text = dgv.SelectedRows[0].Cells[ConstDef.TEXT_DEPT_NAME].Value.ToString();
+            cmbRoom.Text = dgv.SelectedRows[0].Cells[ConstDef.TEXT_ROOM_NAME].Value.ToString();
 
             EnterUpdateStatus(true);
         }
@@ -105,11 +115,13 @@ namespace ITSMaintainmentManager
             //apply to datagridview, its datasource and db
             dgv.SelectedRows[0].Cells[ConstDef.TEXT_STERILE_AREA_TYPE].Value = cmbType.Text;
             dgv.SelectedRows[0].Cells[ConstDef.TEXT_STERILE_AREA_NAME].Value = tbName.Text;
-            dgv.SelectedRows[0].Cells[ConstDef.TEXT_STERILE_AREA_DEPT].Value = cmbDept.Text;
-            dgv.SelectedRows[0].Cells[ConstDef.TEXT_STERILE_AREA_ROOM].Value = cmbRoom.Text;
-            int type =(int)(EnumDef.INS_KINDS)(cmbINSType.SelectedItem.GetType().GetProperty("Key").GetValue(cmbINSType.SelectedItem, null));
-            int dept = (int)(EnumDef.INS_KINDS)(cmbINSType.SelectedItem.GetType().GetProperty("Key").GetValue(cmbINSType.SelectedItem, null));
-            int room = (int)(EnumDef.INS_KINDS)(cmbINSType.SelectedItem.GetType().GetProperty("Key").GetValue(cmbINSType.SelectedItem, null));
+            dgv.SelectedRows[0].Cells[ConstDef.TEXT_DEPT_NAME].Value = cmbDept.Text;
+            dgv.SelectedRows[0].Cells[ConstDef.TEXT_ROOM_NAME].Value = cmbRoom.Text;
+            int type = (int)(EnumDef.STERILE_ROOM_TYPE)(cmbType.SelectedItem.GetType().GetProperty("Key").GetValue(cmbType.SelectedItem, null));
+            int dept = (int)(cmbDept.SelectedItem.GetType().GetProperty("Key").GetValue(cmbDept.SelectedItem, null));
+            int room = -1;
+            if (null != cmbRoom.SelectedItem)
+                room = (int)(cmbRoom.SelectedItem.GetType().GetProperty("Key").GetValue(cmbRoom.SelectedItem, null));
             ((DataTable)dgv.DataSource).AcceptChanges();
             DbMaintainment operDb = new DbMaintainment();
             operDb.UpdateSterileAreaInfo(id, tbName.Text, type, dept, cmbDept.Text, room, cmbRoom.Text);
@@ -132,17 +144,19 @@ namespace ITSMaintainmentManager
                 //insert a new row,db and datatable
                 DbMaintainment operDb = new DbMaintainment();
                 int id = 0;
-                int type = (int)(EnumDef.INS_KINDS)(cmbINSType.SelectedItem.GetType().GetProperty("Key").GetValue(cmbINSType.SelectedItem, null));
-                int dept = (int)(EnumDef.INS_KINDS)(cmbINSType.SelectedItem.GetType().GetProperty("Key").GetValue(cmbINSType.SelectedItem, null));
-                int room = (int)(EnumDef.INS_KINDS)(cmbINSType.SelectedItem.GetType().GetProperty("Key").GetValue(cmbINSType.SelectedItem, null));
+                int type = (int)(EnumDef.STERILE_ROOM_TYPE)(cmbType.SelectedItem.GetType().GetProperty("Key").GetValue(cmbType.SelectedItem, null));
+                int dept = (int)(cmbDept.SelectedItem.GetType().GetProperty("Key").GetValue(cmbDept.SelectedItem, null));
+                int room = -1;
+                if (null != cmbRoom.SelectedItem)
+                    room = (int)(cmbRoom.SelectedItem.GetType().GetProperty("Key").GetValue(cmbRoom.SelectedItem, null));
                 operDb.InsertSterileAreaInfo(ref id, tbName.Text, type, dept, cmbDept.Text, room, cmbRoom.Text);
 
                 DataRow newRow = ((DataTable) dgv.DataSource).NewRow();
-                newRow[DBConstDef.PC_ID] = id;
+                newRow[DBConstDef.SI_ID] = id;
                 newRow[ConstDef.TEXT_STERILE_AREA_TYPE] = cmbType.Text;
                 newRow[ConstDef.TEXT_STERILE_AREA_NAME] = tbName.Text;
-                newRow[ConstDef.TEXT_STERILE_AREA_DEPT] = cmbDept.Text;
-                newRow[ConstDef.TEXT_STERILE_AREA_ROOM] = cmbRoom.Text;
+                newRow[ConstDef.TEXT_DEPT_NAME] = cmbDept.Text;
+                newRow[ConstDef.TEXT_ROOM_NAME] = cmbRoom.Text;
                 ((DataTable) dgv.DataSource).Rows.Add(newRow);
             }
         }
@@ -179,13 +193,6 @@ namespace ITSMaintainmentManager
                 return false;
             }
 
-            DataTable table = (DataTable)dgv.DataSource;
-            if (checkCode && table.Select(String.Format("{0}='{1}'", ConstDef.TEXT_DRUG_COMPANY_NAME, tbName.Text)).Length > 0)
-            {
-                errMsg = MsgConstDef.MSG_STERILE_AREA_EXIST;
-                return false;
-            }
-
             if (string.IsNullOrEmpty(cmbType.Text))
             {
                 errMsg = MsgConstDef.MSG_STERILE_AREA_TYPE_EMPTY;
@@ -198,29 +205,39 @@ namespace ITSMaintainmentManager
                 return false;
             }
 
-            if (cmbRoom.Enabled && string.IsNullOrEmpty(cmbRoom.Text))
+            if (cmbRoom.Items.Count>0 && string.IsNullOrEmpty(cmbRoom.Text))
             {
                 errMsg = MsgConstDef.MSG_STERILE_AREA_ROOM_EMPTY;
                 return false;
             }
 
+            DataTable table = (DataTable)dgv.DataSource;
+            if (checkCode && table.Select(String.Format("{0}='{1}' AND {2}='{3}' AND {4}='{5}' AND {6}='{7}'",
+                                          ConstDef.TEXT_STERILE_AREA_NAME, tbName.Text, ConstDef.TEXT_STERILE_AREA_TYPE, cmbType.Text,
+                                          ConstDef.TEXT_DEPT_NAME, cmbDept.Text, ConstDef.TEXT_ROOM_NAME, cmbRoom.Text)).Length > 0)
+            {
+                errMsg = MsgConstDef.MSG_STERILE_AREA_EXIST;
+                return false;
+            }
             return true;
         }
 
         private void cmbDept_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int id = (int)(EnumDef.INS_KINDS)(cmbINSType.SelectedItem.GetType().GetProperty("Key").GetValue(cmbINSType.SelectedItem, null));
-            //如果科室是设备科，则不需要维护房间
+            cmbRoom.Items.Clear();
+            int id = (int)(EnumDef.STERILE_ROOM_TYPE)(cmbDept.SelectedItem.GetType().GetProperty("Key").GetValue(cmbDept.SelectedItem, null));
             DbMaintainment operDb = new DbMaintainment();
             DataTable queryTable = new DataTable();
-            if (operDb.QueryRoomInfoBy(ref queryTable) == EnumDef.DBMEDITS_RESULT.SUCCESS)
+            if (operDb.QueryRoomInfoByDeptId(ref queryTable,id) == EnumDef.DBMEDITS_RESULT.SUCCESS)
             {
                 foreach (DataRow row in queryTable.Rows)
                 {
-                    int id = Convert.ToInt32(Judgement.JudgeDBNullValue(row[DBConstDef.DEPT_ID], EnumDef.ENUM_DATA_TYPE.DATA_TYPE_INTEGER));
-                    string name = Judgement.JudgeDBNullValue(row[ConstDef.TEXT_DEPT_SIMPLE_NAME], EnumDef.ENUM_DATA_TYPE.DATA_TYPE_STRING).ToString();
-                    cmbDept.Items.Add(new { Key = id, Value = name });
+                    int roomId = Convert.ToInt32(Judgement.JudgeDBNullValue(row[DBConstDef.ROOM_ID], EnumDef.ENUM_DATA_TYPE.DATA_TYPE_INTEGER));
+                    string name = Judgement.JudgeDBNullValue(row[ConstDef.TEXT_ROOM_NAME], EnumDef.ENUM_DATA_TYPE.DATA_TYPE_STRING).ToString();
+                    cmbRoom.Items.Add(new { Key = roomId, Value = name });
                 }
+                cmbRoom.ValueMember = "Key";
+                cmbRoom.DisplayMember = "Value";
             }
         }
     }

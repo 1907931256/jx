@@ -33,6 +33,7 @@ namespace Test
         {
             this.pnlFunc = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.btnIdCardM = new System.Windows.Forms.Button();
             this.btnSterileAreaM = new System.Windows.Forms.Button();
             this.btnFactoryM = new System.Windows.Forms.Button();
@@ -59,8 +60,6 @@ namespace Test
             this.pnlPatInfo = new System.Windows.Forms.Panel();
             this.lblScretch = new System.Windows.Forms.Label();
             this.pnlContainer = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.pnlFunc.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -84,7 +83,6 @@ namespace Test
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.btnIdCardM);
             this.groupBox1.Controls.Add(this.btnSterileAreaM);
             this.groupBox1.Controls.Add(this.btnFactoryM);
@@ -98,6 +96,15 @@ namespace Test
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "维护";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(4, 104);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(108, 23);
+            this.button2.TabIndex = 23;
+            this.button2.Text = "布局信息维护";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // btnIdCardM
             // 
@@ -371,24 +378,6 @@ namespace Test
             this.pnlContainer.Size = new System.Drawing.Size(673, 496);
             this.pnlContainer.TabIndex = 2;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(4, 104);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(108, 23);
-            this.button1.TabIndex = 22;
-            this.button1.Text = "阅读器信息维护";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(116, 104);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(108, 23);
-            this.button2.TabIndex = 23;
-            this.button2.Text = "布局信息维护";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -442,6 +431,5 @@ namespace Test
         private Button btnDrugM;
         private Button btnInsM;
         private Button button2;
-        private Button button1;
     }
 }

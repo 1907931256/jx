@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevComponents.DotNetBar2, Version=10.9.0.1, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -48,6 +49,18 @@
     </Compile>
     <Compile Include="FrmBase.Designer.cs">
       <DependentUpon>FrmBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmAutoPackageM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmAutoPackageM.Designer.cs">
+      <DependentUpon>FrmAutoPackageM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmIdCardM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FrmIdCardM.Designer.cs">
+      <DependentUpon>FrmIdCardM.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmSterileAreaM.cs">
       <SubType>UserControl</SubType>
@@ -79,6 +92,12 @@
     <EmbeddedResource Include="FrmBase.resx">
       <DependentUpon>FrmBase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmAutoPackageM.resx">
+      <DependentUpon>FrmAutoPackageM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmIdCardM.resx">
+      <DependentUpon>FrmIdCardM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmSterileAreaM.resx">
       <DependentUpon>FrmSterileAreaM.cs</DependentUpon>
     </EmbeddedResource>
@@ -104,6 +123,10 @@
     <ProjectReference Include="..\UiControlLibCS\UiControlLibCS.csproj">
       <Project>{C3915CDA-2F6E-4900-B5D8-C1A6BAFC6E4E}</Project>
       <Name>UiControlLibCS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UIControlLib\UIControlLib.vbproj">
+      <Project>{91E4F7E2-5797-4365-B74F-E748D2115D42}</Project>
+      <Name>UIControlLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

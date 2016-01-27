@@ -26,6 +26,10 @@ Friend Class VTrackManage
     Private _alertQuery As FrmAlertQuery
     Private _insMaintain As FrmInsM
     Private _drugMaintain As FrmDrugM
+    Private _drugManufactures As FrmDrugManufacturesM
+    Private _sterileRoomMaintain As FrmSterileAreaM
+    Private _idCardMaintain As FrmIdCardM
+    Private _autoPackageMaintain As FrmAutoPackageM
 #End Region
     Public Property PageHost() As Control
 
@@ -87,7 +91,11 @@ Friend Class VTrackManage
             page = PageSelector.TraceWorkloadAccount, GetType(FrmWorkloadAccount), _
             page = PageSelector.TraceAlertQuery, GetType(FrmAlertQuery), _
             page = PageSelector.InsMaintainment, GetType(FrmInsM), _
-            page = PageSelector.DrugMaintainment, GetType(FrmDrugM))
+            page = PageSelector.DrugMaintainment, GetType(FrmDrugM), _
+            page = PageSelector.AutoPackageMaintainment, GetType(FrmAutoPackageM), _
+            page = PageSelector.FactoryMaintainment, GetType(FrmDrugManufacturesM), _
+            page = PageSelector.SterileAreaMaintainment, GetType(FrmSterileAreaM), _
+            page = PageSelector.IdCardMaintainment, GetType(FrmIdCardM))
     End Function
 
     Private Sub InstanceEventBind(ByVal instance As Object)
