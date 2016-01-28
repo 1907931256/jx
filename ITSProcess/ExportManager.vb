@@ -135,6 +135,7 @@ Public Class ExportManager
         End Try
         If ExportResult = EXCEL_OPERATE_RESULTS.SOFTERROR Then
             UIControlLib.UIMsgBox.MSGBoxShow(MSG_EXCEL_SOFT_ERROR)
+
         ElseIf ExportResult = EXCEL_OPERATE_RESULTS.EXCEPTIONS Then
             UIControlLib.UIMsgBox.MSGBoxShow(MSG_EXCEL_EXPORT_ERROR)
         ElseIf ExportResult = EXCEL_OPERATE_RESULTS.FILERUN Then

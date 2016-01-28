@@ -19,13 +19,13 @@ Partial Class UIExpandPanel
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UIExpandPanel))
-        Me.pnlSearchBarContainer = New System.Windows.Forms.Panel
-        Me.pnlDataGridView = New System.Windows.Forms.Panel
-        Me.pnlHead = New System.Windows.Forms.Panel
+        Me.pnlSearchBarContainer = New System.Windows.Forms.Panel()
+        Me.pnlDataGridView = New System.Windows.Forms.Panel()
+        Me.pnlHead = New System.Windows.Forms.Panel()
+        Me.lblSearchSec = New System.Windows.Forms.Label()
         Me.txtDP = New UIControlLib.UIDropDownList(Me.components)
-        Me.lblSearchSec = New System.Windows.Forms.Label
         Me.pnlSearchBarContainer.SuspendLayout()
         Me.pnlHead.SuspendLayout()
         Me.SuspendLayout()
@@ -44,11 +44,11 @@ Partial Class UIExpandPanel
         'pnlDataGridView
         '
         Me.pnlDataGridView.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnlDataGridView.BackColor = System.Drawing.Color.Transparent
-        Me.pnlDataGridView.Location = New System.Drawing.Point(0, 32)
+        Me.pnlDataGridView.Location = New System.Drawing.Point(0, 30)
         Me.pnlDataGridView.Name = "pnlDataGridView"
-        Me.pnlDataGridView.Size = New System.Drawing.Size(298, 357)
+        Me.pnlDataGridView.Size = New System.Drawing.Size(298, 359)
         Me.pnlDataGridView.TabIndex = 1
         '
         'pnlHead
@@ -59,39 +59,39 @@ Partial Class UIExpandPanel
         Me.pnlHead.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlHead.Location = New System.Drawing.Point(0, 0)
         Me.pnlHead.Name = "pnlHead"
-        Me.pnlHead.Size = New System.Drawing.Size(298, 32)
+        Me.pnlHead.Size = New System.Drawing.Size(298, 26)
         Me.pnlHead.TabIndex = 0
+        '
+        'lblSearchSec
+        '
+        Me.lblSearchSec.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblSearchSec.Font = New System.Drawing.Font("SimSun", 9.0!)
+        Me.lblSearchSec.Location = New System.Drawing.Point(2, 6)
+        Me.lblSearchSec.Name = "lblSearchSec"
+        Me.lblSearchSec.Size = New System.Drawing.Size(72, 14)
+        Me.lblSearchSec.TabIndex = 2
+        Me.lblSearchSec.Text = "科室名称"
+        Me.lblSearchSec.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'txtDP
         '
         Me.txtDP.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtDP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtDP.ColNoOfCode = 0
         Me.txtDP.ColNoOfContent = 1
         Me.txtDP.ContentID = 2
         Me.txtDP.DisplayContent = ""
-        Me.txtDP.Font = New System.Drawing.Font("SimSun", 12.0!)
+        Me.txtDP.Font = New System.Drawing.Font("SimSun", 9.0!)
         Me.txtDP.IDContent = ""
-        Me.txtDP.Location = New System.Drawing.Point(82, 3)
+        Me.txtDP.Location = New System.Drawing.Point(77, 3)
         Me.txtDP.Name = "txtDP"
         Me.txtDP.OnLeft = UIControlLib.UIDropDownList.SNAP_MODE.OnLeft
-        Me.txtDP.Size = New System.Drawing.Size(213, 26)
+        Me.txtDP.Size = New System.Drawing.Size(213, 21)
         Me.txtDP.TabIndex = 4
         Me.txtDP.VisibleRowCount = 10
-        '
-        'lblSearchSec
-        '
-        Me.lblSearchSec.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblSearchSec.Font = New System.Drawing.Font("SimSun", 12.0!)
-        Me.lblSearchSec.Location = New System.Drawing.Point(7, 6)
-        Me.lblSearchSec.Name = "lblSearchSec"
-        Me.lblSearchSec.Size = New System.Drawing.Size(72, 20)
-        Me.lblSearchSec.TabIndex = 2
-        Me.lblSearchSec.Text = "科室名称"
-        Me.lblSearchSec.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'UIExpandPanel
         '

@@ -28,6 +28,35 @@ Public Class DBExpried
             drNew.Item(TEXT_WS_PRODUCE_DATE) = CDate(JudgeDataValue(dr.Item(WS_PRODUCE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
             drNew.Item(TEXT_WS_EXPIRE_DATE) = CDate(JudgeDataValue(dr.Item(WS_EXPIRE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
             drNew.Item(TEXT_STOCK_COUNT) = CStr(JudgeDataValue(dr.Item(WS_INS_COUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
+            drNew.Item(TEXT_BTN_MOVE_OUT) = TEXT_BTN_MOVE_OUT
+            dt.Rows.Add(drNew)
+        Next
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function QueryDrugExpried(ByRef dt As DataTable) As Long
+        dt.Clear()
+        Dim strCon, strSql As String
+        strCon = String.Format("{0} < to_date('{1}','{2}')", DRS_AVAILABLE_DATE, LocalData.ServerNow.Date.ToString(TEXT_DATETIME_FORMATION_DATE), CONST_TEXT_ORACLE_DATETIME_FORMAT_YYYYMMDD)
+        strSql = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, TBL_DRUG_STOCK, strCon)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSql, ds) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_strErrorReason)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        For Each dr As DataRow In ds.Tables(0).Rows
+            Dim drNew As DataRow = dt.NewRow
+            drNew.Item(DRS_ID) = CLng(JudgeDataValue(dr.Item(DRS_ID), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
+            drNew.Item(TEXT_DRUG_ID) = CStr(JudgeDataValue(dr.Item(DRS_DRUG_CODE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_COMMON_NAME) = CStr(JudgeDataValue(dr.Item(DRS_DRUG_COMMON_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_NAME) = CStr(JudgeDataValue(dr.Item(DRS_DRUG_PRODUCT_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_SPECIFICATION) = CStr(JudgeDataValue(dr.Item(DRS_SPECIFICATION), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_UNIT) = CStr(JudgeDataValue(dr.Item(DRS_MEASUER_UNITS), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_FACTORY) = CStr(JudgeDataValue(dr.Item(DRS_MANUFACTURERS), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_BATCHNO) = CStr(JudgeDataValue(dr.Item(DRS_BATCH_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_AMOUNT) = CStr(JudgeDataValue(dr.Item(DRS_DRUG_COUNT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_WS_PRODUCE_DATE) = CDate(JudgeDataValue(dr.Item(DRS_PRODUCE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
+            drNew.Item(TEXT_WS_EXPIRE_DATE) = CDate(JudgeDataValue(dr.Item(DRS_AVAILABLE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
+            drNew.Item(TEXT_BTN_MOVE_OUT) = TEXT_BTN_MOVE_OUT
             dt.Rows.Add(drNew)
         Next
         Return DBMEDITS_RESULT.SUCCESS
@@ -53,6 +82,7 @@ Public Class DBExpried
             drNew.Item(TEXT_WS_INS_TYPE) = CStr(JudgeDataValue(dr.Item(SRS_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             drNew.Item(TEXT_INS_UNIT) = CStr(JudgeDataValue(dr.Item(SRS_INS_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             drNew.Item(TEXT_WS_EXPIRE_DATE) = CDate(JudgeDataValue(dr.Item(SRS_AVAILABLE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
+            drNew.Item(TEXT_BTN_MOVE_OUT) = TEXT_BTN_MOVE_OUT
             dt.Rows.Add(drNew)
         Next
         Return DBMEDITS_RESULT.SUCCESS
@@ -85,6 +115,44 @@ Public Class DBExpried
             Return DBMEDITS_RESULT.ERROR_EXCEPTION
         End If
         If Not ImplementSterileRoomInOutLog(SR_LOG_INOUT_TYPE.WH_OUT_EXPIRED, lOutID) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        If Not TransactionCommit() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function ExpriedDrugOutStock(ByVal dt As DataTable) As Long
+        Dim strCon, strSQL As String
+        Dim lOutID As Long
+        If Not QueryNextVal(lOutID, SEQ_STOREROOM_ABNORMAL_INOUT) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_strErrorReason)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not TransactionBegin() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_strErrorReason)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        For Each dr As DataRow In dt.Rows
+            strCon = String.Format("{0}={1}", DRS_ID, dr.Item(DRS_ID))
+            strSQL = String.Format(DBCONSTDEF_SQL_DELETE_WHERE, TBL_DRUG_STOCK, strCon)
+            If Not TransactionExecute(strSQL) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_strErrorReason)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        Next
+        If Not ImplementSterileRoomAbnormalInOutLog(SR_LOG_INOUT_TYPE.DRUG_OUT_EXPRIED, lOutID) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_strErrorReason)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not ImplementDrugAbnormalDetailLog(lOutID, dt) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_strErrorReason)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not ImplementSterileRoomInOutLog(SR_LOG_INOUT_TYPE.DRUG_OUT_EXPRIED, lOutID) Then
             Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
             Return DBMEDITS_RESULT.ERROR_EXCEPTION
         End If
@@ -170,11 +238,11 @@ Public Class DBExpried
         For Each dr As DataRow In dt.Rows
             Dim oPackage As PackageInfo = New PackageInfo
             oPackage.m_lPackageID = CLng(JudgeDataValue(dr.Item(TEXT_PACKAGE_ID), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
-            oPackage.m_strINSID = CStr(JudgeDataValue(dr.Item(TEXT_INS_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPackage.m_strINSName = CStr(JudgeDataValue(dr.Item(TEXT_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPackage.m_strINSType = CStr(JudgeDataValue(dr.Item(TEXT_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPackage.m_strINSUnit = CStr(JudgeDataValue(dr.Item(TEXT_INS_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPackage.m_datAvailable = CDate(JudgeDataValue(dr.Item(TEXT_EXPIRE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE))
+            oPackage.m_oINSInfo.m_strINSID = CStr(JudgeDataValue(dr.Item(TEXT_INS_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPackage.m_oINSInfo.m_strName = CStr(JudgeDataValue(dr.Item(TEXT_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPackage.m_oINSInfo.m_strType = CStr(JudgeDataValue(dr.Item(TEXT_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPackage.m_oINSInfo.m_strUnit = CStr(JudgeDataValue(dr.Item(TEXT_INS_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPackage.AvailableDate = CDate(JudgeDataValue(dr.Item(TEXT_EXPIRE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE))
             If Not ImplementStoreRoomruRuAbnormalDetailLog(lRegID, oPackage) Then
                 Return False
             End If

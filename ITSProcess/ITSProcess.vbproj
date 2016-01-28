@@ -67,9 +67,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.Excel">
-      <HintPath>..\Debug\Interop.Excel.dll</HintPath>
+    <Reference Include="Interop.Excel, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\Debug\Interop.Excel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -115,6 +116,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="PrintLabel.vb" />
     <Compile Include="PrintManager.vb" />
     <Compile Include="PrintReportImp.vb">
       <SubType>Component</SubType>
@@ -143,6 +145,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BarCodeLib\BarCodeLib.csproj">
+      <Project>{f9d3bd7e-eae2-425e-bf4b-cd142edb25df}</Project>
+      <Name>BarCodeLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DBManager\DBManager.vbproj">
       <Project>{72af3398-e8e6-422d-a6ca-205a4018df3d}</Project>
       <Name>DBManager</Name>
@@ -151,8 +157,12 @@
       <Project>{cc5e39f5-66fe-401e-bb81-4f9e47f1b190}</Project>
       <Name>ITSBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UiControlLibCS\UiControlLibCS.csproj">
+      <Project>{c3915cda-2f6e-4900-b5d8-c1a6bafc6e4e}</Project>
+      <Name>UiControlLibCS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UIControlLib\UIControlLib.vbproj">
-      <Project>{C9869059-3BE7-449A-B29C-148085502043}</Project>
+      <Project>{91e4f7e2-5797-4365-b74f-e748d2115d42}</Project>
       <Name>UIControlLib</Name>
     </ProjectReference>
   </ItemGroup>

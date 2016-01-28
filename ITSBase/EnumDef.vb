@@ -19,6 +19,7 @@
         'EXIST_ZERO                                  '存在0条记录
         'EXIST_ONE                                   '存在一条记录
         EXIST_OVERFLOW                              '存在多条记录
+
     End Enum
     Public Enum ENUM_DATA_TYPE As Integer
         DATA_TYPE_STRING = 1        '包含string，char
@@ -105,6 +106,7 @@
         WareHouseStock = &H23
         WareHouseInOutStatisc = &H24
         WareHouseManagement = &H2F
+        HighValueInReg = &H25
         '30~3F TRACE MANAGEMENT
         LocationQuery = &H31
         TraceQuery = &H32
@@ -146,10 +148,10 @@
         SQL_SERVER
         ORACLE
     End Enum
-    Public Enum PACKAGE_STATE As Short
-        NORMAL = 0
-        LOCK
-    End Enum
+    'Public Enum PACKAGE_STATE As Short
+    '    NORMAL = 0
+    '    LOCK
+    'End Enum
     Public Enum INS_KINDS As Short
         INS_NULL = -1
         WAREHOUSE_SU = 101
@@ -182,7 +184,7 @@
         WH_OUT_BALANCE = 303     '库房物品出充
         WH_OUT_EXPIRED = 304     '过期出库
 
-        HV_IN_STOCK = 400       '高值耗材入库
+        HV_IN_STOCK = 400       '一次性高值耗材打包入库
         HV_IN_DISPATCH = 401    '高值耗材发放入库
 
         HV_OUT_DISPATCH = 402   '高值耗材发放出库
@@ -217,7 +219,12 @@
         FRONT = 0
         AFTER = 1
     End Enum
-
+    Public Enum PACKAGE_DETAIL_CHECK As Short
+        NULL = -1
+        Front = 0
+        MIDDLE = 1
+        AFTER = 2
+    End Enum
     'LBS
     Public Enum TRACE_CARD_CATEGORY As Integer
         HIGH_VALUE_DEVICE = 1
@@ -235,7 +242,86 @@
         排班医生 = 2
         排班护士 = 3
     End Enum
-
+    Public Enum STERILIZE_ROOM_TYPE As Integer
+        CSSD = 1
+        OP = 2
+        EQUIP = 3
+    End Enum
+    Public Enum LABEL_PRINTER_TYPE As Short
+        TYPE_NULL = -1
+        TSC = 0         '台湾半岛体(TSC)243/244
+        ZEBRA           '美国斑马(Zebra) 888-TT 
+    End Enum
+    Public Enum PACKAGE_TYPE As Short
+        PACK_PUB = 0 '清洁区打包，公用物品
+        PACK_PRI     '自备物品打包
+        PACK_INS    '物品打包
+        PACK_BATCH   '锅号锅次
+        PACK_SU_INS   '库房一次性物品标签'
+        PACK_TOOL    '标签辅助工具
+    End Enum
+    Public Enum BAR_CODE_2D_MODE As Short
+        NOT_PRINT_2D_BAR_CODE = 0              '关闭二维码打印
+        PRINT_2D_BAR_CODE = 1             '开启二维码打印
+    End Enum
+    Public Enum PACKAGE_STATE As Short
+        STATE_NULL = -1
+        NOT_STERILIZE = 0 '未灭菌
+        STERILIZE_PARPARE '灭菌准备
+        STERILIZING       '正在进行灭菌   
+        END_STERILIZE     '已灭菌
+        DISPATCHED        '已发放
+        USED              '已使用
+        BACK              '已返回
+        RETURNED          '已回收
+        BORROW_BACK       '已归还
+        DISUSED           '已废弃
+        PRE_RECALL        '待召回
+        RECALLED          '已召回
+        LOSTED            '已丢包
+        EXPIRE            '已过期
+        INFECTED          '已感染
+        RECEVIED          '已接收
+        UNPASS_RETURN     '不合格退回
+        DISTRICT_DISPACTH  '区域发放
+        DISTRICT_BACK      '区域返回
+        DISTRICT_RECIVE    '区域接收
+        RETURN_BACK        '已退回
+        CLEAN_OUT          '清洗出库
+    End Enum
+    Public Enum REQUEST_STATE As Short
+        NULL
+        UNCOMFIRM
+        PART_DISPATCH
+        DISPATCH
+    End Enum
+    Public Enum REQUEST_KIND As Short
+        null
+        INS = 101
+        HIGH_VALUE_SU = 102
+        HIGH_VALUE_RU = 103
+        DRUG = 201
+    End Enum
+    Public Enum EMERGENCY_FLAG As Short  '手术紧急
+        EMERGENCY_NOT = 0       '正常
+        EMERGENCY = 1           '紧急
+    End Enum
+    Public Enum EDIT_FLAG As Short
+        EDITABLE = 0
+        LOCKED
+        DELETED
+    End Enum
+    Public Enum HIGHVALUE_STATE As Short
+        UNUSED
+        DISPATCH
+        FRONT_USE
+        USED
+        BACK
+    End Enum
+    Public Enum BACK As Short
+        NOTBACK = 0
+        BACK
+    End Enum
     Public Enum STERILE_ROOM_TYPE As Integer
         CSSD = 1
         OP = 2

@@ -1,11 +1,61 @@
 ﻿Public Module XMLConstDef
+
     Public Const XML_PATH_DBSETTING As String = "Configuration/DBSettings/add[@key='MedITS']"
+    Public Const XML_PATH_PRINTER_LABEL As String = "Configuration/PrinterSettings/add[@key='LabelPrinter']"
+    Public Const XML_PATH_PRINTER_MEDITS As String = "Configuration/PrinterSettings/add[@key='MedITSPrinter']"
+
+    Public Const XML_ATT_VALUE As String = "value"
+    Public Const XML_ATT_FORMAT As String = "format"
+    Public Const XML_ATT_PORT As String = "Port"
+    Public Const XML_PATH_PRINTER_DISPLAY_USER As String = "Configuration/PrinterSettings/add[@key='DisplayUser']"
     Public Const XML_ATT_SERVER As String = "DBServer"
     Public Const XML_ATT_USER As String = "DBUserName"
     Public Const XML_ATT_PWD As String = "DBUserPWD"
     Public Const XML_ATT_INSTANCE As String = "DBInstance"
     Public Const XML_ATT_TIMEOUT As String = "DBTimeout"
     Public Const XML_PATH_DBTYPE As String = "DBType"
+
+
+    Public Const XML_ATT_TIME As String = "time"
+    Public Const XML_ATT_TEXT As String = "text"
+    Public Const XML_ATT_SMALL_ID As String = "id"
+    Public Const XML_ATT_X As String = "x"
+    Public Const XML_ATT_Y As String = "y"
+    Public Const XML_ATT_FONT As String = "font"
+    Public Const XML_ATT_SIZE As String = "size"
+    Public Const XML_ATT_REVERSE As String = "reverse"
+    Public Const XML_ATT_ARGUMENTS As String = "arguments"
+    Public Const XML_ATT_PATH As String = "path"
+    Public Const XML_ATT_VISIBLE As String = "visible"
+    Public Const XML_ATT_PRINTER_MODEL As String = "printer_model"
+    Public Const XML_ATT_PACKAGE_TYPE As String = "package_type"
+    Public Const XML_ATT_WIDTH As String = "width"
+    Public Const XML_ATT_HEIGH As String = "heigh"
+    Public Const XML_ATT_OFFSET As String = "offset"
+    Public Const XML_ATT_ROTATE As String = "rotate"
+    Public Const XML_ATT_BARCODE_TYPE As String = "barcode_type"
+    Public Const XML_ATT_VOICE_SPEED As String = "voicespeed"
+    Public Const XML_ATT_VOICE_TONE As String = "voicetone"
+    Public Const XML_ATT_VOICE_TYPE As String = "voicetype"
+
+    Public Const XML_ATT_BARCODE As String = "barcode"
+    Public Const XML_ATT_FRAME As String = "frame"
+
+    'PackInfo
+    Public Const XML_PATH_TSC64_ITEM As String = "Configuration/PackInfo/TSC64/Item"
+    Public Const XML_PATH_TSC86_ITEM As String = "Configuration/PackInfo/TSC86/Item"
+    Public Const XML_PATH_TSC86_BATCH_ITEM As String = "Configuration/PackInfo/TSC86Batch/Item"
+    Public Const XML_PATH_ZEBRA64_ITEM As String = "Configuration/PackInfo/Zebra64/Item"
+    Public Const XML_PATH_ZEBRA86_ITEM As String = "Configuration/PackInfo/Zebra86/Item"
+    Public Const XML_PATH_ZEBRA86_BATCH_ITEM As String = "Configuration/PackInfo/Zebra86Batch/Item"
+    Public Const XML_PATH_PACKINGIMG_SHOWPACKINGIMG As String = "Configuration/PackingImg/add[@key='ShowPackingImg']"
+    Public Const XML_PATH_LABEL_FORMAT_ITEM As String = "LabelFormat/Item"
+    Public Const XML_PATH_LABEL_FORMAT_SUB_ITEM As String = "SubItem"
+    'PrinterSettings
+    Public Const XML_PATH_PRINTER_LABEL8X6 As String = "Configuration/PrinterSettings/add[@key='Lable8X6']"
+    Public Const XML_PATH_PRINTER_LABEL6X4 As String = "Configuration/PrinterSettings/add[@key='Lable6X4']"
+    Public Const XML_PATH_PRINTER_CARBON_TSC As String = "Configuration/PrinterSettings/add[@key='CarbonStrapTSC']"
+    Public Const XML_PATH_PRINTER_CARBON_ZEBRA As String = "Configuration/PrinterSettings/add[@key='CarbonStrapZEBRA']"
 #Region "Export Config File"
     Public Const XML_STR_XPATH_EXCELCONFIG As String = "/Configration/ExcelConfig"
     Public Const XML_STR_XPATH_DATATITLE As String = "/Configration/ExcelConfig/DataAreaSetting/dataItem[@name=""DataTitle""]"
@@ -52,5 +102,7 @@
     Public Const XML_STR_COLUMNNOTVALID_STATE As String = "0"
     Public Const XML_STR_COLUMN_FORMAT As String = "c"
     Public Const XML_STR_ATTRIBUTEVALUE_SHEET As String = "sheet"
+
+
 #End Region
 End Module

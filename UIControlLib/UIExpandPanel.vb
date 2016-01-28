@@ -344,7 +344,7 @@ Public Class UIExpandPanel
             Me.pnlDataGridView.Height = Me.pnlSearchBarContainer.Height - CONST_INT_CTRL_MARGIN _
                                                                                - (Me.pnlHead.Height + CONST_INT_CTRL_MARGIN)
         End If
-        
+
     End Sub
 
     Private Sub BindingTable(ByRef dt As DataTable)
@@ -800,7 +800,7 @@ Public Class UIExpandPanel
 
         Dim oLbl As MyLabelBase = Nothing
         If emBarItem = TOOLBAR_SUBITEM.REFRESH Then
-            oLbl = Me.m_btnToolbar.PnlMiddle.Controls.Item("picRefresh")         
+            oLbl = Me.m_btnToolbar.PnlMiddle.Controls.Item("picRefresh")
         ElseIf emBarItem = TOOLBAR_SUBITEM.PRINT Then
             oLbl = Me.m_btnToolbar.PnlMiddle.Controls.Item("picPrint")
         ElseIf emBarItem = TOOLBAR_SUBITEM.PRINTALL Then

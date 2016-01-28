@@ -2,11 +2,14 @@
 Imports UIControlLib
 Imports DBManager
 Imports ITSProcess
+Imports System.Windows.Forms
+
 Public Class FrmWareHouseInOutQuery
     Private m_oDBWareHouseManager As DbWareHouseManager
     Private m_dtWareHouseInOutDetail As DataTable
-    Private m_dtInOutTotal As datatable
+    Private m_dtInOutTotal As DataTable
     Private m_dtWareHouse As DataTable
+    Private m_dtDrugInOutDetail As DataTable
     Private m_dtWareHouseInOutTotal As DataTable
     Private m_lstCurrentSelectSIIType As New List(Of SR_LOG_INOUT_TYPE)
     Private m_strdgvTag As String = String.Empty
@@ -17,6 +20,7 @@ Public Class FrmWareHouseInOutQuery
         m_oDBWareHouseManager = New DbWareHouseManager
         TableConstructor.CreateWareHouseINSInOut(m_dtWareHouseInOutTotal)
         TableConstructor.CreateWareHouseInOutDetail(m_dtWareHouseInOutDetail)
+        TableConstructor.CreateDrugInOutDetail(m_dtDrugInOutDetail)
         TableConstructor.CreateWareHouseINSInOutTotal(m_dtInOutTotal)
         InitialINS()
         InitialINSName()
@@ -28,35 +32,22 @@ Public Class FrmWareHouseInOutQuery
         InitialBtn()
     End Sub
     Private Sub BindingInOutTotal()
-        dgv.ClearBoolColumn()
-        dgv.ClearFormatColumn()
-        dgv.ClearMarkableColumn()
-        dgv.ChangeHeaderSize = True
-        Dim nArrWidth() As Short = {25, 25, 25, 25, 25}
-        dgv.ColumnWidthCollection = nArrWidth
         dgv.DataSource = m_dtWareHouseInOutTotal
         m_strdgvTag = dgv.Tag
     End Sub
-    Private Sub BindingInOutDetail()
-        dgv.ClearBoolColumn()
-        dgv.ClearFormatColumn()
-        dgv.ClearMarkableColumn()
-        dgv.ChangeHeaderSize = True
-        Dim nArrWidth() As Short = {100, 150, 100, 100, 100, 200, 100, 100, 150, 180}
-        dgv.RealColumnWidthCollection = nArrWidth
-        dgv.DataSource = m_dtWareHouseInOutDetail
+    Private Sub BindingInOutDetail(ByVal dt As DataTable)
+        dgv.DataSource = dt
         m_strdgvTag = dgv.Tag
     End Sub
     Private Sub BindingWareHouseINSInOutTable()
-        dgv.ClearBoolColumn()
-        dgv.ClearFormatColumn()
-        dgv.ClearMarkableColumn()
-        dgv.ChangeHeaderSize = True
-        dgv.AllowSort = True
+
         Dim nArrWidth() As Short = {0, 90, 0, 0, 75, 75, 0}
-        dgv.ColumnWidthCollection = nArrWidth
         dgv.DataSource = m_dtInOutTotal
         dgv.Tag = m_strdgvTag
+        dgv.Columns(0).Visible = False
+        dgv.Columns(2).Visible = False
+        dgv.Columns(3).Visible = False
+        dgv.Columns(6).Visible = False
     End Sub
 
     Private Sub InitialINSName()
@@ -73,7 +64,7 @@ Public Class FrmWareHouseInOutQuery
     Private Sub InitialINS()
         Dim arrINSKind() As INS_KINDS = New INS_KINDS() {INS_KINDS.WAREHOUSE_SU, INS_KINDS.WAREHOUSE_INSTRUMENTS}
         If m_oDBWareHouseManager.QueryInsInfo(m_dtWareHouse, arrINSKind) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
         End If
     End Sub
     Private Function CheckValid() As Boolean
@@ -81,7 +72,7 @@ Public Class FrmWareHouseInOutQuery
             Return True
         End If
         If Not cmbINSName.ValidateText Then
-            UIMsgBox.MSGBoxShow(MSG_OP_INS_RQUEST_ERROR_INS_INFO)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_OP_INS_RQUEST_ERROR_INS_INFO)
             cmbINSName.Focus()
             cmbINSName.SelectAll()
             Return False
@@ -129,7 +120,7 @@ Public Class FrmWareHouseInOutQuery
         End If
         dgv.Tag = tvType.SelectedNode.Text.ToString
         If dtpStart.Value.Date > dtpEnd.Value.Date Then
-            UIMsgBox.MSGBoxShow(MSG_ERROR_STAR_BIGER_END)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_ERROR_STAR_BIGER_END)
             Return
         End If
         If tvType.SelectedNode.Text.Equals(TEXT_INS_KIND_WAREHOUSE) OrElse tvType.SelectedNode.Text.Equals(TEXT_INS_KIND_PACKAGE) OrElse tvType.SelectedNode.Text.Equals(TEXT_INS_KIND_DRUG) Then
@@ -138,22 +129,24 @@ Public Class FrmWareHouseInOutQuery
         End If
         dgv.Tag = tvType.SelectedNode.Text.ToString
         If dtpStart.Value.Date > dtpEnd.Value.Date Then
-            UIMsgBox.MSGBoxShow(MSG_DATE_ERROR_STARTDATE_LATER_THAN_ENDDATE)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_DATE_ERROR_STARTDATE_LATER_THAN_ENDDATE)
             Return
         End If
         If tvType.SelectedNode.Parent.Text.Equals(TEXT_INS_KIND_WAREHOUSE) Then
             m_oDBWareHouseManager.QueryWareHouseInOutDetail(m_dtWareHouseInOutDetail, dtpStart.Value, dtpEnd.Value, MatchStringToStelizeRoomINSInOutType(TEXT_INS_KIND_WAREHOUSE + tvType.SelectedNode.Text.ToString), strINSID)
-            BindingInOutDetail()
+            BindingInOutDetail(m_dtWareHouseInOutDetail)
+        ElseIf tvType.SelectedNode.Parent.Text.Equals(TEXT_INS_KIND_DRUG) Then
+            m_oDBWareHouseManager.QueryWareHouseInOutDetail(m_dtDrugInOutDetail, dtpStart.Value, dtpEnd.Value, MatchStringToStelizeRoomINSInOutType(TEXT_INS_KIND_DRUG + tvType.SelectedNode.Text.ToString), strINSID)
+            BindingInOutDetail(m_dtDrugInOutDetail)
         End If
     End Sub
 
     Private Sub GetSterilizeRoomINSInOut()
         If dtpStart.Value.Date > dtpEnd.Value.Date Then
-            UIMsgBox.MSGBoxShow(MSG_DATE_ERROR_STARTDATE_LATER_THAN_ENDDATE)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_DATE_ERROR_STARTDATE_LATER_THAN_ENDDATE)
             Return
         End If
         BindingWareHouseINSInOutTable()
-
         m_oDBWareHouseManager.QueryWareHouseINSInOut(m_dtInOutTotal, dtpStart.Value, dtpEnd.Value, m_lstCurrentSelectSIIType)
         dgv.DataSource = m_dtInOutTotal
         InitialBtn()
@@ -176,7 +169,7 @@ Public Class FrmWareHouseInOutQuery
         btnDetail.Enabled = True
         btnTotal.Enabled = False
     End Sub
-    Private Sub btnRefresh_Click(sender As Object, e As EventArgs)
+    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
         SetGridViewDataByTreeView()
     End Sub
 
@@ -191,11 +184,11 @@ Public Class FrmWareHouseInOutQuery
         SetGridViewDataByTreeView()
     End Sub
 
-    Private Sub btnTotal_Click(sender As Object, e As EventArgs)
+    Private Sub btnTotal_Click(sender As Object, e As EventArgs) Handles btnTotal.Click
         ShowTotalCount()
     End Sub
 
-    Private Sub btnDetail_Click(sender As Object, e As EventArgs)
+    Private Sub btnDetail_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
         If dgv.DataSource Is m_dtInOutTotal Then
             '获取物品名称
             Dim strINSID As String = String.Empty
@@ -203,23 +196,26 @@ Public Class FrmWareHouseInOutQuery
                 strINSID = cmbINSName.IDContent
             End If
 
-            Dim dr As DataRow = dgv.CurrentDataRow
+            Dim dr As DataGridViewRow = dgv.CurrentRow
             If dr Is Nothing Then Exit Sub
-            Dim strSIIID As Long = CLng(dr.Item(SIM_REG_ID).ToString())
-            Dim strSR_LOG_INOUT_TYPE As String = dr.Item(TEXT_STERILIZEROOM_INS_INOUT_TYPE).ToString()
+            Dim strSIIID As Long = CLng(dr.Cells(SIM_REG_ID).Value.ToString())
+            Dim strSR_LOG_INOUT_TYPE As String = dr.Cells(TEXT_STERILIZEROOM_INS_INOUT_TYPE).Value.ToString()
             dgv.Tag = strSR_LOG_INOUT_TYPE
 
             If strSR_LOG_INOUT_TYPE.Substring(0, 4).Equals(TEXT_INS_KIND_WAREHOUSE) Then
                 m_oDBWareHouseManager.QueryWareHouseInOutDetail(m_dtWareHouseInOutDetail, dtpStart.Value, dtpEnd.Value, MatchStringToStelizeRoomINSInOutType(strSR_LOG_INOUT_TYPE), strINSID, strSIIID)
-                BindingInOutDetail()
+                BindingInOutDetail(m_dtWareHouseInOutDetail)
+            ElseIf strSR_LOG_INOUT_TYPE.Substring(0, 4).Equals(TEXT_INS_KIND_DRUG) Then
+                m_oDBWareHouseManager.QueryWareHouseInOutDetail(m_dtDrugInOutDetail, dtpStart.Value, dtpEnd.Value, MatchStringToStelizeRoomINSInOutType(strSR_LOG_INOUT_TYPE), strINSID, strSIIID)
+                BindingInOutDetail(m_dtWareHouseInOutDetail)
             End If
         ElseIf dgv.DataSource Is m_dtWareHouseInOutTotal Then
-            BindingInOutDetail()
+            'BindingInOutDetail()
         End If
         InitialBtn()
     End Sub
 
-    Private Sub btnPrint_Click(sender As Object, e As EventArgs)
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
         Dim oPrint As ReportPrinter = ReportPrinter.GetInstanse
         Dim strName As String = String.Empty
         If dgv.DataSource Is m_dtInOutTotal Then
@@ -230,7 +226,7 @@ Public Class FrmWareHouseInOutQuery
                 strName = String.Format(TEXT_WAREHOUSE_IN_OUT_QUERY, tvType.SelectedNode.Text.ToString)
             End If
             If Not oPrint.PrintWareHouseInOut(m_dtInOutTotal, strName) Then
-                UIMsgBox.MSGBoxShow(oPrint.ErrorMessage)
+                ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", oPrint.ErrorMessage)
             End If
         ElseIf dgv.DataSource Is m_dtWareHouseInOutDetail Then
             If m_dtWareHouseInOutDetail.Rows.Count < 1 Then
@@ -242,7 +238,7 @@ Public Class FrmWareHouseInOutQuery
                 strName = String.Format(TEXT_WAREHOUSE_IN_OUT_DETAIL, tvType.SelectedNode.Text.ToString)
             End If
             If Not oPrint.PrintWareHouseInOutDetail(m_dtWareHouseInOutDetail, strName) Then
-                UIMsgBox.MSGBoxShow(oPrint.ErrorMessage)
+                ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", oPrint.ErrorMessage)
             End If
         ElseIf dgv.DataSource Is m_dtWareHouseInOutTotal Then
             If m_dtWareHouseInOutTotal.Rows.Count < 1 Then
@@ -254,12 +250,12 @@ Public Class FrmWareHouseInOutQuery
                 strName = String.Format(TEXT_WAREHOUSE_IN_OUT_TOTAL, tvType.SelectedNode.Text.ToString)
             End If
             If Not oPrint.PrintWareHouseInOutTotal(m_dtWareHouseInOutTotal, strName) Then
-                UIMsgBox.MSGBoxShow(oPrint.ErrorMessage)
+                ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", oPrint.ErrorMessage)
             End If
         End If
     End Sub
 
-    Private Sub btnExport_Click(sender As Object, e As EventArgs)
+    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
         Dim oExport As ExportManager = ExportManager.GetInstanse
         Dim strName As String = dgv.Tag
         If dgv.DataSource Is m_dtInOutTotal Then
@@ -267,23 +263,27 @@ Public Class FrmWareHouseInOutQuery
                 Exit Sub
             End If
             If Not oExport.ExportWareHouseInOut(m_dtInOutTotal, strName) Then
-                UIMsgBox.MSGBoxShow(oExport.ErrorMessage)
+                ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", oExport.ErrorMessage)
             End If
         ElseIf dgv.DataSource Is m_dtWareHouseInOutDetail Then
             If m_dtWareHouseInOutDetail.Rows.Count < 1 Then
                 Exit Sub
             End If
             If Not oExport.ExportWareHouseInOutDetail(m_dtWareHouseInOutDetail, strName) Then
-                UIMsgBox.MSGBoxShow(oExport.ErrorMessage)
+                ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", oExport.ErrorMessage)
             End If
         ElseIf dgv.DataSource Is m_dtWareHouseInOutTotal Then
             If m_dtWareHouseInOutTotal.Rows.Count < 1 Then
                 Exit Sub
             End If
             If Not oExport.ExportWareHouseInOutDetail(m_dtWareHouseInOutTotal, strName) Then
-                UIMsgBox.MSGBoxShow(oExport.ErrorMessage)
+                ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", oExport.ErrorMessage)
             End If
         End If
+    End Sub
+
+    Private Sub btnRefresh_Click_1(sender As Object, e As EventArgs) Handles btnRefresh.Click
+
     End Sub
 End Class
 

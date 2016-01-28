@@ -62,7 +62,7 @@ Public Class ColorLabel
         Dim drawString As [String] = Me.Text
         ' Create font and brush.
         Dim drawFont As Font = Me.Font
-        Dim drawBrush As New SolidBrush(Me.ForeColor)
+        Dim drawBrush As New SolidBrush(Color.Blue)
         Dim nOffset As Integer = IIf(m_bOnPerform, 1, 0)
         Dim drawRect As RectangleF = New RectangleF(-Me.pnlMid.Location.X + nOffset, Me.pnlMid.Location.Y + nOffset + 2, Me.Size.Width, Me.pnlMid.Height)
 

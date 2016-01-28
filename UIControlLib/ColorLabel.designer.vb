@@ -22,14 +22,13 @@ Partial Class ColorLabel
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.pnlMid = New System.Windows.Forms.Panel
-        Me.pnlRight = New System.Windows.Forms.Panel
-        Me.pnlLeft = New System.Windows.Forms.Panel
+        Me.pnlMid = New System.Windows.Forms.Panel()
+        Me.pnlRight = New System.Windows.Forms.Panel()
+        Me.pnlLeft = New System.Windows.Forms.Panel()
         Me.SuspendLayout()
         '
         'pnlMid
         '
-        Me.pnlMid.BackgroundImage = Global.UIControlLib.My.Resources.Resources.listtitleB_mid
         Me.pnlMid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlMid.Location = New System.Drawing.Point(10, 0)
         Me.pnlMid.Name = "pnlMid"
@@ -38,7 +37,6 @@ Partial Class ColorLabel
         '
         'pnlRight
         '
-        Me.pnlRight.BackgroundImage = Global.UIControlLib.My.Resources.Resources.listtitleB_right
         Me.pnlRight.Dock = System.Windows.Forms.DockStyle.Right
         Me.pnlRight.Location = New System.Drawing.Point(197, 0)
         Me.pnlRight.Name = "pnlRight"

@@ -32,6 +32,7 @@ Public Class TrackFactory
         LoggerManager.ValidDaysCount = 20
         Logger.WriteLine(LogConstDef.LOG_INFORMATION_STARTUP, EnumDef.EVENT_ENTRY_TYPE.INFORMATION)
         If Not ConfigParse.LoadDBSetting() Then Return False
+        If Not ConfigParse.LoadPrinterSetting() Then Return False
         Return True
     End Function
 

@@ -26,23 +26,21 @@ Partial Class FrmOperationUseFront
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnlInstrumentDGV = New System.Windows.Forms.Panel()
-        Me.dgvInstrument = New UIControlLib.UIDataGridView()
+        Me.dgvInstrument = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.pnlInstrumentFunc = New System.Windows.Forms.Panel()
+        Me.btnDelete = New DevComponents.DotNetBar.ButtonX()
+        Me.btnInsConfirm = New DevComponents.DotNetBar.ButtonX()
         Me.txtInsScan = New System.Windows.Forms.TextBox()
         Me.lblInsScan = New System.Windows.Forms.Label()
         Me.pnlInstrument = New System.Windows.Forms.Panel()
         Me.pnlCommit = New System.Windows.Forms.Panel()
+        Me.btnOK = New DevComponents.DotNetBar.ButtonX()
         Me.lblSep = New System.Windows.Forms.Label()
         Me.pnlDrugFunc = New System.Windows.Forms.Panel()
+        Me.btnMed = New DevComponents.DotNetBar.ButtonX()
         Me.pnlDrugDGV = New System.Windows.Forms.Panel()
-        Me.dgvDrug = New UIControlLib.UIDataGridView()
+        Me.dgvDrug = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.pnlDrug = New System.Windows.Forms.Panel()
         Me.pnlFunc = New System.Windows.Forms.Panel()
         Me.btnClose = New DevComponents.DotNetBar.ButtonX()
@@ -76,9 +74,6 @@ Partial Class FrmOperationUseFront
         Me.lblSep4 = New System.Windows.Forms.Label()
         Me.lblSurList = New System.Windows.Forms.Label()
         Me.lblSep3 = New System.Windows.Forms.Label()
-        Me.btnOK = New DevComponents.DotNetBar.ButtonX()
-        Me.btnInsConfirm = New DevComponents.DotNetBar.ButtonX()
-        Me.btnMed = New DevComponents.DotNetBar.ButtonX()
         Me.pnlInstrumentDGV.SuspendLayout()
         CType(Me.dgvInstrument, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlInstrumentFunc.SuspendLayout()
@@ -106,55 +101,29 @@ Partial Class FrmOperationUseFront
         '
         'dgvInstrument
         '
-        Me.dgvInstrument.AllowDelete = True
-        Me.dgvInstrument.AllowSelectChangeRow = False
-        Me.dgvInstrument.AllowSort = True
-        Me.dgvInstrument.AllowUserToAddRows = False
-        Me.dgvInstrument.AllowUserToResizeColumns = False
-        Me.dgvInstrument.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(246, Byte), Integer))
-        Me.dgvInstrument.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgvInstrument.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgvInstrument.BeQuerying = False
-        Me.dgvInstrument.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
-        Me.dgvInstrument.ChangeHeaderSize = False
-        Me.dgvInstrument.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(201, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(209, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvInstrument.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgvInstrument.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvInstrument.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("SimSun", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvInstrument.DefaultCellStyle = DataGridViewCellStyle1
         Me.dgvInstrument.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvInstrument.EnableHeadersVisualStyles = False
+        Me.dgvInstrument.GridColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(215, Byte), Integer), CType(CType(229, Byte), Integer))
         Me.dgvInstrument.Location = New System.Drawing.Point(0, 0)
-        Me.dgvInstrument.Margin = New System.Windows.Forms.Padding(2)
-        Me.dgvInstrument.MultiSelect = False
         Me.dgvInstrument.Name = "dgvInstrument"
-        Me.dgvInstrument.NoItemAlter = ""
+        Me.dgvInstrument.ReadOnly = True
         Me.dgvInstrument.RowHeadersVisible = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgvInstrument.RowsDefaultCellStyle = DataGridViewCellStyle4
         Me.dgvInstrument.RowTemplate.Height = 23
-        Me.dgvInstrument.SelCombineKeyEnable = False
         Me.dgvInstrument.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvInstrument.ShowSelectionColor = True
         Me.dgvInstrument.Size = New System.Drawing.Size(580, 127)
-        Me.dgvInstrument.TabIndex = 13
+        Me.dgvInstrument.TabIndex = 20
         '
         'pnlInstrumentFunc
         '
+        Me.pnlInstrumentFunc.Controls.Add(Me.btnDelete)
         Me.pnlInstrumentFunc.Controls.Add(Me.btnInsConfirm)
         Me.pnlInstrumentFunc.Controls.Add(Me.txtInsScan)
         Me.pnlInstrumentFunc.Controls.Add(Me.lblInsScan)
@@ -164,6 +133,32 @@ Partial Class FrmOperationUseFront
         Me.pnlInstrumentFunc.Name = "pnlInstrumentFunc"
         Me.pnlInstrumentFunc.Size = New System.Drawing.Size(580, 28)
         Me.pnlInstrumentFunc.TabIndex = 2
+        '
+        'btnDelete
+        '
+        Me.btnDelete.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnDelete.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnDelete.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
+        Me.btnDelete.Location = New System.Drawing.Point(455, 3)
+        Me.btnDelete.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnDelete.Name = "btnDelete"
+        Me.btnDelete.Size = New System.Drawing.Size(58, 22)
+        Me.btnDelete.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
+        Me.btnDelete.TabIndex = 24
+        Me.btnDelete.Text = "删除"
+        '
+        'btnInsConfirm
+        '
+        Me.btnInsConfirm.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnInsConfirm.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnInsConfirm.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
+        Me.btnInsConfirm.Location = New System.Drawing.Point(517, 3)
+        Me.btnInsConfirm.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnInsConfirm.Name = "btnInsConfirm"
+        Me.btnInsConfirm.Size = New System.Drawing.Size(58, 22)
+        Me.btnInsConfirm.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
+        Me.btnInsConfirm.TabIndex = 23
+        Me.btnInsConfirm.Text = "拆包确认"
         '
         'txtInsScan
         '
@@ -207,6 +202,19 @@ Partial Class FrmOperationUseFront
         Me.pnlCommit.Size = New System.Drawing.Size(580, 28)
         Me.pnlCommit.TabIndex = 18
         '
+        'btnOK
+        '
+        Me.btnOK.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.btnOK.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
+        Me.btnOK.Location = New System.Drawing.Point(261, 3)
+        Me.btnOK.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnOK.Name = "btnOK"
+        Me.btnOK.Size = New System.Drawing.Size(58, 22)
+        Me.btnOK.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
+        Me.btnOK.TabIndex = 22
+        Me.btnOK.Text = "确认"
+        '
         'lblSep
         '
         Me.lblSep.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
@@ -227,6 +235,20 @@ Partial Class FrmOperationUseFront
         Me.pnlDrugFunc.Size = New System.Drawing.Size(580, 28)
         Me.pnlDrugFunc.TabIndex = 1
         '
+        'btnMed
+        '
+        Me.btnMed.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnMed.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnMed.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
+        Me.btnMed.Location = New System.Drawing.Point(517, 4)
+        Me.btnMed.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnMed.Name = "btnMed"
+        Me.btnMed.Size = New System.Drawing.Size(58, 22)
+        Me.btnMed.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
+        Me.btnMed.TabIndex = 23
+        Me.btnMed.Text = "药品确认"
+        Me.btnMed.Visible = False
+        '
         'pnlDrugDGV
         '
         Me.pnlDrugDGV.Controls.Add(Me.dgvDrug)
@@ -239,52 +261,24 @@ Partial Class FrmOperationUseFront
         '
         'dgvDrug
         '
-        Me.dgvDrug.AllowDelete = True
-        Me.dgvDrug.AllowSelectChangeRow = False
-        Me.dgvDrug.AllowSort = True
-        Me.dgvDrug.AllowUserToAddRows = False
-        Me.dgvDrug.AllowUserToResizeColumns = False
-        Me.dgvDrug.AllowUserToResizeRows = False
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(246, Byte), Integer))
-        Me.dgvDrug.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
-        Me.dgvDrug.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgvDrug.BeQuerying = False
-        Me.dgvDrug.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
-        Me.dgvDrug.ChangeHeaderSize = False
-        Me.dgvDrug.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(201, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(209, Byte), Integer))
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvDrug.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.dgvDrug.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvDrug.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("SimSun", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvDrug.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvDrug.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvDrug.EnableHeadersVisualStyles = False
+        Me.dgvDrug.GridColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(215, Byte), Integer), CType(CType(229, Byte), Integer))
         Me.dgvDrug.Location = New System.Drawing.Point(0, 0)
-        Me.dgvDrug.Margin = New System.Windows.Forms.Padding(2)
-        Me.dgvDrug.MultiSelect = False
         Me.dgvDrug.Name = "dgvDrug"
-        Me.dgvDrug.NoItemAlter = ""
         Me.dgvDrug.RowHeadersVisible = False
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgvDrug.RowsDefaultCellStyle = DataGridViewCellStyle8
         Me.dgvDrug.RowTemplate.Height = 23
-        Me.dgvDrug.SelCombineKeyEnable = False
         Me.dgvDrug.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvDrug.ShowSelectionColor = True
         Me.dgvDrug.Size = New System.Drawing.Size(580, 165)
-        Me.dgvDrug.TabIndex = 12
+        Me.dgvDrug.TabIndex = 19
         '
         'pnlDrug
         '
@@ -696,45 +690,6 @@ Partial Class FrmOperationUseFront
         Me.lblSep3.Size = New System.Drawing.Size(224, 5)
         Me.lblSep3.TabIndex = 34
         '
-        'btnOK
-        '
-        Me.btnOK.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.btnOK.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnOK.Location = New System.Drawing.Point(261, 3)
-        Me.btnOK.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnOK.Name = "btnOK"
-        Me.btnOK.Size = New System.Drawing.Size(58, 22)
-        Me.btnOK.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
-        Me.btnOK.TabIndex = 22
-        Me.btnOK.Text = "确认"
-        '
-        'btnInsConfirm
-        '
-        Me.btnInsConfirm.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.btnInsConfirm.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnInsConfirm.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnInsConfirm.Location = New System.Drawing.Point(517, 3)
-        Me.btnInsConfirm.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnInsConfirm.Name = "btnInsConfirm"
-        Me.btnInsConfirm.Size = New System.Drawing.Size(58, 22)
-        Me.btnInsConfirm.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
-        Me.btnInsConfirm.TabIndex = 23
-        Me.btnInsConfirm.Text = "拆包确认"
-        '
-        'btnMed
-        '
-        Me.btnMed.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.btnMed.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnMed.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnMed.Location = New System.Drawing.Point(517, 3)
-        Me.btnMed.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnMed.Name = "btnMed"
-        Me.btnMed.Size = New System.Drawing.Size(58, 22)
-        Me.btnMed.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
-        Me.btnMed.TabIndex = 23
-        Me.btnMed.Text = "药品确认"
-        '
         'FrmOperationUseFront
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -768,7 +723,6 @@ Partial Class FrmOperationUseFront
 
     End Sub
     Friend WithEvents pnlInstrumentDGV As System.Windows.Forms.Panel
-    Friend WithEvents dgvInstrument As UIControlLib.UIDataGridView
     Friend WithEvents pnlInstrumentFunc As System.Windows.Forms.Panel
     Friend WithEvents txtInsScan As System.Windows.Forms.TextBox
     Friend WithEvents lblInsScan As System.Windows.Forms.Label
@@ -777,7 +731,6 @@ Partial Class FrmOperationUseFront
     Friend WithEvents lblSep As System.Windows.Forms.Label
     Friend WithEvents pnlDrugFunc As System.Windows.Forms.Panel
     Friend WithEvents pnlDrugDGV As System.Windows.Forms.Panel
-    Friend WithEvents dgvDrug As UIControlLib.UIDataGridView
     Friend WithEvents pnlDrug As System.Windows.Forms.Panel
     Friend WithEvents pnlFunc As System.Windows.Forms.Panel
     Friend WithEvents btnClose As DevComponents.DotNetBar.ButtonX
@@ -814,5 +767,8 @@ Partial Class FrmOperationUseFront
     Friend WithEvents btnInsConfirm As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnOK As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnMed As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents dgvInstrument As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents dgvDrug As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents btnDelete As DevComponents.DotNetBar.ButtonX
 
 End Class

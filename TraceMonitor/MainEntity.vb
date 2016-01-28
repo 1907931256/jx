@@ -25,6 +25,7 @@ Public Class MainEntity
         Dim oLocalData As LocalDataModule.LocalData = LocalData.Create()
         oLocalData.SetPath(Application.StartupPath)
         If Not ConfigParse.LoadDBSetting() Then Return False
+        If Not ConfigParse.LoadPrinterSetting() Then Return False
         JoinThread()
         _threadColl = New List(Of Thread)()
         _dbSavedCardExciterPair = New Dictionary(Of Integer, Integer)()

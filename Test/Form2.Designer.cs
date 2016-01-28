@@ -60,6 +60,8 @@ namespace Test
             this.pnlPatInfo = new System.Windows.Forms.Panel();
             this.lblScretch = new System.Windows.Forms.Label();
             this.pnlContainer = new System.Windows.Forms.Panel();
+            this.btnHighValueInReg = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pnlFunc.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -222,6 +224,7 @@ namespace Test
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnHighValueInReg);
             this.groupBox3.Controls.Add(this.btnInOutStatistics);
             this.groupBox3.Controls.Add(this.btnStockManage);
             this.groupBox3.Controls.Add(this.btnWareHouseOutReg);
@@ -247,7 +250,7 @@ namespace Test
             // 
             // btnStockManage
             // 
-            this.btnStockManage.Location = new System.Drawing.Point(116, 51);
+            this.btnStockManage.Location = new System.Drawing.Point(116, 80);
             this.btnStockManage.Name = "btnStockManage";
             this.btnStockManage.Size = new System.Drawing.Size(108, 23);
             this.btnStockManage.TabIndex = 13;
@@ -257,7 +260,7 @@ namespace Test
             // 
             // btnWareHouseOutReg
             // 
-            this.btnWareHouseOutReg.Location = new System.Drawing.Point(4, 51);
+            this.btnWareHouseOutReg.Location = new System.Drawing.Point(118, 51);
             this.btnWareHouseOutReg.Name = "btnWareHouseOutReg";
             this.btnWareHouseOutReg.Size = new System.Drawing.Size(108, 23);
             this.btnWareHouseOutReg.TabIndex = 12;
@@ -267,7 +270,7 @@ namespace Test
             // 
             // btnWareHouseInReg
             // 
-            this.btnWareHouseInReg.Location = new System.Drawing.Point(116, 22);
+            this.btnWareHouseInReg.Location = new System.Drawing.Point(4, 51);
             this.btnWareHouseInReg.Name = "btnWareHouseInReg";
             this.btnWareHouseInReg.Size = new System.Drawing.Size(108, 23);
             this.btnWareHouseInReg.TabIndex = 11;
@@ -378,6 +381,26 @@ namespace Test
             this.pnlContainer.Size = new System.Drawing.Size(673, 496);
             this.pnlContainer.TabIndex = 2;
             // 
+            // btnHighValueInReg
+            // 
+            this.btnHighValueInReg.Location = new System.Drawing.Point(118, 23);
+            this.btnHighValueInReg.Name = "btnHighValueInReg";
+            this.btnHighValueInReg.Size = new System.Drawing.Size(108, 23);
+            this.btnHighValueInReg.TabIndex = 15;
+            this.btnHighValueInReg.Text = "高值耗材入库登记";
+            this.btnHighValueInReg.UseVisualStyleBackColor = true;
+            this.btnHighValueInReg.Click += new System.EventHandler(this.btnHighValueInReg_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 300);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(228, 100);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "维护";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -423,6 +446,7 @@ namespace Test
         private Panel pnlPatInfo;
         private Label lblScretch;
         private Panel pnlContainer;
+        private Button btnHighValueInReg;
         private GroupBox groupBox1;
         private Button btnIdCardM;
         private Button btnSterileAreaM;

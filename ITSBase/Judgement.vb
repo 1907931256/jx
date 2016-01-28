@@ -314,4 +314,24 @@ Public Class Judgement
         If CStr(oInput).Length = 0 Then Return False
         Return Regex.IsMatch(CStr(oInput), "^\+?[0-9]{13,25}")
     End Function
+
+    '********************************************************************
+    '	Title:			Sex
+    '	Author:			CXX
+    '	Create Date:	2016-1-26
+    '	Description:    M,F 
+    '*********************************************************************
+    Public Shared Function Sex(ByVal strSex As String) As String
+        Dim strRealSex As String = String.Empty
+        If strSex.ToUpper.Equals("M") Then
+            strRealSex = "ÄÐ"
+        ElseIf strSex.ToUpper.Equals("F") Then
+            strRealSex = "Å®"
+        Else
+            strRealSex = "Î´Öª"
+        End If
+        Return strRealSex
+    End Function
+
+
 End Class

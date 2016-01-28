@@ -110,6 +110,10 @@ namespace Test
             TrackFactory.SwitchToPage(EnumDef.PageSelector.WareHouseInOutStatisc);
         }
 
+        private void btnHighValueInReg_Click(object sender, EventArgs e)
+        {
+            TrackFactory.SwitchToPage(EnumDef.PageSelector.HighValueInReg);
+        }
         private void btnInsM_Click(object sender, EventArgs e)
         {
             TrackFactory.SwitchToPage(EnumDef.PageSelector.InsMaintainment);

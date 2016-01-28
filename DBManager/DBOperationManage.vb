@@ -10,7 +10,6 @@ Public Class DbOperationManage
         If lRet <> DBMEDITS_RESULT.SUCCESS Then
             Return lRet
         End If
-
         Return DBMEDITS_RESULT.SUCCESS
     End Function
     Public Function QueryTotalReason(ByRef dt As DataTable) As Long
@@ -29,10 +28,10 @@ Public Class DbOperationManage
         Return DBMEDITS_RESULT.SUCCESS
     End Function
     Public Function QuerySurgeryNoteInfo(ByRef tableSureryNote As DataTable, startTime As String, endTime As String, surRoomId As String, ByVal ParamArray arrStatus() As OPerationNoteState) As EnumDef.DBMEDITS_RESULT
-        Dim columns As String = String.Format("{0},{1} As {2},{3} As {4},{5} As {6},{7} As {8},{9} As {10},{11} As {12},{13} As {14},{15} As {16},{17} As {18},{19} As {20},{21} As {22},{23} As {24},{25} As {26}, {27},{28} AS {29}，{30}", _
+        Dim columns As String = String.Format("{0},{1} As {2},{3} As {4},{5} As {6},{7} As {8},{9} As {10},{11} As {12},{13} As {14},{15} As {16},{17} As {18},{19} As {20},{21} As {22},{23} As {24},{25} As {26}, {27},{28} AS {29}，{30},{31}", _
                     OPN_ID, OPN_VISIT_ID, TEXT_VISIT_ID, OPN_PATIENT_NAME, TEXT_PATIENT_NAME, OPN_GENDER, TEXT_GENDER, OPN_AGE, TEXT_AGE, OPN_OPERATION_NAME, TEXT_OPERATION_NAME, _
                     OPN_ORDER_DATE, TEXT_ORDER_DATE, ROOM_NAME, TEXT_ROOM_NAME, OPN_TABLE_ID, TEXT_TABLE_ID, TRUE_NAME, TEXT_DOCTOR_NAME, FULL_NAME, TEXT_DEPARTMENT_NAME, _
-                    OPN_WEIGHT, TEXT_WEIGHT, OPN_DIAGNOSIS, TEXT_DIAGNOSIS, OPN_DR_MEMO, TEXT_DR_MEMO, OPN_OPERATION_ID, OPN_OPERATION_STATUS, TEXT_OPERATION_STATUS, OPN_ROOM_ID)
+                    OPN_WEIGHT, TEXT_WEIGHT, OPN_DIAGNOSIS, TEXT_DIAGNOSIS, OPN_DR_MEMO, TEXT_DR_MEMO, OPN_OPERATION_ID, OPN_OPERATION_STATUS, TEXT_OPERATION_STATUS, OPN_ROOM_ID, OPN_PATIENT_ID)
         Dim leftJoin As String = String.Format(" Left Join {0} On {1}={2}", DIC_USER_INFO, USER_CODE, OPN_DOCTOR_ID)
         leftJoin += String.Format(" Left Join {0} On {1}={2}", DIC_DEPT_INFO, DEPT_ID, OPN_DEPARTMENT_ID)
         leftJoin += String.Format(" Left Join {0} On {1}={2}", DIC_OPERATING_ROOM, ROOM_ID, OPN_ROOM_ID)
@@ -57,7 +56,7 @@ Public Class DbOperationManage
             drNew.Item(OPN_ID) = CLng(JudgeDataValue(dr.Item(OPN_ID), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
             drNew.Item(TEXT_VISIT_ID) = CStr(JudgeDataValue(dr.Item(TEXT_VISIT_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             drNew.Item(TEXT_PATIENT_NAME) = CStr(JudgeDataValue(dr.Item(TEXT_PATIENT_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            drNew.Item(TEXT_GENDER) = IIf(CStr(JudgeDataValue(dr.Item(TEXT_GENDER), ENUM_DATA_TYPE.DATA_TYPE_STRING)).Equals("1"), "男", "女")
+            drNew.Item(TEXT_GENDER) = Judgement.Sex(CStr(JudgeDataValue(dr.Item(TEXT_GENDER), ENUM_DATA_TYPE.DATA_TYPE_STRING)))
             drNew.Item(TEXT_AGE) = CStr(JudgeDataValue(dr.Item(TEXT_AGE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             drNew.Item(TEXT_OPERATION_NAME) = CStr(JudgeDataValue(dr.Item(TEXT_OPERATION_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             drNew.Item(TEXT_ORDER_DATE) = CStr(JudgeDataValue(dr.Item(TEXT_ORDER_DATE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
@@ -71,6 +70,7 @@ Public Class DbOperationManage
             drNew.Item(TEXT_DR_MEMO) = CStr(JudgeDataValue(dr.Item(TEXT_DR_MEMO), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             drNew.Item(OPN_OPERATION_ID) = CStr(JudgeDataValue(dr.Item(OPN_OPERATION_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             drNew.Item(TEXT_OPERATION_STATUS) = MatchNoteStatusToString(CInt(JudgeDataValue(dr.Item(TEXT_OPERATION_STATUS), ENUM_DATA_TYPE.DATA_TYPE_INTEGER)))
+            drNew.Item(TEXT_PATIENT_ID) = CStr(JudgeDataValue(dr.Item(OPN_PATIENT_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             tableSureryNote.Rows.Add(drNew)
         Next
         Return DBMEDITS_RESULT.SUCCESS
@@ -209,10 +209,10 @@ Public Class DbOperationManage
         For Each dr As DataRow In ds.Tables(0).Rows
             Dim oPackgeCheck As PackageCheck = New PackageCheck
             oPackgeCheck.m_oPackageInfo.m_lPackageID = CLng(JudgeDataValue(dr.Item(FUID_PACKAGE_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPackgeCheck.m_oPackageInfo.m_strINSID = CStr(JudgeDataValue(dr.Item(FUID_INS_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPackgeCheck.m_oPackageInfo.m_strINSName = CStr(JudgeDataValue(dr.Item(FUID_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPackgeCheck.m_oPackageInfo.m_strINSType = CStr(JudgeDataValue(dr.Item(FUID_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPackgeCheck.m_oPackageInfo.m_strINSUnit = CStr(JudgeDataValue(dr.Item(FUID_INS_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPackgeCheck.m_oPackageInfo.m_oINSInfo.m_strINSID = CStr(JudgeDataValue(dr.Item(FUID_INS_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPackgeCheck.m_oPackageInfo.m_oINSInfo.m_strName = CStr(JudgeDataValue(dr.Item(FUID_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPackgeCheck.m_oPackageInfo.m_oINSInfo.m_strType = CStr(JudgeDataValue(dr.Item(FUID_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPackgeCheck.m_oPackageInfo.m_oINSInfo.m_strUnit = CStr(JudgeDataValue(dr.Item(FUID_INS_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             oPackgeCheck.m_nResult = CStr(JudgeDataValue(dr.Item(FUID_RESULT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             oPackgeCheck.m_strReason = CStr(JudgeDataValue(dr.Item(FUID_REASON), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             lstPackageCheck.Add(oPackgeCheck)
@@ -234,8 +234,8 @@ Public Class DbOperationManage
     End Function
 
     Public Function QueryInstrumentRequestDetail(ByRef insRequest As DataTable, ByVal surNoteId As String) As EnumDef.DBMEDITS_RESULT
-        Dim columns As String = String.Format("{0} as {1}, {2} as {3}, {4} as {5}, {6} as {7}, {8} as {9}", IRD_CODE, TEXT_INS_CODE, IRD_NAME, TEXT_INS_NAME, _
-                        IRD_SPEC, TEXT_INS_SPECIFICATION, IRD_UNIT, TEXT_INS_UNIT, IRD_COUNT, TEXT_INS_AMOUNT)
+        Dim columns As String = String.Format("{0} as {1}, {2} as {3}, {4} as {5}, {6} as {7}, {8} as {9},{10} AS {11}", IRD_CODE, TEXT_INS_CODE, IRD_NAME, TEXT_INS_NAME, _
+                        IRD_SPEC, TEXT_INS_SPECIFICATION, IRD_UNIT, TEXT_INS_UNIT, IRD_COUNT, TEXT_INS_AMOUNT, IRD_INS_DISPATCH_COUNT, TEXT_DISPATCH_COUNT)
         Dim tableJoin As String = String.Format("{0},{1},{2}", TBL_INS_REQUEST_DETAIL, TBL_OPERATION_REQUEST_MASTER, TBL_OPERATION_NOTE)
         Dim where As String = String.Format("{0}={1} AND {2}={3} AND {3}='{4}'", IRD_REG_ID, DR_ID, DR_OPN_REG_ID, OPN_ID, surNoteId)
         Dim querySql = String.Format("Select {0} From {1} Where {2}", columns, tableJoin, where)
@@ -245,11 +245,11 @@ Public Class DbOperationManage
     Public Function QueryInstrumentPredefineDetail(ByRef insRequest As DataTable, ByVal surId As String) As EnumDef.DBMEDITS_RESULT
         Dim columns As String = String.Format("{0} as {1}, {2} as {3}, {4} as {5}, {6} as {7}, {8} as {9}", INS_CODE, TEXT_INS_CODE, INS_NAME, TEXT_INS_NAME, _
                         INS_SPEC, TEXT_INS_SPECIFICATION, INS_UNIT, TEXT_INS_UNIT, OPID_INS_COUNT, TEXT_INS_AMOUNT)
-        Dim tableJoin As String = String.Format("{0},{1}", MST_OPERATION_INS_DETAIL, MST_INSTRUMENT_INFO)
-        Dim where As String = String.Format("{0}={1} AND {2}='{3}'", OPID_INS_ID, INS_CODE, OPID_REG_ID, surId)
+        Dim tableJoin As String = String.Format("{0} inner join {1} on {2}={3}", MST_OPERATION_INS_DETAIL, MST_INSTRUMENT_INFO, OPID_INS_ID, INS_CODE)
+        Dim where As String = String.Format("{0}={1} ", OPID_REG_ID, surId)
 
-        'Dim tableJoin As String = String.Format("{0},{1},{2}", MST_OPERATION_INS_DETAIL, TBL_OPERATION_NOTE, MST_INSTRUMENT_INFO)
-        'Dim where As String = String.Format("{0}={1} AND {2}={3} AND {3}='{4}'", OPID_INS_ID, INS_CODE, OPID_REG_ID, OPN_OPERATION_ID, surId)
+        ' Dim tableJoin As String = String.Format("{0},{1},{2}", MST_OPERATION_INS_DETAIL, TBL_OPERATION_NOTE, MST_INSTRUMENT_INFO)
+        ' Dim where As String = String.Format("{0}={1} AND {2}={3} AND {3}='{4}'", OPID_INS_ID, INS_CODE, OPID_REG_ID, OPN_OPERATION_ID, surId)
         Dim querySql = String.Format("Select distinct  {0} From {1} Where {2}", columns, tableJoin, where)
         Return QueryTable(querySql, insRequest)
     End Function
@@ -263,7 +263,7 @@ Public Class DbOperationManage
     End Function
 
     Public Function QueryInstrumentInfo(ByRef insInfo As DataTable) As EnumDef.DBMEDITS_RESULT
-        Dim columns As String = String.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", INS_CODE, INS_TYPE, INS_CODE, INS_NAME, _
+        Dim columns As String = String.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", INS_CODE, INS_SPEC, INS_CODE, INS_NAME, _
                                                 INS_PRODUCT_NAME, INS_NAME_INPUTCODE, INS_SPEC, INS_UNIT)
         Dim querySql = String.Format("Select {0} From {1} Order By {2}", columns, MST_INSTRUMENT_INFO, INS_NAME)
         Return QueryTable(querySql, insInfo)
@@ -280,6 +280,13 @@ Public Class DbOperationManage
     Public Function QuerySurgeryDrugUseEndTable(ByRef drugInfo As DataTable, useRegId As String) As EnumDef.DBMEDITS_RESULT
         Dim strCon As String = String.Format("{0}='{1}'", DUD_REG_ID, useRegId)
         Dim querySql = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, TBL_DRUG_USE_DETAIL, strCon)
+        Return QueryTable(querySql, drugInfo)
+    End Function
+    Public Function QuerySurgeryDrugReturnTable(ByRef drugInfo As DataTable, lOPerationRegId As String) As EnumDef.DBMEDITS_RESULT
+        Dim strCon As String = String.Format("{0}='{1}'", ORM_REG_ID, lOPerationRegId)
+        Dim strTable As String = String.Format("{0} inner join {1} on {2}={3}", TBL_OPERATION_RETURN_MASTER, TBL_DRUG_RETURN_DETAIL, _
+                                               ORM_ID, DRD_REG_ID)
+        Dim querySql = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, strTable, strCon)
         Return QueryTable(querySql, drugInfo)
     End Function
     Public Function QuerySurgeryDrugRequestTable(ByRef drugInfo As DataTable, OPNoteId As String) As EnumDef.DBMEDITS_RESULT
@@ -313,10 +320,18 @@ Public Class DbOperationManage
         Dim querySql = String.Format("Select {0} From {1} Where {2}", columns, TBL_INS_USE_DETAIL, where)
         Return QueryTable(querySql, insInfo)
     End Function
+    Public Function QuerySurgeryInsReturnTable(ByRef insInfo As DataTable, lOPerationRegId As String) As EnumDef.DBMEDITS_RESULT
+        Dim strTable As String = String.Format("{0} inner join {1} on {2}={3}", TBL_OPERATION_RETURN_MASTER, TBL_INS_RETURN_DETAIL, _
+                                               ORM_ID, IRD_REG_ID)
+        Dim where = String.Format("{0}='{1}'", ORM_REG_ID, lOPerationRegId)
+        Dim querySql = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, strTable, where)
+        Return QueryTable(querySql, insInfo)
+    End Function
 
     Public Function CommitSurgeryRequestMaster(ByRef surgeryNoteInfo As SurgeryNoteInfo, ByVal drugTable As DataTable, ByVal insTable As DataTable) As DBMEDITS_RESULT
         If surgeryNoteInfo Is Nothing OrElse drugTable Is Nothing OrElse insTable Is Nothing Then Return DBMEDITS_RESULT.ERROR_PARAMETER
         Dim reqMasterId As String = surgeryNoteInfo.RequestReg.Id
+    
         If String.IsNullOrEmpty(surgeryNoteInfo.RequestReg.Id) Then
             Dim lRequestID As Long
             If Not QueryNextVal(lRequestID, SEQ_TBL_OPER_REQUEST_MASTER) Then
@@ -390,6 +405,259 @@ Public Class DbOperationManage
 
         Return DBMEDITS_RESULT.SUCCESS
     End Function
+    Public Function CommitSurgeryRequestMaster(ByRef surgeryNoteInfo As SurgeryNoteInfo, ByVal drugTable As DataTable, ByVal insTable As DataTable, ByVal dtHighSU As DataTable, ByVal dtHighValueRU As DataTable) As DBMEDITS_RESULT
+        If surgeryNoteInfo Is Nothing OrElse drugTable Is Nothing OrElse insTable Is Nothing Then Return DBMEDITS_RESULT.ERROR_PARAMETER
+        Dim lHighValueSUID As Long = CONST_INVALID_DATA
+        Dim lHighValueRUID As Long = CONST_INVALID_DATA
+        Dim lRequestID As Long = CONST_INVALID_DATA
+
+        If dtHighSU.Rows.Count > 0 Then
+            If Not QueryNextVal(lHighValueSUID, SEQ_TBL_OPER_REQUEST_MASTER) Then
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        End If
+        If dtHighValueRU.Rows.Count > 0 Then
+            If Not QueryNextVal(lHighValueRUID, SEQ_TBL_OPER_REQUEST_MASTER) Then
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        End If
+            If Not QueryNextVal(lRequestID, SEQ_TBL_OPER_REQUEST_MASTER) Then
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        If Not TransactionBegin() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+
+        '如果手术申请单不存在的话，就先添加,并获取返回的ID号；
+        If drugTable.Rows.Count > 0 OrElse insTable.Rows.Count > 0 Then
+            Dim strCols As String = String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", DR_ID, DR_OPN_REG_ID, DR_ROOM_NAME, _
+                                                  DR_TABLE_ID, DR_REQUEST_DATE, DR_ROOM_ID, DR_KIND, DR_STATE, DR_DEPARTMENT_ID, _
+                                                  DR_DEPARTMENT_NAME, DR_STAFF_ID, DR_STAFF_NAME)
+            Dim strValues As String = String.Format("{0},'{1}','{2}','{3}',to_date('{4}','{5}'),{6},'{7}','{8}','{9}','{10}'", lRequestID, surgeryNoteInfo.Id, _
+                                                    surgeryNoteInfo.Room, surgeryNoteInfo.Table, DateTime.Now, _
+                                                    CONST_TEXT_ORACLE_DATETIME_FORMAT_YYYYMMDDHHMMSS, surgeryNoteInfo.RoomID, _
+                                                    CStr(REQUEST_KIND.INS), CStr(REQUEST_STATE.UNCOMFIRM), surgeryNoteInfo.DepartmentID, _
+                                                    surgeryNoteInfo.DepartmentName)
+            Dim insertSql As String = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_OPERATION_REQUEST_MASTER, strCols, strValues)
+            If Not TransactionExecute(insertSql) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        End If 
+
+        For Each drugRow As DataRow In drugTable.Rows
+            Dim drugInfo As New DrugInfo()
+            drugInfo.TransFromDataRow(drugRow)
+            Dim insertCols = String.Format("{0},{1},{2},{3},{4},{5},{6},{7}", DRD_REG_ID, DRD_COMMON_NAME, DRD_PRODUCT_NAME, DRD_DRUG_SPEC, DRD_DRUG_FACTORY, DRD_MEASUER_UNITS, DRD_PACK_COUNT, DRD_DRUG_ID)
+            Dim colValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'", lRequestID, drugInfo.CommonName, drugInfo.ProductName, drugInfo.Specification, drugInfo.Factory, drugInfo.Unit, drugInfo.Amount, drugInfo.strDrugID)
+            Dim insertSql = String.Format("Insert Into {0} ({1}) Values ({2})", TBL_DRUG_REQUEST_DETAIL, insertCols, colValues)
+            If Not TransactionExecute(insertSql) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        Next
+
+        For Each insRow As DataRow In insTable.Rows
+            Dim insInfo As New InstrumentInfo()
+            insInfo.TransFromDataRow(insRow)
+            Dim insertCols = String.Format("{0},{1},{2},{3},{4},{5}", IRD_REG_ID, IRD_CODE, IRD_NAME, IRD_SPEC, IRD_UNIT, IRD_COUNT)
+            Dim colValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}'", lRequestID, insInfo.Code, insInfo.Name, insInfo.Specification, insInfo.Unit, insInfo.Amount)
+            Dim insertSql = String.Format("Insert Into {0} ({1}) Values ({2})", TBL_INS_REQUEST_DETAIL, insertCols, colValues)
+            If Not TransactionExecute(insertSql) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        Next
+        If dtHighSU.Rows.Count > 0 Then
+            Dim strCols As String = String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", DR_ID, DR_OPN_REG_ID, DR_ROOM_NAME, _
+                                                  DR_TABLE_ID, DR_REQUEST_DATE, DR_ROOM_ID, DR_KIND, DR_STATE, DR_DEPARTMENT_ID, DR_DEPARTMENT_NAME)
+            Dim strValues As String = String.Format("{0},'{1}','{2}','{3}',to_date('{4}','{5}'),{6},'{7}','{8}','{9}','{10}'", lHighValueSUID, surgeryNoteInfo.Id, _
+                                                    surgeryNoteInfo.Room, surgeryNoteInfo.Table, DateTime.Now, _
+                                                    CONST_TEXT_ORACLE_DATETIME_FORMAT_YYYYMMDDHHMMSS, surgeryNoteInfo.RoomID, _
+                                                   CStr(REQUEST_KIND.HIGH_VALUE_SU), CStr(REQUEST_STATE.UNCOMFIRM), _
+                                                   surgeryNoteInfo.DepartmentID, surgeryNoteInfo.DepartmentName)
+            Dim insertSql As String = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_OPERATION_REQUEST_MASTER, strCols, strValues)
+            If Not TransactionExecute(insertSql) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+            For Each dr As DataRow In dtHighSU.Rows
+                Dim insInfo As New InstrumentInfo()
+                insInfo.TransFromDataRow(dr)
+                Dim insertCols = String.Format("{0},{1},{2},{3},{4},{5}", IRD_REG_ID, IRD_CODE, IRD_NAME, IRD_SPEC, IRD_UNIT, IRD_COUNT)
+                Dim colValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}'", lHighValueSUID, insInfo.Code, insInfo.Name, insInfo.Specification, insInfo.Unit, insInfo.Amount)
+                insertSql = String.Format("Insert Into {0} ({1}) Values ({2})", TBL_INS_REQUEST_DETAIL, insertCols, colValues)
+                If Not TransactionExecute(insertSql) Then
+                    Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                    Return DBMEDITS_RESULT.ERROR_EXCEPTION
+                End If
+            Next
+        End If
+        If dtHighValueRU.Rows.Count > 0 Then
+            Dim strCols As String = String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", DR_ID, DR_OPN_REG_ID, DR_ROOM_NAME, _
+                                                  DR_TABLE_ID, DR_REQUEST_DATE, DR_ROOM_ID, DR_KIND, DR_STATE, DR_DEPARTMENT_ID, DR_DEPARTMENT_NAME)
+            Dim strValues As String = String.Format("{0},'{1}','{2}','{3}',to_date('{4}','{5}'),{6},'{7}','{8}','{9}','{10}'", lHighValueRUID, surgeryNoteInfo.Id, _
+                                                    surgeryNoteInfo.Room, surgeryNoteInfo.Table, DateTime.Now, _
+                                                    CONST_TEXT_ORACLE_DATETIME_FORMAT_YYYYMMDDHHMMSS, surgeryNoteInfo.RoomID, _
+                                                    CStr(REQUEST_KIND.HIGH_VALUE_RU), CStr(REQUEST_STATE.UNCOMFIRM), _
+                                                    surgeryNoteInfo.DepartmentID, surgeryNoteInfo.DepartmentName)
+            Dim insertSql As String = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_OPERATION_REQUEST_MASTER, strCols, strValues)
+            If Not TransactionExecute(insertSql) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+            For Each dr As DataRow In dtHighValueRU.Rows
+                Dim insInfo As New InstrumentInfo()
+                insInfo.TransFromDataRow(dr)
+                Dim insertCols = String.Format("{0},{1},{2},{3},{4},{5}", IRD_REG_ID, IRD_CODE, IRD_NAME, IRD_SPEC, IRD_UNIT, IRD_COUNT)
+                Dim colValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}'", lHighValueRUID, insInfo.Code, insInfo.Name, insInfo.Specification, insInfo.Unit, insInfo.Amount)
+                insertSql = String.Format("Insert Into {0} ({1}) Values ({2})", TBL_INS_REQUEST_DETAIL, insertCols, colValues)
+                If Not TransactionExecute(insertSql) Then
+                    Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                    Return DBMEDITS_RESULT.ERROR_EXCEPTION
+                End If
+            Next
+        End If
+        If Not ImplementUpdateOPerationStatus(surgeryNoteInfo.Id, OPerationNoteState.Requested) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not TransactionCommit() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        '提交事务后，获取申请单值，确保是新增的情况下
+        'surgeryNoteInfo.RequestReg.Id = reqMasterId
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function ModifySurgeryRequestMaster(ByRef surgeryNoteInfo As SurgeryNoteInfo, ByVal drugTable As DataTable, ByVal insTable As DataTable, ByVal dtHighSU As DataTable, ByVal dtHighValueRU As DataTable) As DBMEDITS_RESULT
+        If surgeryNoteInfo Is Nothing OrElse drugTable Is Nothing OrElse insTable Is Nothing Then Return DBMEDITS_RESULT.ERROR_PARAMETER
+
+        Dim reqMasterId As String = surgeryNoteInfo.RequestReg.Id
+        Dim lHighValueSUID As Long = CONST_INVALID_DATA
+        Dim lHighValueRUID As Long = CONST_INVALID_DATA
+        Dim lRequestID As Long = CONST_INVALID_DATA
+
+        If dtHighSU.Rows.Count > 0 Then
+            If Not QueryNextVal(lHighValueSUID, SEQ_TBL_OPER_REQUEST_MASTER) Then
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        End If
+        If dtHighValueRU.Rows.Count > 0 Then
+            If Not QueryNextVal(lHighValueRUID, SEQ_TBL_OPER_REQUEST_MASTER) Then
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        End If
+        If Not QueryNextVal(lRequestID, SEQ_TBL_OPER_REQUEST_MASTER) Then
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not TransactionBegin() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        '如果手术申请单不存在的话，就先添加,并获取返回的ID号；
+        If drugTable.Rows.Count > 0 OrElse insTable.Rows.Count > 0 Then
+            Dim strCols As String = String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", DR_ID, DR_OPN_REG_ID, DR_ROOM_NAME, _
+                                                  DR_TABLE_ID, DR_REQUEST_DATE, DR_ROOM_ID, DR_KIND, DR_STATE, DR_DEPARTMENT_ID, DR_DEPARTMENT_NAME)
+            Dim strValues As String = String.Format("{0},'{1}','{2}','{3}',to_date('{4}','{5}'),{6},'{7}','{8}','{9}','{10}'", lRequestID, surgeryNoteInfo.Id, _
+                                                    surgeryNoteInfo.Room, surgeryNoteInfo.Table, DateTime.Now, _
+                                                    CONST_TEXT_ORACLE_DATETIME_FORMAT_YYYYMMDDHHMMSS, surgeryNoteInfo.RoomID, _
+                                                    CStr(REQUEST_KIND.INS), CStr(REQUEST_STATE.UNCOMFIRM), surgeryNoteInfo.DepartmentID, surgeryNoteInfo.DepartmentName)
+            Dim insertSql As String = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_OPERATION_REQUEST_MASTER, strCols, strValues)
+            If Not TransactionExecute(insertSql) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        End If
+
+        For Each drugRow As DataRow In drugTable.Rows
+            Dim drugInfo As New DrugInfo()
+            drugInfo.TransFromDataRow(drugRow)
+            Dim insertCols = String.Format("{0},{1},{2},{3},{4},{5},{6},{7}", DRD_REG_ID, DRD_COMMON_NAME, DRD_PRODUCT_NAME, DRD_DRUG_SPEC, DRD_DRUG_FACTORY, DRD_MEASUER_UNITS, DRD_PACK_COUNT, DRD_DRUG_ID)
+            Dim colValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'", lRequestID, drugInfo.CommonName, drugInfo.ProductName, drugInfo.Specification, drugInfo.Factory, drugInfo.Unit, drugInfo.Amount, drugInfo.strDrugID)
+            Dim insertSql = String.Format("Insert Into {0} ({1}) Values ({2})", TBL_DRUG_REQUEST_DETAIL, insertCols, colValues)
+            If Not TransactionExecute(insertSql) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        Next
+
+        For Each insRow As DataRow In insTable.Rows
+            Dim insInfo As New InstrumentInfo()
+            insInfo.TransFromDataRow(insRow)
+            Dim insertCols = String.Format("{0},{1},{2},{3},{4},{5}", IRD_REG_ID, IRD_CODE, IRD_NAME, IRD_SPEC, IRD_UNIT, IRD_COUNT)
+            Dim colValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}'", lRequestID, insInfo.Code, insInfo.Name, insInfo.Specification, insInfo.Unit, insInfo.Amount)
+            Dim insertSql = String.Format("Insert Into {0} ({1}) Values ({2})", TBL_INS_REQUEST_DETAIL, insertCols, colValues)
+            If Not TransactionExecute(insertSql) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        Next
+        If dtHighSU.Rows.Count > 0 Then
+            Dim strCols As String = String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", DR_ID, DR_OPN_REG_ID, DR_ROOM_NAME, _
+                                                  DR_TABLE_ID, DR_REQUEST_DATE, DR_ROOM_ID, DR_KIND, DR_STATE, DR_DEPARTMENT_ID, DR_DEPARTMENT_NAME)
+            Dim strValues As String = String.Format("{0},'{1}','{2}','{3}',to_date('{4}','{5}'),{6},'{7}','{8}','{9}','{10}'", lHighValueSUID, surgeryNoteInfo.Id, _
+                                                    surgeryNoteInfo.Room, surgeryNoteInfo.Table, DateTime.Now, _
+                                                    CONST_TEXT_ORACLE_DATETIME_FORMAT_YYYYMMDDHHMMSS, surgeryNoteInfo.RoomID, _
+                                                   CStr(REQUEST_KIND.HIGH_VALUE_SU), CStr(REQUEST_STATE.UNCOMFIRM), _
+                                                   surgeryNoteInfo.DepartmentID, surgeryNoteInfo.DepartmentName)
+            Dim insertSql As String = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_OPERATION_REQUEST_MASTER, strCols, strValues)
+            If Not TransactionExecute(insertSql) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+            For Each dr As DataRow In dtHighSU.Rows
+                Dim insInfo As New InstrumentInfo()
+                insInfo.TransFromDataRow(dr)
+                Dim insertCols = String.Format("{0},{1},{2},{3},{4},{5}", IRD_REG_ID, IRD_CODE, IRD_NAME, IRD_SPEC, IRD_UNIT, IRD_COUNT)
+                Dim colValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}'", lHighValueSUID, insInfo.Code, insInfo.Name, insInfo.Specification, insInfo.Unit, insInfo.Amount)
+                insertSql = String.Format("Insert Into {0} ({1}) Values ({2})", TBL_INS_REQUEST_DETAIL, insertCols, colValues)
+                If Not TransactionExecute(insertSql) Then
+                    Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                    Return DBMEDITS_RESULT.ERROR_EXCEPTION
+                End If
+            Next
+        End If
+        If dtHighValueRU.Rows.Count > 0 Then
+            Dim strCols As String = String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", DR_ID, DR_OPN_REG_ID, DR_ROOM_NAME, _
+                                                  DR_TABLE_ID, DR_REQUEST_DATE, DR_ROOM_ID, DR_KIND, DR_STATE, DR_DEPARTMENT_ID, DR_DEPARTMENT_NAME)
+            Dim strValues As String = String.Format("{0},'{1}','{2}','{3}',to_date('{4}','{5}'),{6},'{7}','{8}','{9}','{10}'", lHighValueSUID, surgeryNoteInfo.Id, _
+                                                    surgeryNoteInfo.Room, surgeryNoteInfo.Table, DateTime.Now, _
+                                                    CONST_TEXT_ORACLE_DATETIME_FORMAT_YYYYMMDDHHMMSS, surgeryNoteInfo.RoomID, _
+                                                    (REQUEST_KIND.HIGH_VALUE_RU), CStr(REQUEST_STATE.UNCOMFIRM), _
+                                                    surgeryNoteInfo.DepartmentID, surgeryNoteInfo.DepartmentName)
+            Dim insertSql As String = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_OPERATION_REQUEST_MASTER, strCols, strValues)
+            If Not TransactionExecute(insertSql) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+            For Each dr As DataRow In dtHighSU.Rows
+                Dim insInfo As New InstrumentInfo()
+                insInfo.TransFromDataRow(dr)
+                Dim insertCols = String.Format("{0},{1},{2},{3},{4},{5}", IRD_REG_ID, IRD_CODE, IRD_NAME, IRD_SPEC, IRD_UNIT, IRD_COUNT)
+                Dim colValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}'", lHighValueRUID, insInfo.Code, insInfo.Name, insInfo.Specification, insInfo.Unit, insInfo.Amount)
+                insertSql = String.Format("Insert Into {0} ({1}) Values ({2})", TBL_INS_REQUEST_DETAIL, insertCols, colValues)
+                If Not TransactionExecute(insertSql) Then
+                    Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                    Return DBMEDITS_RESULT.ERROR_EXCEPTION
+                End If
+            Next
+        End If
+        If Not ImplementUpdateOPerationStatus(surgeryNoteInfo.Id, OPerationNoteState.Requested) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not TransactionCommit() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        '提交事务后，获取申请单值，确保是新增的情况下
+        'surgeryNoteInfo.RequestReg.Id = reqMasterId
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
 
     Public Function GenerateSurgeryUseMaster(ByRef surgeryNoteInfo As SurgeryNoteInfo)
         If surgeryNoteInfo Is Nothing Then Return DBMEDITS_RESULT.ERROR_PARAMETER
@@ -458,7 +726,7 @@ Public Class DbOperationManage
         Return DBMEDITS_RESULT.SUCCESS
     End Function
 
-    Public Function CommitSurgeryUseMaster(ByVal surgeryNoteInfo As SurgeryNoteInfo, ByVal drugTable As DataTable, ByVal insTable As DataTable) As DBMEDITS_RESULT
+    Public Function CommitSurgeryUseMaster(ByVal surgeryNoteInfo As SurgeryNoteInfo, ByVal drugTable As DataTable, ByVal insTable As DataTable, ByVal lstPackageDetailCheck As List(Of PackageINSDetailCountCheck)) As DBMEDITS_RESULT
         If surgeryNoteInfo Is Nothing OrElse drugTable Is Nothing OrElse insTable Is Nothing Then Return DBMEDITS_RESULT.ERROR_PARAMETER
 
         Dim lUseID As Long
@@ -506,7 +774,29 @@ Public Class DbOperationManage
             If Not TransactionExecute(strSQL) Then
                 Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
                 Return DBMEDITS_RESULT.ERROR_EXCEPTION
-            End If 
+            End If
+            If Not ImplementUpdateHighInfo(insRow.Item(TEXT_PACKAGE_ID), PACKAGE_DETAIL_CHECK.MIDDLE, lUseID) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        Next
+
+        For Each oPackageDetailCheck As PackageINSDetailCountCheck In lstPackageDetailCheck
+            '对于未拆包确认的治疗包，术前拆包器械数量审核插入数据
+            If Not ImplementInsertFrontUseIfNotReg(oPackageDetailCheck.m_lstINSDetail, surgeryNoteInfo.Id, oPackageDetailCheck.m_lPackageID, PACKAGE_DETAIL_CHECK.Front) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+            If Not ImplementDeletePackageDetailCheck(surgeryNoteInfo.Id, oPackageDetailCheck.m_lPackageID, PACKAGE_DETAIL_CHECK.MIDDLE) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+            For Each oInSDetail As INSDetailInfo In oPackageDetailCheck.m_lstINSDetail
+                If Not ImplementInsertPackageDetailCheck(oInSDetail, oPackageDetailCheck.m_lPackageID, surgeryNoteInfo.Id, PACKAGE_DETAIL_CHECK.MIDDLE) Then
+                    Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                    Return DBMEDITS_RESULT.ERROR_EXCEPTION
+                End If
+            Next
         Next
         If Not ImplementSterileRoomInOutLog(SR_LOG_INOUT_TYPE.INS_USE_OUT, lUseID) Then
             Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
@@ -524,7 +814,7 @@ Public Class DbOperationManage
         Return DBMEDITS_RESULT.SUCCESS
     End Function
 
-    Public Function CommitSurgeryFrontUseMaster(ByVal lstPackageCheck As List(Of PackageCheck), ByVal dt As DataTable, ByVal oSurgeryNoteInfo As SurgeryNoteInfo, ByVal eType As CHECK_TYPE) As DBMEDITS_RESULT
+    Public Function CommitSurgeryFrontUseMaster(ByVal lstPackageCheck As List(Of PackageCheck), ByVal lstPackageDetailCheck As List(Of PackageINSDetailCountCheck), dt As DataTable, ByVal oSurgeryNoteInfo As SurgeryNoteInfo, ByVal eType As CHECK_TYPE) As DBMEDITS_RESULT
         If oSurgeryNoteInfo Is Nothing Then Return DBMEDITS_RESULT.ERROR_PARAMETER
         Dim lFrontUseID As Long
         If Not QueryNextVal(lFrontUseID, SEQ_MST_FRONT_USE_MASTER) Then
@@ -551,13 +841,19 @@ Public Class DbOperationManage
                                 FUID_RESULT, FUID_REASON)
 
         For Each oPackageCheck As PackageCheck In lstPackageCheck
-            strValues = String.Format("{0},{1},'{2}','{3}','{4}','{5}','{6}','{7}'", lFrontUseID, oPackageCheck.m_oPackageInfo.m_lPackageID, oPackageCheck.m_oPackageInfo.m_strINSID, _
-                                      oPackageCheck.m_oPackageInfo.m_strINSName, oPackageCheck.m_oPackageInfo.m_strINSType, oPackageCheck.m_oPackageInfo.m_strINSUnit, _
+            strValues = String.Format("{0},{1},'{2}','{3}','{4}','{5}','{6}','{7}'", lFrontUseID, oPackageCheck.m_oPackageInfo.m_lPackageID, oPackageCheck.m_oPackageInfo.m_oINSInfo.m_strINSID, _
+                                      oPackageCheck.m_oPackageInfo.m_oINSInfo.m_strName, oPackageCheck.m_oPackageInfo.m_oINSInfo.m_strType, oPackageCheck.m_oPackageInfo.m_oINSInfo.m_strUnit, _
                                       oPackageCheck.m_nResult, oPackageCheck.m_strReason)
             strSQl = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_FRONT_USE_INS_DETAIL, strCols, strValues)
             If Not TransactionExecute(strSQl) Then
                 Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
                 Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+            If oPackageCheck.m_oPackageInfo.m_oINSInfo.m_shINSKind = INS_KINDS.HIGH_VALUE OrElse oPackageCheck.m_oPackageInfo.m_oINSInfo.m_shINSKind = INS_KINDS.HIGH_VALUE_SU Then
+                If Not ImplementUpdateHighInfo(oPackageCheck.m_oPackageInfo.m_lPackageID, PACKAGE_DETAIL_CHECK.Front, lFrontUseID) Then
+                    Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+                    Return DBMEDITS_RESULT.ERROR_EXCEPTION
+                End If
             End If
             If oPackageCheck.m_nResult = CHECK_RESULT.FAILD Then
                 Dim strCon As String = String.Format("{0}={1}", SRS_PACKAGE_ID, oPackageCheck.m_oPackageInfo.m_lPackageID)
@@ -581,6 +877,19 @@ Public Class DbOperationManage
                 Return DBMEDITS_RESULT.ERROR_EXCEPTION
             End If
         Next
+        '术前拆包登记包内物品详细清点
+        For Each oPackageDetailCheck As PackageINSDetailCountCheck In lstPackageDetailCheck
+            If Not ImplementDeletePackageDetailCheck(oSurgeryNoteInfo.Id, oPackageDetailCheck.m_lPackageID, PACKAGE_DETAIL_CHECK.Front) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+            For Each oInSDetail As INSDetailInfo In oPackageDetailCheck.m_lstINSDetail
+                If Not ImplementInsertPackageDetailCheck(oInSDetail, oPackageDetailCheck.m_lPackageID, oSurgeryNoteInfo.Id, PACKAGE_DETAIL_CHECK.Front) Then
+                    Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                    Return DBMEDITS_RESULT.ERROR_EXCEPTION
+                End If
+            Next
+        Next
         '更新单据的状态
         If Not ImplementUpdateOPerationStatus(oSurgeryNoteInfo.Id, OPerationNoteState.SurgeryConfirm) Then
             Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
@@ -592,6 +901,66 @@ Public Class DbOperationManage
             Return DBMEDITS_RESULT.ERROR_EXCEPTION
         End If
         Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Private Function ImplementUpdateHighInfo(ByVal lPackageID As Long, ByVal eType As PACKAGE_DETAIL_CHECK, ByVal lRegID As Long) As Boolean
+        Dim strCon, strSQL, strValue As String
+        strCon = String.Format("{0}={1}", PKD_REG_ID, lPackageID)
+        If eType = PACKAGE_DETAIL_CHECK.Front Then
+            strValue = String.Format("{0}={1} and {2}='{3}'", PKD_FRONT_USE_ID, lRegID, PKD_STATE, CStr(HIGHVALUE_STATE.FRONT_USE))
+        ElseIf eType = PACKAGE_DETAIL_CHECK.MIDDLE Then
+            strValue = String.Format("{0}={1} and {2}='{3}'", PKD_USE_ID, lRegID, PKD_STATE, CStr(HIGHVALUE_STATE.USED))
+        End If
+        strSQL = String.Format(DBCONSTDEF_SQL_UPDATE_WHERE, TBL_PACKAGE_DETAIL_INFO, strValue, strCon)
+        If Not TransactionExecute(strSQL) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+            Return False
+        End If
+        Return True
+    End Function
+
+    Private Function ImplementInsertFrontUseIfNotReg(ByVal lstINSDetailInfo As List(Of INSDetailInfo), ByVal lOPNID As Long, ByVal lPackageID As Long, ByVal eType As PACKAGE_DETAIL_CHECK) As Boolean
+        Dim strCon, strSQl, strInsert, strCols, strValues, strExists As String
+        strCols = String.Format("{0},{1},{2},{3},{4},{5}", IDC_PACKAGE_ID, IDC_INS_NAME, IDC_INS_TYPE, IDC_COUNT, IDC_OPN_ID, IDC_TYPE)
+        strSQl = String.Empty
+        If lstINSDetailInfo.Count < 1 Then
+            Return True
+        End If
+        For nIndex As Integer = 0 To lstINSDetailInfo.Count - 1
+            strValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}'", lPackageID, lstINSDetailInfo(nIndex).m_strINSName, lstINSDetailInfo(nIndex).m_strINSType, lstINSDetailInfo(nIndex).m_nCount, lOPNID, CStr(eType))
+            If nIndex = lstINSDetailInfo.Count - 1 Then
+                strSQl += String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_INS_DETAIL_CHECK, strCols, strValues)
+            Else
+                strSQl += String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_INS_DETAIL_CHECK, strCols, strValues) + ";"
+            End If
+        Next
+
+        strCon = String.Format("{0}={1} and {2}={3} and {4}='{5}'", IDC_OPN_ID, lOPNID, IDC_PACKAGE_ID, lPackageID, IDC_TYPE, CStr(eType))
+        strExists = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, IDC_ID, TBL_INS_DETAIL_CHECK, strCon)
+        strInsert = String.Format(DBCONSTDEF_ORACLE_SELECT_INSERT, TBL_INS_DETAIL_CHECK, strExists, strSQl)
+        If Not TransactionExecute(strInsert) Then
+            Return False
+        End If
+        Return True
+    End Function
+    Private Function ImplementDeletePackageDetailCheck(ByVal lOPNID As Long, ByVal lPackageID As Long, ByVal eType As PACKAGE_DETAIL_CHECK) As Boolean
+        Dim strCon, strSql As String
+        strCon = String.Format("{0}={1} and {2}={3} and {4}='{5}'", IDC_OPN_ID, lOPNID, IDC_PACKAGE_ID, lPackageID, IDC_TYPE, CStr(eType))
+        strSql = String.Format(DBCONSTDEF_SQL_DELETE_WHERE, TBL_INS_DETAIL_CHECK, strCon)
+        If Not TransactionExecute(strSql) Then
+            Logger.WriteLine(m_oDBConnect.GetErrorString)
+            Return False
+        End If
+        Return True
+    End Function
+    Public Function ImplementInsertPackageDetailCheck(ByVal oINSDetailInfo As INSDetailInfo, ByVal lPackageID As Long, ByVal lOPNID As Long, ByVal eType As PACKAGE_DETAIL_CHECK) As Boolean
+        Dim strSQL, strValues, strCols As String
+        strCols = String.Format("{0},{1},{2},{3},{4},{5}", IDC_PACKAGE_ID, IDC_INS_NAME, IDC_INS_TYPE, IDC_COUNT, IDC_OPN_ID, IDC_TYPE)
+        strValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}'", lPackageID, oINSDetailInfo.m_strINSName, oINSDetailInfo.m_strINSType, oINSDetailInfo.m_nCount, lOPNID, CStr(eType))
+        strSQL = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_INS_DETAIL_CHECK, strCols, strValues)
+        If Not TransactionExecute(strSQL) Then
+            Return False
+        End If
+        Return True
     End Function
     Public Function ImplementUpdateOPerationStatus(ByVal lOperatorID As Long, ByVal eStatus As OPerationNoteState) As Boolean
         Dim StrCon As String = String.Format("{0}={1}", OPN_ID, lOperatorID)
@@ -659,8 +1028,8 @@ Public Class DbOperationManage
                                 FUID_RESULT, FUID_REASON)
 
         For Each oPackageCheck As PackageCheck In lstPackageCheck
-            strValues = String.Format("{0},{1},'{2}','{3}','{4}','{5}','{6}','{7}'", lFrontUseID, oPackageCheck.m_oPackageInfo.m_lPackageID, oPackageCheck.m_oPackageInfo.m_strINSID, _
-                                      oPackageCheck.m_oPackageInfo.m_strINSName, oPackageCheck.m_oPackageInfo.m_strINSType, oPackageCheck.m_oPackageInfo.m_strINSUnit, _
+            strValues = String.Format("{0},{1},'{2}','{3}','{4}','{5}','{6}','{7}'", lFrontUseID, oPackageCheck.m_oPackageInfo.m_lPackageID, oPackageCheck.m_oPackageInfo.m_oINSInfo.m_strINSID, _
+                                      oPackageCheck.m_oPackageInfo.m_oINSInfo.m_strName, oPackageCheck.m_oPackageInfo.m_oINSInfo.m_strType, oPackageCheck.m_oPackageInfo.m_oINSInfo.m_strUnit, _
                                       oPackageCheck.m_nResult, oPackageCheck.m_strReason)
             strSQl = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_FRONT_USE_INS_DETAIL, strCols, strValues)
             If Not TransactionExecute(strSQl) Then
@@ -706,9 +1075,11 @@ Public Class DbOperationManage
     End Function
 
     Public Function QueryPackageInfoByID(ByRef oPakcageInfo As PackageInfo, ByVal lPackageID As Long) As DBMEDITS_RESULT
-        Dim strCon, strSql As String
-        strCon = String.Format("{0}={1}", SRS_PACKAGE_ID, lPackageID)
-        strSql = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, TBL_STERILEROOM_RU_STOCK, strCon)
+        Dim strCon, strSql, strTable As String
+        strCon = String.Format("{0}={1} and {2}={3}", SRS_PACKAGE_ID, lPackageID, SI_TYPE, CStr(STERILIZE_ROOM_TYPE.OP))
+        strTable = String.Format("{0} inner join {1} on {2}={3} INNER JOIN {4} ON {5}={6}", TBL_STERILEROOM_RU_STOCK, _
+                                 MST_STERILEROOM_INFO, SRS_STERILIZE_ROOM_ID, SI_ID, MST_INSTRUMENT_INFO, INS_CODE, SRS_INS_ID)
+        strSql = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, strTable, strCon)
         Dim ds As New DataSet
         If Not QueryOleDb(strSql, ds) Then
             Logger.WriteLine(m_oDBConnect.GetErrorString)
@@ -720,13 +1091,18 @@ Public Class DbOperationManage
             Return DBMEDITS_RESULT.EXIST_OVERFLOW
         Else
             oPakcageInfo.m_lPackageID = CLng(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_PACKAGE_ID), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
-            oPakcageInfo.m_strINSID = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_INS_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPakcageInfo.m_strINSName = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPakcageInfo.m_strINSType = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPakcageInfo.m_strINSUnit = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_INS_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            oPakcageInfo.m_datSterilize = CDate(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_STERILIZE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE))
-            oPakcageInfo.m_datAvailable = CDate(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_AVAILABLE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE))
-            oPakcageInfo.m_nSterilizRoomID = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_STERILIZE_ROOM_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPakcageInfo.m_oINSInfo.m_strINSID = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_INS_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPakcageInfo.m_oINSInfo.m_strName = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPakcageInfo.m_oINSInfo.m_strType = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPakcageInfo.m_oINSInfo.m_strUnit = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_INS_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPakcageInfo.SterilizeDate = CDate(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_STERILIZE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE))
+            oPakcageInfo.AvailableDate = CDate(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_AVAILABLE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE))
+            oPakcageInfo.m_lSterileRoomID = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(SRS_STERILIZE_ROOM_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPakcageInfo.m_oINSInfo.m_strINSID = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(INS_CODE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPakcageInfo.m_oINSInfo.m_strName = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPakcageInfo.m_oINSInfo.m_strType = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(INS_SPEC), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPakcageInfo.m_oINSInfo.m_strUnit = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(INS_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oPakcageInfo.m_oINSInfo.m_shINSKind = CStr(JudgeDataValue(ds.Tables(0).Rows(0).Item(INS_KIND), ENUM_DATA_TYPE.DATA_TYPE_STRING))
         End If
         Return DBMEDITS_RESULT.SUCCESS
     End Function
@@ -782,7 +1158,7 @@ Public Class DbOperationManage
         Next
         Return DBMEDITS_RESULT.SUCCESS
     End Function
-    Public Function InsertReturnInfo(ByVal oSur As SurgeryNoteInfo, ByVal dtDurg As DataTable, ByVal dtINS As DataTable) As Long
+    Public Function InsertReturnInfo(ByVal oSur As SurgeryNoteInfo, ByVal dtDurg As DataTable, ByVal dtINS As DataTable, ByVal lstPackageCjeck As List(Of PackageINSDetailCountCheck)) As Long
         Dim strSQL, strCols, strValues As String
         Dim lReturnID As Long
         '获取回收主表主键
@@ -809,12 +1185,13 @@ Public Class DbOperationManage
             If CInt(dr.Item(TEXT_DRUG_RETURN_COUNT)) = 0 Then
                 Continue For
             End If
-            strCols = String.Format("{0},{1},{2},{3},{4},{5},{6},{7}", DRD_REG_ID, DRD_DRUG_ID, DRD_COMMON_NAME, DRD_PRODUCT_NAME, _
-                               DRD_DRUG_SPEC, DRD_DRUG_FACTORY, DRD_MEASUER_UNITS, DRD_PACK_COUNT)
-            strValues = String.Format("{0},'{1}','{2}','{3}','{4}','{5}','{6}','{7}'", lReturnID, dr.Item(TEXT_DRUG_ID), _
+            strCols = String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}", DRD_REG_ID, DRD_DRUG_ID, DRD_COMMON_NAME, DRD_PRODUCT_NAME, _
+                               DRD_DRUG_SPEC, DRD_DRUG_FACTORY, DRD_MEASUER_UNITS, DRD_PACK_COUNT, DRD_BACK_COUNT)
+            strValues = String.Format("{0},'{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'", lReturnID, dr.Item(TEXT_DRUG_ID), _
                                       dr.Item(TEXT_DRUG_COMMON_NAME), dr.Item(TEXT_DRUG_PRODUCT_NAME), _
                                       dr.Item(TEXT_DRUG_SPECIFICATION), dr.Item(TEXT_DRUG_FACTORY), _
-                                      dr.Item(TEXT_DRUG_UNIT), dr.Item(TEXT_DRUG_RETURN_COUNT))
+                                      dr.Item(TEXT_DRUG_UNIT), dr.Item(TEXT_DRUG_RETURN_COUNT), _
+                                      dr.Item(TEXT_DRUG_BACK_COUNT))
             strSQL = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_DRUG_RETURN_DETAIL, strCols, strValues)
             If Not TransactionExecute(strSQL) Then
                 Logger.WriteLine(m_oDBConnect.GetErrorString)
@@ -835,6 +1212,18 @@ Public Class DbOperationManage
                     Return DBMEDITS_RESULT.ERROR_EXCEPTION
                 End If
             End If
+        Next
+        For Each oPackageCheck As PackageINSDetailCountCheck In lstPackageCjeck
+            If Not ImplementDeletePackageDetailCheck(oSur.Id, oPackageCheck.m_lPackageID, PACKAGE_DETAIL_CHECK.AFTER) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+            For Each oInSDetail As INSDetailInfo In oPackageCheck.m_lstINSDetail
+                If Not ImplementInsertPackageDetailCheck(oInSDetail, oPackageCheck.m_lPackageID, oSur.Id, PACKAGE_DETAIL_CHECK.AFTER) Then
+                    Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                    Return DBMEDITS_RESULT.ERROR_EXCEPTION
+                End If
+            Next
         Next
         '更新单据状态
         If Not ImplementUpdateOPerationStatus(oSur.Id, OPerationNoteState.SurgeryReturn) Then
@@ -862,7 +1251,7 @@ Public Class DbOperationManage
     Public Function QueryINSDetailInfoByID(ByRef dt As DataTable, ByVal strINSID As String) As Long
         Dim strCon, strSQl As String
         strCon = String.Format("{0}='{1}'", IDI_REG_ID, strINSID)
-        strSQl = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, MST_INS_DETAIL_INFO, strCon)
+        strSQl = String.Format(DBCONSTDEF_SQL_SELECT_WHERE_ORDER, DBCONSTDEF_SQL_SELECT_ALL, MST_INS_DETAIL_INFO, strCon, IDI_ID)
         Dim ds As New DataSet
         If Not QueryOleDb(strSQl, ds) Then
             Logger.WriteLine(m_oDBConnect.GetErrorString)
@@ -873,6 +1262,81 @@ Public Class DbOperationManage
         Else
             dt = ds.Tables(0).Copy
         End If
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function QueryINSDetailByPKID(ByRef oPackageDetailCheck As PackageINSDetailCountCheck) As Long
+        Dim strCon As String = String.Format("{0}={1} and {2}={3} and {4}='{5}'", IDC_OPN_ID, oPackageDetailCheck.m_lOPNID, IDC_PACKAGE_ID, _
+                                             oPackageDetailCheck.m_lPackageID, IDC_TYPE, CStr(oPackageDetailCheck.m_ePackageDetailCheck))
+        Dim strOrderBy As String = String.Format("{0},{1}", IDC_INS_NAME, IDC_INS_TYPE)
+        Dim strSQl As String = String.Format(DBCONSTDEF_SQL_SELECT_WHERE_ORDER, DBCONSTDEF_SQL_SELECT_ALL, TBL_INS_DETAIL_CHECK, strCon, strOrderBy)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSQl, ds) Then
+            Logger.WriteLine(m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        For Each dr As DataRow In ds.Tables(0).Rows
+            Dim oInsDetail As New INSDetailInfo
+            oInsDetail.m_strINSName = CStr(JudgeDataValue(dr.Item(IDC_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oInsDetail.m_strINSType = CStr(JudgeDataValue(dr.Item(IDC_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            oInsDetail.m_nCount = CInt(JudgeDataValue(dr.Item(IDC_COUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
+            oPackageDetailCheck.m_lstINSDetail.Add(oInsDetail)
+        Next
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function QueryHighValueInfoByID(ByRef oHighValueIngo As HighValueInfo, ByVal lPackageID As Long) As Long
+        Dim strCon, strSQl As String
+        strCon = String.Format("{0}={1}", PKD_REG_ID, lPackageID)
+        strSQl = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, TBL_PACKAGE_DETAIL_INFO, strCon)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSQl, ds) Then
+            Logger.WriteLine(m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If ds.Tables(0).Rows.Count < 0 Then
+            Return DBMEDITS_RESULT.ERROR_NOT_EXIST
+        ElseIf ds.Tables(0).Rows.Count > 1 Then
+            Return DBMEDITS_RESULT.ERROR_EXIST_OVERFLOW
+        Else
+            oHighValueIngo.m_lPackageID = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_REG_ID), ENUM_DATA_TYPE.DATA_TYPE_INTEGER)
+            oHighValueIngo.m_strINSID = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_INS_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+            oHighValueIngo.m_strINSName = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+            oHighValueIngo.m_strINSType = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+            oHighValueIngo.m_nCompanyID = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_COMPANY_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+            oHighValueIngo.m_strCompanyName = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_COMPANY_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+            oHighValueIngo.m_strCompanyCode = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_COMPANY_PRODUCT_CODE), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+            oHighValueIngo.m_strSequenceBarcode = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_PRODUCT_ORDER_CODE), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+            oHighValueIngo.m_datExamDate = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_EXAM_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)
+            oHighValueIngo.m_datExpriedDate = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_EXAM_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)
+            oHighValueIngo.m_strBatch = JudgeDataValue(ds.Tables(0).Rows(0).Item(PKD_BATCH_ID), ENUM_DATA_TYPE.DATA_TYPE_DATE)
+        End If
+        Return DBMEDITS_RESULT.SUCCESS
+
+    End Function
+    Public Function QueryInfoByType(ByRef dt As DataTable, ByVal ParamArray eType As INS_KINDS()) As Long
+
+        Dim strCon, strSQl As String
+        strCon = CreateArrayCondition(INS_KIND, SqlDbType.VarChar, True, eType)
+        strSQl = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, MST_INSTRUMENT_INFO, strCon)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSQl, ds) Then
+            Logger.WriteLine(m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        dt = ds.Tables(0).Copy
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function QueryHighUseByID(ByVal lUseID As Long, ByRef strINSName As String) As Long
+        Dim strSQL, strCon As String
+        strCon = String.Format("{0}={1}", PKD_USE_ID, lUseID)
+        strSQL = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, TBL_PACKAGE_DETAIL_INFO, strCon)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSQL, ds) Then
+            Logger.WriteLine(m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        For Each dr As DataRow In ds.Tables(0).Rows
+            strINSName += JudgeDataValue(dr.Item(PKD_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING) + "  "
+        Next
         Return DBMEDITS_RESULT.SUCCESS
     End Function
 End Class

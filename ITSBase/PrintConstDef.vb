@@ -95,6 +95,7 @@ Public Module PrintConstDef
     Public Const CONST_PRINT_CONTINUOUS_FILE As String = "_C"
 
     Public Const _PrintWareHouseStock As String = "_PrintWareHouseStock.xml"
+    Public Const _printOPerationINSList As String = "_printOPerationINSList.xml"
     Public Const _PrintWareHouseStockDetail As String = "_PrintWareHouseStockDetail.xml"
     Public Const _PrintWareHouseInOut As String = "_PrintWareHouseInOut.xml"
     Public Const _PrintWareHouseInOutTotal As String = "_PrintWareHouseInOutTotal.xml"
@@ -189,4 +190,19 @@ Public Module PrintConstDef
 
     Public Const CONST_PRINT86_WILDTH As Integer = 640
     Public Const CONST_PRINT86_HEIGHT As Integer = 480
+
+    Public Const CONST_PRINT_TITLE_PATIENT_NAME = "PatientName"
+    Public Const CONST_PRINT_TITLE_PATIENT_SEX = "PatientSex"
+    Public Const CONST_PRINT_TITLE_PATIENT_AGE = "PatientAge"
+    Public Const CONST_PRINT_TITLE_PATIENT_WEIGHT = "PatientWeight"
+    Public Const CONST_PRINT_TITLE_PATIENT_HOSPITAL_ID = "HospitalID"
+    Public Const CONST_PRINT_TITLE_PATIENT_PATIENT_ID = "PatientID"
+    Public Const CONST_PRINT_TITLE_PATIENT_VISIT_ID = "VisitID"
+    Public Const CONST_PRINT_TITLE_PATIENT_DP = "Department"
+    Public Const CONST_PRINT_TITLE_PATIENT_BED_NO = "BedNo"
+    Public Const CONST_PRINT_TITLE_PATIENT_OPERATION_TIME = "OperationTime"
+    Public Const CONST_PRINT_TITLE_PATIENT_OPERATION_NAME = "OperationName"
+    Public Const CONST_PRINT_TITLE_RECORD = "Record"
+    Public Const CONST_PRINT_TITLE_HIGH_VALUE = "HighValue"
+
 End Module

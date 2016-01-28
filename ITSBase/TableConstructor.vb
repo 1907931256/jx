@@ -90,12 +90,17 @@ Public Class TableConstructor
         dt.Columns.Add(New DataColumn(TEXT_INS_TYPE, GetType(String)))
         dt.Columns.Add(New DataColumn(TEXT_UNIT, GetType(String)))
     End Sub
+    Public Shared Sub CreateINSRequest(ByRef dt As DataTable)
+        dt = New DataTable
+        AddINSFourColumns(dt)
+        dt.Columns.Add(New DataColumn(TEXT_COUNT, GetType(String)))
+    End Sub
     Public Shared Sub CreateINSColumns(ByRef dt As DataTable)
         dt = New DataTable
         dt.Columns.Add(New DataColumn(INS_ID, GetType(String)))
         dt.Columns.Add(New DataColumn(INS_NAME_INPUTCODE, GetType(String)))
         dt.Columns.Add(New DataColumn(INS_NAME, GetType(String)))
-        dt.Columns.Add(New DataColumn(INS_TYPE, GetType(String)))
+        dt.Columns.Add(New DataColumn(INS_SPEC, GetType(String)))
         dt.Columns.Add(New DataColumn(INS_UNIT, GetType(String)))
     End Sub
     '********************************************************************
@@ -119,6 +124,25 @@ Public Class TableConstructor
         dt.Columns.Add(New DataColumn(TEXT_STOCK_COUNT, GetType(Long)))
     End Sub
     '********************************************************************
+    '	Title:			CreateWarerhouseStock
+    '	Author:			CXX
+    '	Create Date:	2015-11-21
+    '	Columns:        
+    '*********************************************************************
+    Public Shared Sub CreateHighValueINS(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(TEXT_INS_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_INS_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_INS_TYPE, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_COMPANY_ID, GetType(Long)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_COMPANY_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_HIGH_COMPANY_CODE, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_HIGH_CODE, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_BATCH_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_HIGH_CHECK_DATE, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_HIGH_EXPRIED_DATE, GetType(String)))
+    End Sub
+    '********************************************************************
     '	Title:			CreateBalanceStock
     '	Author:			CXX
     '	Create Date:	2015-11-22
@@ -132,6 +156,16 @@ Public Class TableConstructor
         dt = New DataTable
         AddINSFourColumns(dt)
         dt.Columns.Add(New DataColumn(TEXT_STOCK_COUNT, GetType(Integer)))
+    End Sub
+    Public Shared Sub CreateDrugBalanceStock(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_COMMON_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_SPECIFICATION, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_UNIT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_FACTORY, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_AMOUNT, GetType(String)))
     End Sub
     '********************************************************************
     '	Title:			CreateWarerhouseStock
@@ -170,6 +204,12 @@ Public Class TableConstructor
         dt.Columns.Add(New DataColumn(TEXT_STERILIZEROOM_INS_INOUT_STAFF_NAME, GetType(String)))
         dt.Columns.Add(New DataColumn(TEXT_STERILIZEROOM_INS_INOUT_REG_TIME, GetType(Date)))
     End Sub
+    Public Shared Sub CreateDrugInOutDetail(ByRef dt As DataTable)
+        dt = New DataTable
+        CreateDrugStock(dt)
+        dt.Columns.Add(New DataColumn(TEXT_STERILIZEROOM_INS_INOUT_STAFF_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_STERILIZEROOM_INS_INOUT_REG_TIME, GetType(Date)))
+    End Sub
 
     Public Shared Sub CreateWareHouseINSInOutTotal(ByRef dt As DataTable)
         dt = New DataTable
@@ -181,37 +221,38 @@ Public Class TableConstructor
         dt.Columns.Add(New DataColumn(TEXT_STERILIZEROOM_INS_INOUT_REG_TIME, GetType(Date)))
         dt.Columns.Add(New DataColumn(SIM_REG_ID, GetType(Integer)))
     End Sub
-    Public Shared Sub CreateDrugStock(ByRef dt As DataTable)
-        dt = New DataTable
-        dt.Columns.Add(New DataColumn(DRS_ID, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_ID, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_COMMON_NAME, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_PRODUCT_NAME, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_SPECIFICATION, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_UNIT, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_FACTORY, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_AMOUNT, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_STOCK_UNIT, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_MFG, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_BATCHNO, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_EXPIRE, GetType(String)))
-    End Sub
+    'Public Shared Sub CreateDrugStock(ByRef dt As DataTable)
+    '    dt = New DataTable
+    '    dt.Columns.Add(New DataColumn(DRS_ID, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_ID, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_COMMON_NAME, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_PRODUCT_NAME, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_SPECIFICATION, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_UNIT, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_FACTORY, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_AMOUNT, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_STOCK_UNIT, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_MFG, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_BATCHNO, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_EXPIRE, GetType(String)))
+    'End Sub
 
-    Public Shared Sub CreateDrugStockDetail(ByRef dt As DataTable)
-        dt = New DataTable
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_ID, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_COMMON_NAME, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_PRODUCT_NAME, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_SPECIFICATION, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_UNIT, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_FACTORY, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_AMOUNT, GetType(String)))
-        dt.Columns.Add(New DataColumn(TEXT_DRUG_STOCK_UNIT, GetType(String)))
-    End Sub
+    'Public Shared Sub CreateDrugStockDetail(ByRef dt As DataTable)
+    '    dt = New DataTable
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_ID, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_COMMON_NAME, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_PRODUCT_NAME, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_SPECIFICATION, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_UNIT, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_FACTORY, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_AMOUNT, GetType(String)))
+    '    dt.Columns.Add(New DataColumn(TEXT_DRUG_STOCK_UNIT, GetType(String)))
+    'End Sub
     Public Shared Sub CreateOperationNote(ByRef dt As DataTable)
         dt = New DataTable
         dt.Columns.Add(New DataColumn(OPN_ID, GetType(String)))
         dt.Columns.Add(New DataColumn(TEXT_VISIT_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_PATIENT_ID, GetType(String)))
         dt.Columns.Add(New DataColumn(TEXT_PATIENT_NAME, GetType(String)))
         dt.Columns.Add(New DataColumn(TEXT_GENDER, GetType(String)))
         dt.Columns.Add(New DataColumn(TEXT_AGE, GetType(String)))
@@ -257,6 +298,15 @@ Public Class TableConstructor
         dt.Columns.Add(New DataColumn(TEXT_DRUG_BACK_COUNT, GetType(String)))
         dt.Columns.Add(New DataColumn(TEXT_DRUG_RETURN_COUNT, GetType(String)))
     End Sub
+    Public Shared Sub CreateUseDrug(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_COMMON_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_PRODUCT_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_SPECIFICATION, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_FACTORY, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_UNIT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_AMOUNT, GetType(String)))
+    End Sub
     Public Shared Sub CreateReturnINS(ByRef dt As DataTable)
         dt = New DataTable
         dt.Columns.Add(New DataColumn(TEXT_PACKAGE_ID, GetType(String)))
@@ -276,5 +326,88 @@ Public Class TableConstructor
         dt.Columns.Add(New DataColumn(TEXT_INS_TYPE, GetType(String)))
         dt.Columns.Add(New DataColumn(TEXT_INS_UNIT, GetType(String)))
         dt.Columns.Add(New DataColumn(TEXT_EXPIRE_DATE, GetType(String)))
+    End Sub
+    Public Shared Sub CreateSurList(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(TEXT_OPERATION_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_OPERATION_NAME, GetType(String)))
+    End Sub
+    Public Shared Sub CreateSurINSList(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(TEXT_INS_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_OPERATER_FRONT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_OPERATER_USING, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_OPERATER_AFTER, GetType(String)))
+    End Sub
+    '********************************************************************
+    '	Title:			CreateDrugInfo
+    '	Author:			CXX
+    '	Create Date:	2015-11-21
+    '	Columns:        
+    '*********************************************************************
+    Public Shared Sub CreateDrugInfo(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_COMMON_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_PRODUCT_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_SPECIFICATION, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_UNIT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_COMPANY_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_STOCK_UNIT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_STOCK_UNIT_BIG, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_STOCK_CHANGE, GetType(String)))
+
+    End Sub
+    '********************************************************************
+    '	Title:			CreateDrugInfo
+    '	Author:			CXX
+    '	Create Date:	2015-11-21
+    '	Columns:        
+    '*********************************************************************
+    Public Shared Sub CreateDrugStock(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_COMMON_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_SPECIFICATION, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_UNIT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_FACTORY, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_AMOUNT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_PRODUCE_DATE, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_BATCHNO, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_EXPIRE_DATE, GetType(String)))
+    End Sub
+    Public Shared Sub CreateDrugStockDetail(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(DRS_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_COMMON_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_SPECIFICATION, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_UNIT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_FACTORY, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_BATCHNO, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DRUG_AMOUNT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_PRODUCE_DATE, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_WS_EXPIRE_DATE, GetType(String)))
+    End Sub
+    Public Shared Sub CreateLabelFomat(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(TEXT_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_NAME, GetType(String)))
+    End Sub
+    Public Shared Sub CreateRequestList(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(TEXT_DP_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_ID, GetType(String)))
+    End Sub
+    Public Shared Sub CreatRequestDetail(ByRef dt As DataTable)
+        dt = New DataTable
+        dt.Columns.Add(New DataColumn(TEXT_INS_ID, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_INS_NAME, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_INS_TYPE, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_INS_UNIT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_COUNT, GetType(String)))
+        dt.Columns.Add(New DataColumn(TEXT_DISPATCH_COUNT, GetType(String)))
     End Sub
 End Class

@@ -1,6 +1,8 @@
+Imports ZhiFa.Base.ControlBase
+
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FrmOPUseFaileReason
-    Inherits UIControlLib.ModalDialogBase
+    Inherits ControlBase
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -39,15 +41,7 @@ Partial Class FrmOPUseFaileReason
         CType(Me.dgvMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'LblClose
-        '
-        Me.LblClose.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblClose.Size = New System.Drawing.Size(21, 21)
-        '
-        'PanelMidTop
-        '
-        Me.PanelMidTop.Margin = New System.Windows.Forms.Padding(4)
-        Me.PanelMidTop.Size = New System.Drawing.Size(565, 32)
+
         '
         'btnClose
         '
@@ -209,7 +203,6 @@ Partial Class FrmOPUseFaileReason
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "FrmOPUseFaileReason"
         Me.Text = "拆包检查不合格原因"
-        Me.Controls.SetChildIndex(Me.PanelMidTop, 0)
         Me.Controls.SetChildIndex(Me.dgvMain, 0)
         Me.Controls.SetChildIndex(Me.UiFrmInfo1, 0)
         Me.Controls.SetChildIndex(Me.btnAdd, 0)

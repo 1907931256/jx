@@ -90,6 +90,7 @@ Public Module ConstDef
 
 
     Public Const DBCONSTDEF_ORACLE_SELECT_INSERT_UPDATE As String = "Declare x  number;begin select count(1) into x from {0} where exists({1});if x>0 then {2}; else {3};end if; end; "
+    Public Const DBCONSTDEF_ORACLE_SELECT_INSERT As String = "Declare x  number;begin select count(1) into x from {0} where exists({1});if x<1 then {2};end if; end; "
     Public Const DBCONSTEDF_SQL_SELECT_WHERE_NOTEXISTS_SELECT_SQL_WHERE As String = "SELECT {0} FROM {1} WHERE {2} NOT EXISTS ({3})"
 
     Public Const DBCONSTEDF_SQL_CONVERT_DATE_FORMAT As String = "CONVERT(varchar(12) , {0}, 111 )"

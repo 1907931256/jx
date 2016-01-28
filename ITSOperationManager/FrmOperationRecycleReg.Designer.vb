@@ -26,12 +26,6 @@ Partial Class FrmOperationRecycleReg
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnlSurInfo = New System.Windows.Forms.Panel()
         Me.gbSurDetail = New System.Windows.Forms.GroupBox()
         Me.tbTable = New System.Windows.Forms.TextBox()
@@ -64,13 +58,14 @@ Partial Class FrmOperationRecycleReg
         Me.lblSep3 = New System.Windows.Forms.Label()
         Me.pnlDrug = New System.Windows.Forms.Panel()
         Me.pnlDrugDGV = New System.Windows.Forms.Panel()
-        Me.dgvDrug = New UIControlLib.UIDataGridView()
+        Me.dgvDrug = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.lblSep = New System.Windows.Forms.Label()
         Me.pnlCommit = New System.Windows.Forms.Panel()
+        Me.btnPrintList = New DevComponents.DotNetBar.ButtonX()
         Me.btnOK = New DevComponents.DotNetBar.ButtonX()
         Me.pnlInstrument = New System.Windows.Forms.Panel()
         Me.pnlInstrumentDGV = New System.Windows.Forms.Panel()
-        Me.dgvInstrument = New UIControlLib.UIDataGridView()
+        Me.dgvInstrument = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.pnlInstrumentFunc = New System.Windows.Forms.Panel()
         Me.btnConfirm = New DevComponents.DotNetBar.ButtonX()
         Me.txtInsScan = New System.Windows.Forms.TextBox()
@@ -491,52 +486,24 @@ Partial Class FrmOperationRecycleReg
         '
         'dgvDrug
         '
-        Me.dgvDrug.AllowDelete = True
-        Me.dgvDrug.AllowSelectChangeRow = False
-        Me.dgvDrug.AllowSort = True
-        Me.dgvDrug.AllowUserToAddRows = False
-        Me.dgvDrug.AllowUserToResizeColumns = False
-        Me.dgvDrug.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(246, Byte), Integer))
-        Me.dgvDrug.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgvDrug.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgvDrug.BeQuerying = False
-        Me.dgvDrug.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
-        Me.dgvDrug.ChangeHeaderSize = False
-        Me.dgvDrug.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(201, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(209, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvDrug.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgvDrug.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvDrug.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("SimSun", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvDrug.DefaultCellStyle = DataGridViewCellStyle1
         Me.dgvDrug.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvDrug.EnableHeadersVisualStyles = False
+        Me.dgvDrug.GridColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(215, Byte), Integer), CType(CType(229, Byte), Integer))
         Me.dgvDrug.Location = New System.Drawing.Point(0, 0)
-        Me.dgvDrug.Margin = New System.Windows.Forms.Padding(2)
-        Me.dgvDrug.MultiSelect = False
         Me.dgvDrug.Name = "dgvDrug"
-        Me.dgvDrug.NoItemAlter = ""
         Me.dgvDrug.RowHeadersVisible = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgvDrug.RowsDefaultCellStyle = DataGridViewCellStyle4
         Me.dgvDrug.RowTemplate.Height = 23
-        Me.dgvDrug.SelCombineKeyEnable = False
         Me.dgvDrug.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvDrug.ShowSelectionColor = True
         Me.dgvDrug.Size = New System.Drawing.Size(578, 191)
-        Me.dgvDrug.TabIndex = 12
+        Me.dgvDrug.TabIndex = 49
         '
         'lblSep
         '
@@ -544,12 +511,13 @@ Partial Class FrmOperationRecycleReg
         Me.lblSep.Location = New System.Drawing.Point(226, 225)
         Me.lblSep.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblSep.Name = "lblSep"
-        Me.lblSep.Size = New System.Drawing.Size(580, 8)
+        Me.lblSep.Size = New System.Drawing.Size(580, 10)
         Me.lblSep.TabIndex = 13
         '
         'pnlCommit
         '
         Me.pnlCommit.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.pnlCommit.Controls.Add(Me.btnPrintList)
         Me.pnlCommit.Controls.Add(Me.btnOK)
         Me.pnlCommit.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.pnlCommit.Location = New System.Drawing.Point(226, 388)
@@ -558,12 +526,25 @@ Partial Class FrmOperationRecycleReg
         Me.pnlCommit.Size = New System.Drawing.Size(580, 28)
         Me.pnlCommit.TabIndex = 14
         '
+        'btnPrintList
+        '
+        Me.btnPrintList.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnPrintList.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.btnPrintList.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
+        Me.btnPrintList.Location = New System.Drawing.Point(321, 4)
+        Me.btnPrintList.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnPrintList.Name = "btnPrintList"
+        Me.btnPrintList.Size = New System.Drawing.Size(58, 22)
+        Me.btnPrintList.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
+        Me.btnPrintList.TabIndex = 24
+        Me.btnPrintList.Text = "清单打印"
+        '
         'btnOK
         '
         Me.btnOK.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.btnOK.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnOK.Location = New System.Drawing.Point(259, 3)
+        Me.btnOK.Location = New System.Drawing.Point(259, 4)
         Me.btnOK.Margin = New System.Windows.Forms.Padding(2)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(58, 22)
@@ -577,10 +558,10 @@ Partial Class FrmOperationRecycleReg
         Me.pnlInstrument.Controls.Add(Me.pnlInstrumentDGV)
         Me.pnlInstrument.Controls.Add(Me.pnlInstrumentFunc)
         Me.pnlInstrument.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pnlInstrument.Location = New System.Drawing.Point(226, 233)
+        Me.pnlInstrument.Location = New System.Drawing.Point(226, 235)
         Me.pnlInstrument.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlInstrument.Name = "pnlInstrument"
-        Me.pnlInstrument.Size = New System.Drawing.Size(580, 155)
+        Me.pnlInstrument.Size = New System.Drawing.Size(580, 153)
         Me.pnlInstrument.TabIndex = 15
         '
         'pnlInstrumentDGV
@@ -590,57 +571,30 @@ Partial Class FrmOperationRecycleReg
         Me.pnlInstrumentDGV.Location = New System.Drawing.Point(0, 30)
         Me.pnlInstrumentDGV.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlInstrumentDGV.Name = "pnlInstrumentDGV"
-        Me.pnlInstrumentDGV.Size = New System.Drawing.Size(580, 125)
+        Me.pnlInstrumentDGV.Size = New System.Drawing.Size(580, 123)
         Me.pnlInstrumentDGV.TabIndex = 1
         '
         'dgvInstrument
         '
-        Me.dgvInstrument.AllowDelete = True
-        Me.dgvInstrument.AllowSelectChangeRow = False
-        Me.dgvInstrument.AllowSort = True
-        Me.dgvInstrument.AllowUserToAddRows = False
-        Me.dgvInstrument.AllowUserToResizeColumns = False
-        Me.dgvInstrument.AllowUserToResizeRows = False
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(246, Byte), Integer))
-        Me.dgvInstrument.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
-        Me.dgvInstrument.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgvInstrument.BeQuerying = False
-        Me.dgvInstrument.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
-        Me.dgvInstrument.ChangeHeaderSize = False
-        Me.dgvInstrument.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(201, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(209, Byte), Integer))
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvInstrument.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.dgvInstrument.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvInstrument.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("SimSun", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvInstrument.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvInstrument.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvInstrument.EnableHeadersVisualStyles = False
+        Me.dgvInstrument.GridColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(215, Byte), Integer), CType(CType(229, Byte), Integer))
         Me.dgvInstrument.Location = New System.Drawing.Point(0, 0)
-        Me.dgvInstrument.Margin = New System.Windows.Forms.Padding(2)
-        Me.dgvInstrument.MultiSelect = False
         Me.dgvInstrument.Name = "dgvInstrument"
-        Me.dgvInstrument.NoItemAlter = ""
+        Me.dgvInstrument.ReadOnly = True
         Me.dgvInstrument.RowHeadersVisible = False
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgvInstrument.RowsDefaultCellStyle = DataGridViewCellStyle8
         Me.dgvInstrument.RowTemplate.Height = 23
-        Me.dgvInstrument.SelCombineKeyEnable = False
         Me.dgvInstrument.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvInstrument.ShowSelectionColor = True
-        Me.dgvInstrument.Size = New System.Drawing.Size(580, 125)
-        Me.dgvInstrument.TabIndex = 13
+        Me.dgvInstrument.Size = New System.Drawing.Size(580, 123)
+        Me.dgvInstrument.TabIndex = 50
         '
         'pnlInstrumentFunc
         '
@@ -764,12 +718,10 @@ Partial Class FrmOperationRecycleReg
     Friend WithEvents lblSurList As System.Windows.Forms.Label
     Friend WithEvents pnlDrug As System.Windows.Forms.Panel
     Friend WithEvents pnlDrugDGV As System.Windows.Forms.Panel
-    Friend WithEvents dgvDrug As UIControlLib.UIDataGridView
     Friend WithEvents lblSep As System.Windows.Forms.Label
     Friend WithEvents pnlCommit As System.Windows.Forms.Panel
     Friend WithEvents pnlInstrument As System.Windows.Forms.Panel
     Friend WithEvents pnlInstrumentDGV As System.Windows.Forms.Panel
-    Friend WithEvents dgvInstrument As UIControlLib.UIDataGridView
     Friend WithEvents pnlInstrumentFunc As System.Windows.Forms.Panel
     Friend WithEvents txtInsScan As System.Windows.Forms.TextBox
     Friend WithEvents lblInsScan As System.Windows.Forms.Label
@@ -784,5 +736,8 @@ Partial Class FrmOperationRecycleReg
     Friend WithEvents tbSurRoom As System.Windows.Forms.TextBox
     Friend WithEvents tbSurName As System.Windows.Forms.TextBox
     Friend WithEvents tbSurTime As System.Windows.Forms.TextBox
+    Friend WithEvents dgvDrug As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents dgvInstrument As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents btnPrintList As DevComponents.DotNetBar.ButtonX
 
 End Class

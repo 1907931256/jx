@@ -74,7 +74,7 @@ namespace ITSMaintainmentManager
         {
             cmbINSType.Text = dgv.SelectedRows[0].Cells[ConstDef.TEXT_CONST_IND_KIND].Value.ToString();
             tbProductName.Text = dgv.SelectedRows[0].Cells[ConstDef.TEXT_INS_NAME].Value.ToString();
-            tbCommonName.Text = dgv.SelectedRows[0].Cells[ConstDef.TEXT_INS_PRODUCTNAME].Value.ToString();
+            tbCommonName.Text = dgv.SelectedRows[0].Cells[ConstDef.TEXT_INS_PRODUCT_NAME].Value.ToString();
             tbCode.Text = dgv.SelectedRows[0].Cells[DBConstDef.TEXT_INS_CODE].Value.ToString();
             tbSpec.Text = dgv.SelectedRows[0].Cells[DBConstDef.TEXT_INS_SPECIFICATION].Value.ToString();
             txtINSUnit.Text = dgv.SelectedRows[0].Cells[DBConstDef.TEXT_INS_UNIT].Value.ToString();
@@ -106,7 +106,7 @@ namespace ITSMaintainmentManager
                 //apply to datagridview, its datasource and db
                 dgv.SelectedRows[0].Cells[ConstDef.TEXT_CONST_IND_KIND].Value = cmbINSType.Text;
                 dgv.SelectedRows[0].Cells[ConstDef.TEXT_INS_NAME].Value = tbProductName.Text;
-                dgv.SelectedRows[0].Cells[ConstDef.TEXT_INS_PRODUCTNAME].Value = tbCommonName.Text;
+                dgv.SelectedRows[0].Cells[ConstDef.TEXT_INS_PRODUCT_NAME].Value = tbCommonName.Text;
                 dgv.SelectedRows[0].Cells[DBConstDef.TEXT_INS_CODE].Value = tbCode.Text;
                 dgv.SelectedRows[0].Cells[DBConstDef.TEXT_INS_SPECIFICATION].Value = tbSpec.Text;
                 dgv.SelectedRows[0].Cells[DBConstDef.TEXT_INS_UNIT].Value = txtINSUnit.Text;
@@ -140,7 +140,7 @@ namespace ITSMaintainmentManager
                 newRow[DBConstDef.INS_ID] = insId;
                 newRow[ConstDef.TEXT_CONST_IND_KIND] = cmbINSType.Text;
                 newRow[ConstDef.TEXT_INS_NAME] = tbProductName.Text;
-                newRow[ConstDef.TEXT_INS_PRODUCTNAME] = tbCommonName.Text;
+                newRow[ConstDef.TEXT_INS_PRODUCT_NAME] = tbCommonName.Text;
                 newRow[DBConstDef.TEXT_INS_CODE] = tbCode.Text;
                 newRow[DBConstDef.TEXT_INS_SPECIFICATION] = tbSpec.Text;
                 newRow[DBConstDef.TEXT_INS_UNIT] = txtINSUnit.Text;

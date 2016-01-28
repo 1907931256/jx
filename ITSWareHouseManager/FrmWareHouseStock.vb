@@ -9,11 +9,13 @@ Public Class FrmWareHouseStock
     Private m_dtStockDetail As DataTable
     Private m_dtPackage As DataTable
     Private m_dtPackageDetail As DataTable
-    Private m_oDBWarehouseStock As DbWareHouseManager
+    Private m_dtDrug As DataTable
+    Private m_dtDrugDetail As DataTable
+    Private m_oDBWarehouseStock As DBWareHouseManager
 
     Private Sub FrmWareHouseStock_Load(sender As Object, e As EventArgs) Handles Me.Load
         InitialTable()
-        m_oDBWarehouseStock = New DbWareHouseManager
+        m_oDBWarehouseStock = New DBWareHouseManager
         Reset()
         btnTaking.Enabled = False
         btnChange.Enabled = False
@@ -31,33 +33,38 @@ Public Class FrmWareHouseStock
         TableConstructor.CreateWarerhouseStock(m_dtStockDetail)
         TableConstructor.CreateBalanceStock(m_dtPackage)
         TableConstructor.CreatePackageExpried(m_dtPackageDetail)
+        TableConstructor.CreateDrugBalanceStock(m_dtDrug)
+        TableConstructor.CreateDrugStockDetail(m_dtDrugDetail)
     End Sub
     Private Sub Binding()
-        dgv.ClearBoolColumn()
         dgv.AllowUserToResizeColumns = True
-        dgv.AllowSort = True
         Dim arrWith() As Short
         If cmbINSTYPE.Text.Equals(TEXT_WAREHOUSE_IN_REG_TYPE_WAREHOUSE_INS) Then
             If btnDetail.Text = TEXT_DETAIL Then
-                arrWith = {25, 25, 25, 25, 25}
-                dgv.ColumnWidthCollection = arrWith
                 dgv.DataSource = m_dtStock
             Else
                 arrWith = {0, 150, 250, 80, 80, 0, 250, 150, 150, 100, 120}
-                dgv.RealColumnWidthCollection = arrWith
                 dgv.DataSource = m_dtStockDetail
+                dgv.Columns(0).Visible = False
+                dgv.Columns(5).Visible = False
+                dgv.Columns(1).Width = 150
             End If
         ElseIf cmbINSTYPE.Text.Equals(TEXT_WAREHOUSE_IN_REG_TYPE_PACKAGE) Then
             If btnDetail.Text = TEXT_DETAIL Then
                 arrWith = {25, 25, 25, 25, 25}
-                dgv.ColumnWidthCollection = arrWith
                 dgv.DataSource = m_dtPackage
             Else
                 arrWith = {0, 15, 15, 15, 20, 10, 10, 15}
-                dgv.ColumnWidthCollection = arrWith
                 dgv.DataSource = m_dtPackageDetail
+                dgv.Columns(0).Visible = False
             End If
-         
+        ElseIf cmbINSTYPE.Text.Equals(TEXT_WAREHOUSE_IN_REG_TYPE_DRUG) Then
+            If btnDetail.Text = TEXT_DETAIL Then
+                dgv.DataSource = m_dtDrug
+            Else
+                dgv.DataSource = m_dtDrugDetail
+                dgv.Columns(0).Visible = False
+            End If
         End If
     End Sub
     Private Sub RefreshData()
@@ -65,34 +72,46 @@ Public Class FrmWareHouseStock
             If btnDetail.Text = TEXT_TOTAL Then
                 btnTaking.Enabled = True
                 If Not m_oDBWarehouseStock.QueryWareHouseStockDetail(m_dtStockDetail) = DBMEDITS_RESULT.SUCCESS Then
-                    UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+                    ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
                 End If
             Else
                 btnTaking.Enabled = False
                 If Not m_oDBWarehouseStock.QueryWareHouseStockTotal(m_dtStock) = DBMEDITS_RESULT.SUCCESS Then
-                    UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+                    ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
                 End If
             End If
         ElseIf cmbINSTYPE.Text.Equals(TEXT_WAREHOUSE_IN_REG_TYPE_PACKAGE) Then
             If btnDetail.Text = TEXT_TOTAL Then
                 btnTaking.Enabled = True
                 If Not m_oDBWarehouseStock.QueryPackageStockDetail(m_dtPackageDetail) = DBMEDITS_RESULT.SUCCESS Then
-                    UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+                    ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
                 End If
             Else
                 btnTaking.Enabled = False
                 If Not m_oDBWarehouseStock.QueryPackageStockTotal(m_dtPackage) = DBMEDITS_RESULT.SUCCESS Then
-                    UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+                    ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
                 End If
 
+            End If
+        ElseIf cmbINSTYPE.Text.Equals(TEXT_WAREHOUSE_IN_REG_TYPE_DRUG) Then
+            If btnDetail.Text = TEXT_TOTAL Then
+                btnTaking.Enabled = True
+                If Not m_oDBWarehouseStock.QueryDrugStockDetail(m_dtDrugDetail) = DBMEDITS_RESULT.SUCCESS Then
+                                        ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
+                End If
+            Else
+                btnTaking.Enabled = False
+                If Not m_oDBWarehouseStock.QueryDrugStockTotal(m_dtDrug) = DBMEDITS_RESULT.SUCCESS Then
+                    ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
+                End If
             End If
         End If
         Binding()
     End Sub
-    Private Sub btnRefresh_Click(sender As Object, e As EventArgs)
+    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
         RefreshData()
     End Sub
-    Private Sub btnDetail_Click(sender As Object, e As EventArgs)
+    Private Sub btnDetail_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
         If btnDetail.Text = TEXT_DETAIL Then
             btnDetail.Text = TEXT_TOTAL
         Else
@@ -104,15 +123,23 @@ Public Class FrmWareHouseStock
         RefreshData()
     End Sub
 
-    Private Sub btnTaking_Click(sender As Object, e As EventArgs)
-        Dim dr As DataRow = dgv.CurrentDataRow
+    Private Sub btnTaking_Click(sender As Object, e As EventArgs) Handles btnTaking.Click
+        Dim dr As DataGridViewRow = dgv.CurrentRow
         If dr Is Nothing Then Exit Sub
-        Dim oFrmStocking As FrmWareHouseStocking = New FrmWareHouseStocking(dr)
-        oFrmStocking.ShowDialog()
-        btnRefresh.PerformClick()
+        If cmbINSTYPE.Text.Equals(TEXT_WAREHOUSE_IN_REG_TYPE_WAREHOUSE_INS) Then
+            Dim oFrmStocking As FrmWareHouseStocking = New FrmWareHouseStocking(dr)
+            oFrmStocking.ShowDialog()
+            btnRefresh.PerformClick()
+        ElseIf cmbINSTYPE.Text.Equals(TEXT_WAREHOUSE_IN_REG_TYPE_DRUG) Then
+            Dim oFrmStocking As FrmDrugStocking = New FrmDrugStocking(dr.Cells(DRS_ID).Value)
+            oFrmStocking.ShowDialog()
+            btnRefresh.PerformClick()
+        End If
+        
+      
     End Sub
 
-    Private Sub btnPrint_Click(sender As Object, e As EventArgs)
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
         Dim oPrint As ReportPrinter = ReportPrinter.GetInstanse
         Dim strName As String = "Please enter the name"
         If dgv.DataSource Is m_dtStock Then
@@ -120,19 +147,19 @@ Public Class FrmWareHouseStock
                 Exit Sub
             End If
             If Not oPrint.PrintWareHouseStock(m_dtStock, strName) Then
-                UIMsgBox.MSGBoxShow(oPrint.ErrorMessage)
+                ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", oPrint.ErrorMessage)
             End If
         Else
             If m_dtStockDetail.Rows.Count < 1 Then
                 Exit Sub
             End If
             If Not oPrint.PrintWareHouseStockDetail(m_dtStockDetail, strName) Then
-                UIMsgBox.MSGBoxShow(oPrint.ErrorMessage)
+                ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", oPrint.ErrorMessage)
             End If
         End If
     End Sub
 
-    Private Sub btnExport_Click(sender As Object, e As EventArgs)
+    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
         Dim oExport As ExportManager = ExportManager.GetInstanse
         Dim strName As String = "Please enter the name"
         If dgv.DataSource Is m_dtStock Then
@@ -140,19 +167,19 @@ Public Class FrmWareHouseStock
                 Exit Sub
             End If
             If Not oExport.ExportWareHouseStock(m_dtStock, strName) Then
-                UIMsgBox.MSGBoxShow(oExport.ErrorMessage)
+                ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", oExport.ErrorMessage)
             End If
         Else
             If m_dtStockDetail.Rows.Count < 1 Then
                 Exit Sub
             End If
             If Not oExport.ExportWareHouseStockDetail(m_dtStockDetail, strName) Then
-                UIMsgBox.MSGBoxShow(oExport.ErrorMessage)
+                ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", oExport.ErrorMessage)
             End If
         End If
     End Sub
 
-    Private Sub btnExpried_Click(sender As Object, e As EventArgs)
+    Private Sub btnExpried_Click(sender As Object, e As EventArgs) Handles btnExpried.Click
         Dim oFrmExpried As FrmExpried = New FrmExpried
         oFrmExpried.ShowDialog()
     End Sub
@@ -161,10 +188,10 @@ Public Class FrmWareHouseStock
         RefreshData()
     End Sub
 
-    Private Sub btnChange_Click(sender As Object, e As EventArgs)
-        Dim dr As DataRow = dgv.CurrentDataRow
+    Private Sub btnChange_Click(sender As Object, e As EventArgs) Handles btnChange.Click
+        Dim dr As DataGridViewRow = dgv.CurrentRow
         If dr Is Nothing Then Exit Sub
-        Dim lPackageID As Long = dr.Item(TEXT_PACKAGE_ID)
+        Dim lPackageID As Long = dr.Cells(TEXT_PACKAGE_ID).Value
         Dim oFrmChange As FrmPackageChange = New FrmPackageChange(lPackageID)
         oFrmChange.ShowDialog()
         RefreshData()

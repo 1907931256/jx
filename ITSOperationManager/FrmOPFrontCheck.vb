@@ -24,14 +24,14 @@ Public Class FrmOPFrontCheck
 
         Dim dt As DataTable = New DataTable
         If oDBOperateOle.QueryTotal(dt, MST_PACKAGE_CHECK_REASON) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
             Exit Sub
         End If
         cmbReaon.DisplayMember = PCR_REASON
         cmbReaon.DataSource = dt
     End Sub
     Private Sub InitialPackage()
-        Dim oPackageCheckInfo As PackageCheck = Nothing
+        Dim oPackageCheckInfo As PackageCheck
         For Each oPackageCheck As PackageCheck In m_lstPackageCheck
             If oPackageCheck.m_oPackageInfo.m_lPackageID = m_lPackageID Then
                 oPackageCheckInfo = oPackageCheck
@@ -42,10 +42,10 @@ Public Class FrmOPFrontCheck
             Exit Sub
         End If
         txtPackageID.Text = oPackageCheckInfo.m_oPackageInfo.m_lPackageID
-        txtINSID.Text = oPackageCheckInfo.m_oPackageInfo.m_strINSID
-        txtINSName.Text = oPackageCheckInfo.m_oPackageInfo.m_strINSName
-        txtINSType.Text = oPackageCheckInfo.m_oPackageInfo.m_strINSType
-        txtINSUnit.Text = oPackageCheckInfo.m_oPackageInfo.m_strINSUnit
+        txtINSID.Text = oPackageCheckInfo.m_oPackageInfo.m_oINSInfo.m_strINSID
+        txtINSName.Text = oPackageCheckInfo.m_oPackageInfo.m_oINSInfo.m_strName
+        txtINSType.Text = oPackageCheckInfo.m_oPackageInfo.m_oINSInfo.m_strType
+        txtINSUnit.Text = oPackageCheckInfo.m_oPackageInfo.m_oINSInfo.m_strUnit
         cmbResult.Text = MatchCheckStateToString(oPackageCheckInfo.m_nResult)
         cmbReaon.Text = oPackageCheckInfo.m_strReason
     End Sub
@@ -56,7 +56,7 @@ Public Class FrmOPFrontCheck
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
         If cmbReaon.Text = String.Empty Then
-            UIMsgBox.MSGBoxShow(MSG_USE_FRONT_REASON)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_USE_FRONT_REASON)
             Exit Sub
         End If
         For Each oPackageCheck As PackageCheck In m_lstPackageCheck

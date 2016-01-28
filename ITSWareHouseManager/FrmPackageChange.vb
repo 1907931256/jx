@@ -11,7 +11,7 @@ Public Class FrmPackageChange
         Dim oDB As DBOperateOle = New DBOperateOle
         Dim dt As DataTable = New DataTable
         If oDB.QueryTotal(dt, MST_STERILEROOM_INFO) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
         Else
             cmbSterilizeRoom.DisplayMember = SI_NAME
             cmbSterilizeRoom.ValueMember = SI_ID
@@ -28,7 +28,7 @@ Public Class FrmPackageChange
         Dim oDBPeration As DbOperationManage = New DbOperationManage
 
         If Not oDBPeration.ChangePackageLocality(cmbSterilizeRoom.SelectedValue, m_lPackageID) = DBMEDITS_RESULT.SUCCESS Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
         Else
             Me.Close()
         End If

@@ -139,7 +139,7 @@ Public Module DBConstDef
     Public Const INS_CHINESECODE As String = "INS_CHINESECODE"
     Public Const INS_CODE As String = "INS_CODE"
     Public Const INS_NAME As String = "INS_NAME"
-    Public Const INS_TYPE As String = "INS_TYPE"
+    'Public Const INS_TYPE As String = "INS_TYPE"
     Public Const INS_UNIT As String = "INS_UNIT"
     Public Const INS_UNIT_PRICE As String = "INS_UNIT_PRICE"
     Public Const INS_EXPENABLE_PRICE As String = "INS_EXPENABLE_PRICE"
@@ -520,6 +520,7 @@ Public Module DBConstDef
     Public Const PK_AVAILABLE_DATE As String = "PK_AVAILABLE_DATE"
     Public Const PK_LOCALITY As String = "PK_LOCALITY"
     Public Const PK_STATE As String = "PK_STATE"
+    Public Const SEQ_TBL_PACKAGE_INFO As String = "SEQ_TBL_PACKAGE_INFO"
 
     '打包登记表
     Public Const TBL_PACKING_BATCH As String = "TBL_PACKING_BATCH"
@@ -635,35 +636,28 @@ Public Module DBConstDef
     '物品发放登记表
     Public Const TBL_INS_DISPATCH As String = "TBL_INS_DISPATCH"
     Public Const ID_ID As String = "ID_ID"
+    Public Const ID_OPN_REG_ID As String = "ID_OPN_REG_ID"
     Public Const ID_REG_ID As String = "ID_REG_ID"
-    Public Const ID_NOTE_ID As String = "ID_NOTE_ID"
-    Public Const ID_NOTE_TYPE As String = "ID_NOTE_TYPE"
     Public Const ID_DP_ID As String = "ID_DP_ID"
     Public Const ID_DP_NAME As String = "ID_DP_NAME"
-    Public Const ID_WARD_ID As String = "ID_WARD_ID"
-    Public Const ID_WARD_NAME As String = "ID_WARD_NAME"
     Public Const ID_ROOM_ID As String = "ID_ROOM_ID"
     Public Const ID_ROOM_NAME As String = "ID_ROOM_NAME"
-    Public Const ID_SF1_ID As String = "ID_SF1_ID"
-    Public Const ID_SF1_NAME As String = "ID_SF1_NAME"
-    Public Const ID_SF2_ID As String = "ID_SF2_ID"
-    Public Const ID_SF2_NAME As String = "ID_SF2_NAME"
-    Public Const ID_DATETIME As String = "ID_DATETIME"
-    Public Const ID_EDIT_FLAG As String = "ID_EDIT_FLAG"
+    Public Const ID_STAFF_ID As String = "ID_STAFF_ID"
+    Public Const ID_STAFF_NAME As String = "ID_STAFF_NAME"
+    Public Const ID_DISPATCH_DATE As String = "ID_DISPATCH_DATE"
+    Public Const SEQ_TBL_INS_DISPATCH As String = "SEQ_TBL_INS_DISPATCH"
 
 
     '非一次性物品发放的详细信息表
-    Public Const TBL_RU_DISPATCH_DETAIL As String = "TBL_RU_DISPATCH_DETAIL"
-    Public Const RDD_SEQ_ID As String = "RDD_SEQ_ID"
-    Public Const RDD_REG_ID As String = "RDD_REG_ID"
-    Public Const RDD_INS_ID As String = "RDD_INS_ID"
-    Public Const RDD_INS_NAME As String = "RDD_INS_NAME"
-    Public Const RDD_INS_TYPE As String = "RDD_INS_TYPE"
-    Public Const RDD_INS_UNIT As String = "RDD_INS_UNIT"
-    Public Const RDD_INS_UNIT_PRICE As String = "RDD_INS_UNIT_PRICE"
-    Public Const RDD_INS_EXPENABLE_PRICE As String = "RDD_INS_EXPENABLE_PRICE"
-    Public Const RDD_BACK_ROOM As String = "RDD_BACK_ROOM"
-    Public Const RDD_PACKAGE_ID As String = "RDD_PACKAGE_ID"
+    Public Const TBL_INS_DISPATCH_DETAIL As String = "TBL_INS_DISPATCH_DETAIL"
+    Public Const IDD_ID As String = "IDD_ID"
+    Public Const IDD_REG_ID As String = "IDD_REG_ID"
+    Public Const IDD_INS_ID As String = "IDD_INS_ID"
+    Public Const IDD_INS_NAME As String = "IDD_INS_NAME"
+    Public Const IDD_INS_TYPE As String = "IDD_INS_TYPE"
+    Public Const IDD_INS_UNIT As String = "IDD_INS_UNIT"
+    Public Const IDD_BACK As String = "IDD_BACK"
+    Public Const IDD_PACKAGE_ID As String = "IDD_PACKAGE_ID"
 
     '一次性物品发放的详细信息表
     Public Const TBL_SU_DISPATCH_DETAIL As String = "TBL_SU_DISPATCH_DETAIL"
@@ -1319,6 +1313,7 @@ Public Module DBConstDef
     Public Const PKD_DISPATCH_ID As String = "PKD_DISPATCH_ID"
     Public Const PKD_RECEIVE_ID As String = "PKD_RECEIVE_ID"
     Public Const PKD_USE_ID As String = "PKD_USE_ID"
+    Public Const PKD_FRONT_USE_ID As String = "PKD_FRONT_USE_ID"
     Public Const PKD_INS_PRICE As String = "PKD_INS_PRICE"
 
     '库房一次性物品条码表
@@ -1347,6 +1342,7 @@ Public Module DBConstDef
     Public Const TBL_OPERATION_NOTE As String = "TBL_OPERATION_NOTE"
     Public Const OPN_ID As String = "OPN_ID"
     Public Const OPN_VISIT_ID As String = "OPN_VISIT_ID"
+    Public Const OPN_PATIENT_ID As String = "OPN_PATIENT_ID"
     Public Const OPN_PATIENT_NAME As String = "OPN_PATIENT_NAME"
     Public Const OPN_GENDER As String = "OPN_GENDER"
     Public Const OPN_AGE As String = "OPN_AGE"
@@ -1390,9 +1386,17 @@ Public Module DBConstDef
     Public Const TBL_OPERATION_REQUEST_MASTER As String = "TBL_OPERATION_REQUEST_MASTER"
     Public Const DR_ID As String = "DR_ID"
     Public Const DR_OPN_REG_ID As String = "DR_OPN_REG_ID"
+    Public Const DR_DEPARTMENT_ID As String = "DR_DEPARTMENT_ID"
+    Public Const DR_DEPARTMENT_NAME As String = "DR_DEPARTMENT_NAME"
+    Public Const DR_ROOM_ID As String = "DR_ROOM_ID"
     Public Const DR_ROOM_NAME As String = "DR_ROOM_NAME"
     Public Const DR_TABLE_ID As String = "DR_TABLE_ID"
     Public Const DR_REQUEST_DATE As String = "DR_REQUEST_DATE"
+    Public Const DR_STATE As String = "DR_STATE"
+    Public Const DR_KIND As String = "DR_KIND"
+    Public Const DR_EDIT As String = "DR_EDIT"
+    Public Const DR_STAFF_ID As String = "DR_STAFF_ID"
+    Public Const DR_STAFF_NAME As String = "DR_STAFF_NAME"
     Public Const SEQ_TBL_OPER_REQUEST_MASTER As String = "SEQ_TBL_OPER_REQUEST_MASTER"
 
     '手术药品申请单详表
@@ -1409,7 +1413,7 @@ Public Module DBConstDef
 
     Public Const TEXT_DRUG_ID As String = "药品编号"
 
-    Public Const TEXT_DRUG_COMMON_NAME As String = "药品名称"
+    Public Const TEXT_DRUG_COMMON_NAME As String = "通用名称"
     Public Const TEXT_DRUG_PRODUCT_NAME As String = "药品商品名"
     Public Const TEXT_DRUG_SPECIFICATION As String = "药品规格"
     Public Const TEXT_DRUG_FACTORY As String = "药品厂家"
@@ -1423,6 +1427,11 @@ Public Module DBConstDef
     Public Const TEXT_DRUG_STOCK_UNIT As String = "库存小单位"
     Public Const TEXT_DRUG_BACK_COUNT As String = "退回数量"
     Public Const TEXT_DRUG_RETURN_COUNT As String = "回收数量"
+    Public Const TEXT_DRUG_STOCK_UNIT_BIG As String = "库存大单位"
+    Public Const TEXT_DRUG_STOCK_CHANGE As String = "换算系数"
+    'Public Const TEXT_DRUG_NAME As String = "通用名称"
+    Public Const TEXT_DRUG_UNIT_KIND As String = "单位类别"
+    Public Const TEXT_DRUG_UNIT_NAME As String = "类别名称"
 
     '手术器械申请表
     Public Const TEXT_INS_CODE As String = "物品编号"
@@ -1471,7 +1480,7 @@ Public Module DBConstDef
     Public Const DRUG_SPECIFICATION As String = "DRUG_SPECIFICATION"
     Public Const DRUG_MANUFACTURERS As String = "DRUG_MANUFACTURERS"
     Public Const DRUG_MEASUER_UNITS As String = "DRUG_MEASUER_UNITS"
-    Public Const DRUG_PACK_UNIT As String = "DRUG_PACK_UNIT"
+    'Public Const DRUG_PACK_UNIT As String = "DRUG_PACK_UNIT"
     Public Const DRUG_PACK_UNITS As String = "DRUG_PACK_UNITS"
     Public Const DRUG_UNITS As String = "DRUG_UNITS"
     Public Const DRUG_TO_PACK_CONVERSION_RATIO As String = "DRUG_TO_PACK_CONVERSION_RATIO"
@@ -1541,6 +1550,7 @@ Public Module DBConstDef
     'Public Const DRD_DRUG_FACTORY As String = "DRD_DRUG_FACTORY"
     'Public Const DRD_MEASUER_UNITS As String = "DRD_MEASUER_UNITS"
     'Public Const DRD_PACK_COUNT As String = "DRD_PACK_COUNT"
+    Public Const DRD_BACK_COUNT As String = "DRD_BACK_COUNT"
     Public Const DRD_PACKAGE_ID As String = "DRD_PACKAGE_ID"
     Public Const DRD_DATE As String = "DRD_DATE"
 
@@ -1552,6 +1562,15 @@ Public Module DBConstDef
     'Public Const IRD_INS_NAME As String = "IRD_INS_NAME"
     'Public Const IRD_INS_TYPE As String = "IRD_INS_TYPE"
     'Public Const IRD_INS_UNIT As String = "IRD_INS_UNIT"
+
+    Public Const TBL_INS_DETAIL_CHECK As String = "TBL_INS_DETAIL_CHECK"
+    Public Const IDC_ID As String = "IDC_ID"
+    Public Const IDC_PACKAGE_ID As String = "IDC_PACKAGE_ID"
+    Public Const IDC_INS_NAME As String = "IDC_INS_NAME"
+    Public Const IDC_INS_TYPE As String = "IDC_INS_TYPE"
+    Public Const IDC_COUNT As String = "IDC_COUNT"
+    Public Const IDC_OPN_ID As String = "IDC_OPN_ID"
+    Public Const IDC_TYPE As String = "IDC_TYPE"
 
 #End Region
 
@@ -1609,7 +1628,7 @@ Public Module DBConstDef
     Public Const SRAID_STERILEROOM_ID As String = "SRAID_STERILEROOM_ID"
 
     '无菌区高值耗材物品出现入库日志详细表
-    Public Const LOG_STERILEROOM_HV_ABNORMAL_INOUT_DETAIL As String = "LOG_STERILEROOM_HV_ABNORMAL_INOUT_DETAIL"
+    Public Const LOG_STERILEROOM_HV_ABNORMAL_INOUT_DETAIL As String = "LOG_HV_ABNORMAL_INOUT_DETAIL"
     Public Const SHAID_ID As String = "SHAID_ID"
     Public Const SHAID_REG_ID As String = "SHAID_REG_ID"
     Public Const SHAID_INS_ID As String = "SHAID_INS_ID"

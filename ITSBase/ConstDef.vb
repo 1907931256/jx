@@ -193,10 +193,8 @@ Public Module ConstDef
     Public Const TEXT_INS_CONTAINER As String = "盛装容器"
     Public Const TEXT_INS_ID As String = "物品编号"
     Public Const TEXT_INS_NAME As String = "物品名称"
-    Public Const TEXT_INS_PRODUCTNAME As String = "物品商品名"
     Public Const TEXT_INS_TYPE As String = "物品规格"
     Public Const TEXT_CONST_IND_KIND As String = "物品类别"
-    Public Const TEXT_INS_INPUTCODE As String = "物品输入码"
     Public Const TEXT_UNIT As String = "单位"
     Public Const TEXT_INS_UNITPRICE As String = "物品单价"
     Public Const TEXT_INS_COST_PRICE As String = "成本价格"
@@ -245,6 +243,8 @@ Public Module ConstDef
     Public Const TEXT_INS_BIO_FLAG As String = "生物检测"
     Public Const TEXT_BORROW_CONFIRM_WARN As String = "归还提醒"
     Public Const TEXT_DELETE As String = "删除"
+    Public Const TEXT_INS_PRODUCT_NAME As String = "物品商品名"
+    Public Const TEXT_INS_INPUTCODE As String = "物品拼音码"
 
     Public Const TEXT_START_TIME As String = "开始时间"
     Public Const TEXT_END_TIME As String = "结束时间"
@@ -606,6 +606,7 @@ Public Module ConstDef
     Public Const TEXT_TOTAL As String = "总量"
     Public Const TEXT_BTN_ADD As String = "添加"
     Public Const TEXT_BTN_OK As String = "确定"
+    Public Const TEXT_BTN_CLOSE As String = "关闭"
     Public Const TEXT_BTN_MOVE_OUT As String = "移出"
     Public Const TEXT_BTN_CONFIRM As String = "确认"
     Public Const TEXT_BTN_HELP As String = "帮助"
@@ -761,6 +762,13 @@ Public Module ConstDef
     Public Const TEXT_HV_OUT_USED As String = "高值耗材使用出库"
     Public Const TEXT_HV_OUT_BACK As String = "高值耗材退回出库"
 
+    Public Const TEXT_DRUG_IN As String = "药品入库"
+    Public Const TEXT_DRUG_OUT As String = "药品出库"
+    Public Const TEXT_DRUG_OUT_BALANCE As String = "药品出充"
+    Public Const TEXT_DRUG_IN_BALANCE As String = "药品入充"
+    Public Const TEXT_DRUG_EXPRIED_OUT As String = "药品过期出库"
+
+
     'MST_WH_INS_RELATIONSHIP
     Public Const TEXT_WH_INS_RELATIONSHIP_ID As String = "编号"
     Public Const TEXT_WH_INS_RELATIONSHIP_WH_ID As String = "库房物品编号"
@@ -794,6 +802,11 @@ Public Module ConstDef
     Public Const TEXT_WS_WIR_REG_ID As String = "普通物品对应关系"
 
     Public Const TEXT_WS_HIGH_CONPANY_CODE As String = "厂商编号"
+
+    Public Const TEXT_WS_HIGH_COMPANY_CODE As String = "厂商条码"
+    Public Const TEXT_WS_HIGH_CODE As String = "序列条码"
+    Public Const TEXT_WS_HIGH_CHECK_DATE As String = "检验日期"
+    Public Const TEXT_WS_HIGH_EXPRIED_DATE As String = "失效日期"
 
     'print
     Public Const TEXT_PRINTER_ERROR_NOTEXIST_INLIST As String = "打印机：{0}，在操作系统打印机列表中不存在。"
@@ -1572,6 +1585,7 @@ Public Module ConstDef
 
 
     Public Const TEXT_VISIT_ID As String = "就诊号"
+    Public Const TEXT_PATIENT_ID As String = "病人编号"
     Public Const TEXT_PATIENT_NAME As String = "姓名"
     Public Const TEXT_GENDER As String = "性别"
     Public Const TEXT_AGE As String = "年龄"
@@ -1585,6 +1599,11 @@ Public Module ConstDef
     Public Const TEXT_DIAGNOSIS As String = "诊断"
     Public Const TEXT_DR_MEMO As String = "备注"
     Public Const TEXT_OPERATION_STATUS As String = "手术状态"
+
+    Public Const TEXT_OPERATER_FRONT As String = "术前"
+    Public Const TEXT_OPERATER_USING As String = "关闭体腔前"
+    Public Const TEXT_OPERATER_AFTER As String = "关闭体腔后"
+
 
 
     'Real Time Show Style
@@ -1769,7 +1788,9 @@ Public Module ConstDef
     Public Const TEXT_RESULT_OK As String = "合格"
     Public Const TEXT_RESULT_FAILD As String = "不合格"
 
-    Public Const TEXT_RETURN_IS_EXIST As String = "是否存在"
+    Public Const TEXT_RETURN_IS_EXIST As String = "回收确认"
+
+    Public Const TEXT_DISPATCH_COUNT As String = "发放数量"
 
 
 

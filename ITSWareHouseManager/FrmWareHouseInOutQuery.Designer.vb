@@ -39,9 +39,6 @@ Partial Class FrmWareHouseInOutQuery
         Dim TreeNode15 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("过期出库")
         Dim TreeNode16 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("器械类", New System.Windows.Forms.TreeNode() {TreeNode13, TreeNode14, TreeNode15})
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnlInfo = New System.Windows.Forms.Panel()
         Me.btnRefresh = New DevComponents.DotNetBar.ButtonX()
         Me.gbDrugInfo = New System.Windows.Forms.GroupBox()
@@ -53,7 +50,6 @@ Partial Class FrmWareHouseInOutQuery
         Me.dtpEnd = New System.Windows.Forms.DateTimePicker()
         Me.dtpStart = New System.Windows.Forms.DateTimePicker()
         Me.tvType = New System.Windows.Forms.TreeView()
-        Me.dgv = New UIControlLib.UIDataGridView()
         Me.pnlCommit = New System.Windows.Forms.Panel()
         Me.btnTotal = New DevComponents.DotNetBar.ButtonX()
         Me.btnPrint = New DevComponents.DotNetBar.ButtonX()
@@ -61,17 +57,18 @@ Partial Class FrmWareHouseInOutQuery
         Me.btnDetail = New DevComponents.DotNetBar.ButtonX()
         Me.pnlFunc = New System.Windows.Forms.Panel()
         Me.btnClose = New DevComponents.DotNetBar.ButtonX()
-        Me.pnlInfo.SuspendLayout()
-        Me.gbDrugInfo.SuspendLayout()
-        Me.gbDateSelector.SuspendLayout()
-        CType(Me.dgv, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.pnlCommit.SuspendLayout()
-        Me.pnlFunc.SuspendLayout()
-        Me.SuspendLayout()
+        Me.dgv = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.pnlInfo.SuspendLayout
+        Me.gbDrugInfo.SuspendLayout
+        Me.gbDateSelector.SuspendLayout
+        Me.pnlCommit.SuspendLayout
+        Me.pnlFunc.SuspendLayout
+        CType(Me.dgv,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.SuspendLayout
         '
         'pnlInfo
         '
-        Me.pnlInfo.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.pnlInfo.BackColor = System.Drawing.Color.FromArgb(CType(CType(194,Byte),Integer), CType(CType(217,Byte),Integer), CType(CType(247,Byte),Integer))
         Me.pnlInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlInfo.Controls.Add(Me.btnRefresh)
         Me.pnlInfo.Controls.Add(Me.gbDrugInfo)
@@ -87,9 +84,9 @@ Partial Class FrmWareHouseInOutQuery
         'btnRefresh
         '
         Me.btnRefresh.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.btnRefresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnRefresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.btnRefresh.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnRefresh.Location = New System.Drawing.Point(741, 19)
+        Me.btnRefresh.Location = New System.Drawing.Point(742, 19)
         Me.btnRefresh.Name = "btnRefresh"
         Me.btnRefresh.Size = New System.Drawing.Size(59, 21)
         Me.btnRefresh.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -107,7 +104,7 @@ Partial Class FrmWareHouseInOutQuery
         Me.gbDrugInfo.Padding = New System.Windows.Forms.Padding(2)
         Me.gbDrugInfo.Size = New System.Drawing.Size(338, 43)
         Me.gbDrugInfo.TabIndex = 7
-        Me.gbDrugInfo.TabStop = False
+        Me.gbDrugInfo.TabStop = false
         Me.gbDrugInfo.Text = "物品信息"
         '
         'cmbINSName
@@ -116,11 +113,11 @@ Partial Class FrmWareHouseInOutQuery
         Me.cmbINSName.CodeIndex = 0
         Me.cmbINSName.DisplayIndex = 1
         Me.cmbINSName.DropDownOritation = UIControlLib.CmbDropDownList.SNAP_MODE.OnLeft
-        Me.cmbINSName.FormattingEnabled = True
+        Me.cmbINSName.FormattingEnabled = true
         Me.cmbINSName.IDContent = Nothing
         Me.cmbINSName.IDIndex = 2
-        Me.cmbINSName.IsIgnoreEnter = False
-        Me.cmbINSName.IsSelectCont = False
+        Me.cmbINSName.IsIgnoreEnter = false
+        Me.cmbINSName.IsSelectCont = false
         Me.cmbINSName.Location = New System.Drawing.Point(78, 22)
         Me.cmbINSName.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbINSName.Name = "cmbINSName"
@@ -131,7 +128,7 @@ Partial Class FrmWareHouseInOutQuery
         '
         'lblCommonName
         '
-        Me.lblCommonName.AutoSize = True
+        Me.lblCommonName.AutoSize = true
         Me.lblCommonName.Location = New System.Drawing.Point(20, 24)
         Me.lblCommonName.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblCommonName.Name = "lblCommonName"
@@ -160,12 +157,12 @@ Partial Class FrmWareHouseInOutQuery
         Me.gbDateSelector.Padding = New System.Windows.Forms.Padding(2)
         Me.gbDateSelector.Size = New System.Drawing.Size(290, 43)
         Me.gbDateSelector.TabIndex = 0
-        Me.gbDateSelector.TabStop = False
+        Me.gbDateSelector.TabStop = false
         Me.gbDateSelector.Text = "时间范围"
         '
         'lblSpan
         '
-        Me.lblSpan.AutoSize = True
+        Me.lblSpan.AutoSize = true
         Me.lblSpan.Location = New System.Drawing.Point(146, 28)
         Me.lblSpan.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblSpan.Name = "lblSpan"
@@ -176,7 +173,7 @@ Partial Class FrmWareHouseInOutQuery
         '
         'dtpEnd
         '
-        Me.dtpEnd.CalendarMonthBackground = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.dtpEnd.CalendarMonthBackground = System.Drawing.Color.FromArgb(CType(CType(194,Byte),Integer), CType(CType(217,Byte),Integer), CType(CType(247,Byte),Integer))
         Me.dtpEnd.CustomFormat = "yyyy-MM-dd"
         Me.dtpEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.dtpEnd.Location = New System.Drawing.Point(167, 19)
@@ -187,7 +184,7 @@ Partial Class FrmWareHouseInOutQuery
         '
         'dtpStart
         '
-        Me.dtpStart.CalendarMonthBackground = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.dtpStart.CalendarMonthBackground = System.Drawing.Color.FromArgb(CType(CType(194,Byte),Integer), CType(CType(217,Byte),Integer), CType(CType(247,Byte),Integer))
         Me.dtpStart.CustomFormat = "yyyy-MM-dd"
         Me.dtpStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.dtpStart.Location = New System.Drawing.Point(20, 19)
@@ -198,7 +195,7 @@ Partial Class FrmWareHouseInOutQuery
         '
         'tvType
         '
-        Me.tvType.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.tvType.BackColor = System.Drawing.Color.FromArgb(CType(CType(194,Byte),Integer), CType(CType(217,Byte),Integer), CType(CType(247,Byte),Integer))
         Me.tvType.Dock = System.Windows.Forms.DockStyle.Left
         Me.tvType.Location = New System.Drawing.Point(0, 77)
         Me.tvType.Margin = New System.Windows.Forms.Padding(2)
@@ -239,59 +236,9 @@ Partial Class FrmWareHouseInOutQuery
         Me.tvType.Size = New System.Drawing.Size(206, 311)
         Me.tvType.TabIndex = 11
         '
-        'dgv
-        '
-        Me.dgv.AllowDelete = True
-        Me.dgv.AllowSelectChangeRow = False
-        Me.dgv.AllowSort = True
-        Me.dgv.AllowUserToAddRows = False
-        Me.dgv.AllowUserToResizeColumns = False
-        Me.dgv.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(246, Byte), Integer))
-        Me.dgv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgv.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgv.BeQuerying = False
-        Me.dgv.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
-        Me.dgv.ChangeHeaderSize = False
-        Me.dgv.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(201, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(209, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
-        Me.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv.DefaultCellStyle = DataGridViewCellStyle3
-        Me.dgv.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgv.EnableHeadersVisualStyles = False
-        Me.dgv.Location = New System.Drawing.Point(206, 77)
-        Me.dgv.Margin = New System.Windows.Forms.Padding(2)
-        Me.dgv.MultiSelect = False
-        Me.dgv.Name = "dgv"
-        Me.dgv.NoItemAlter = ""
-        Me.dgv.RowHeadersVisible = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgv.RowsDefaultCellStyle = DataGridViewCellStyle4
-        Me.dgv.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.dgv.RowTemplate.Height = 23
-        Me.dgv.SelCombineKeyEnable = False
-        Me.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv.ShowSelectionColor = True
-        Me.dgv.Size = New System.Drawing.Size(600, 311)
-        Me.dgv.TabIndex = 12
-        '
         'pnlCommit
         '
-        Me.pnlCommit.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.pnlCommit.BackColor = System.Drawing.Color.FromArgb(CType(CType(194,Byte),Integer), CType(CType(217,Byte),Integer), CType(CType(247,Byte),Integer))
         Me.pnlCommit.Controls.Add(Me.btnTotal)
         Me.pnlCommit.Controls.Add(Me.btnPrint)
         Me.pnlCommit.Controls.Add(Me.btnExport)
@@ -306,7 +253,7 @@ Partial Class FrmWareHouseInOutQuery
         'btnTotal
         '
         Me.btnTotal.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.btnTotal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnTotal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.btnTotal.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
         Me.btnTotal.Location = New System.Drawing.Point(557, 4)
         Me.btnTotal.Name = "btnTotal"
@@ -318,7 +265,7 @@ Partial Class FrmWareHouseInOutQuery
         'btnPrint
         '
         Me.btnPrint.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.btnPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.btnPrint.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
         Me.btnPrint.Location = New System.Drawing.Point(681, 4)
         Me.btnPrint.Name = "btnPrint"
@@ -330,7 +277,7 @@ Partial Class FrmWareHouseInOutQuery
         'btnExport
         '
         Me.btnExport.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.btnExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.btnExport.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
         Me.btnExport.Location = New System.Drawing.Point(743, 4)
         Me.btnExport.Name = "btnExport"
@@ -342,9 +289,9 @@ Partial Class FrmWareHouseInOutQuery
         'btnDetail
         '
         Me.btnDetail.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.btnDetail.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnDetail.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.btnDetail.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnDetail.Location = New System.Drawing.Point(619, 4)
+        Me.btnDetail.Location = New System.Drawing.Point(616, 4)
         Me.btnDetail.Name = "btnDetail"
         Me.btnDetail.Size = New System.Drawing.Size(59, 21)
         Me.btnDetail.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -353,7 +300,7 @@ Partial Class FrmWareHouseInOutQuery
         '
         'pnlFunc
         '
-        Me.pnlFunc.BackColor = System.Drawing.Color.FromArgb(CType(CType(194, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(247, Byte), Integer))
+        Me.pnlFunc.BackColor = System.Drawing.Color.FromArgb(CType(CType(194,Byte),Integer), CType(CType(217,Byte),Integer), CType(CType(247,Byte),Integer))
         Me.pnlFunc.Controls.Add(Me.btnClose)
         Me.pnlFunc.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlFunc.Location = New System.Drawing.Point(0, 0)
@@ -372,9 +319,30 @@ Partial Class FrmWareHouseInOutQuery
         Me.btnClose.TabIndex = 10
         Me.btnClose.Text = "关闭"
         '
+        'dgv
+        '
+        Me.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("SimSun", 9!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134,Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv.DefaultCellStyle = DataGridViewCellStyle1
+        Me.dgv.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgv.GridColor = System.Drawing.Color.FromArgb(CType(CType(208,Byte),Integer), CType(CType(215,Byte),Integer), CType(CType(229,Byte),Integer))
+        Me.dgv.Location = New System.Drawing.Point(206, 77)
+        Me.dgv.Name = "dgv"
+        Me.dgv.ReadOnly = true
+        Me.dgv.RowTemplate.Height = 23
+        Me.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv.Size = New System.Drawing.Size(600, 311)
+        Me.dgv.TabIndex = 48
+        '
         'FrmWareHouseInOutQuery
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 12!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.dgv)
         Me.Controls.Add(Me.tvType)
@@ -384,17 +352,17 @@ Partial Class FrmWareHouseInOutQuery
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmWareHouseInOutQuery"
         Me.Size = New System.Drawing.Size(806, 416)
-        Me.pnlInfo.ResumeLayout(False)
-        Me.gbDrugInfo.ResumeLayout(False)
-        Me.gbDrugInfo.PerformLayout()
-        Me.gbDateSelector.ResumeLayout(False)
-        Me.gbDateSelector.PerformLayout()
-        CType(Me.dgv, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.pnlCommit.ResumeLayout(False)
-        Me.pnlFunc.ResumeLayout(False)
-        Me.ResumeLayout(False)
+        Me.pnlInfo.ResumeLayout(false)
+        Me.gbDrugInfo.ResumeLayout(false)
+        Me.gbDrugInfo.PerformLayout
+        Me.gbDateSelector.ResumeLayout(false)
+        Me.gbDateSelector.PerformLayout
+        Me.pnlCommit.ResumeLayout(false)
+        Me.pnlFunc.ResumeLayout(false)
+        CType(Me.dgv,System.ComponentModel.ISupportInitialize).EndInit
+        Me.ResumeLayout(false)
 
-    End Sub
+End Sub
     Friend WithEvents pnlInfo As System.Windows.Forms.Panel
     Friend WithEvents gbDrugInfo As System.Windows.Forms.GroupBox
     Friend WithEvents lblCommonName As System.Windows.Forms.Label
@@ -404,7 +372,6 @@ Partial Class FrmWareHouseInOutQuery
     Friend WithEvents dtpEnd As System.Windows.Forms.DateTimePicker
     Friend WithEvents dtpStart As System.Windows.Forms.DateTimePicker
     Friend WithEvents tvType As System.Windows.Forms.TreeView
-    Friend WithEvents dgv As UIControlLib.UIDataGridView
     Friend WithEvents pnlCommit As System.Windows.Forms.Panel
     Friend WithEvents cmbINSName As UIControlLib.CmbDropDownList
     Friend WithEvents pnlFunc As System.Windows.Forms.Panel
@@ -414,5 +381,6 @@ Partial Class FrmWareHouseInOutQuery
     Friend WithEvents btnExport As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnDetail As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnRefresh As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents dgv As DevComponents.DotNetBar.Controls.DataGridViewX
 
 End Class

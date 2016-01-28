@@ -5,11 +5,11 @@ Imports System.Windows.Forms
 Imports ITSBase
 Imports DBManager
 Imports UIControlLib
-Imports ITSprocess
 
 Public Class FrmOPUseFaileReason
     Private m_dtUnit As DataTable
     Private m_oDBOperateOle As DbOperationManage = New DbOperationManage
+
     Public Sub New()
 
         ' This call is required by the Windows Form Designer.
@@ -29,12 +29,13 @@ Public Class FrmOPUseFaileReason
     Private Sub Query()
         m_dtUnit.Clear()
         If m_oDBOperateOle.QueryTotal(m_dtUnit, MST_PACKAGE_CHECK_REASON) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
         End If
     End Sub
     Private Sub Insert()
         If Not m_oDBOperateOle.InsertUseFaileReason(txtReason.Text) = DBMEDITS_RESULT.SUCCESS Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
             Exit Sub
         End If
         Clear()
@@ -43,7 +44,7 @@ Public Class FrmOPUseFaileReason
 
     Private Sub Modify(ByVal strID As String)
         If Not m_oDBOperateOle.ModifyUseFaileReason(txtReason.Text, CLng(strID)) = DBMEDITS_RESULT.SUCCESS Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(Windows.Forms.MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
             Exit Sub
         End If
         Clear()
@@ -59,7 +60,7 @@ Public Class FrmOPUseFaileReason
             Clear()
             Query()
         Else
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
         End If
     End Sub
 
@@ -78,7 +79,7 @@ Public Class FrmOPUseFaileReason
         End If
         Dim drFind() As DataRow = m_dtUnit.Select(strCol)
         If drFind.Length > 0 Then
-            UIMsgBox.MSGBoxShow(String.Format(MSG_ERROR_USE_FAILE_REASON_EXIST))
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_ERROR_USE_FAILE_REASON_EXIST)
             txtReason.Focus()
             txtReason.SelectAll()
             Return True

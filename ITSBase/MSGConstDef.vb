@@ -52,6 +52,7 @@
 
     'INS
     Public Const MSG_OP_INS_RQUEST_ERROR_INS_INFO As String = "物品信息无效，请重新输入。"
+    Public Const MSG_OP_INS_RQUEST_ERROR_DRUG_INFO As String = "药品信息无效，请重新输入。"
 
     Public Const MSG_HV_INS_RQUEST_ERROR_INS_INFO As String = "配件名称信息无效，请重新输入。"
     Public Const MSG_OP_INS_RQUEST_ERROR_INS_COUNT As String = "物品数量请输入正整数。"
@@ -187,7 +188,8 @@
     Public Const MSG_INSERT_SUCESS As String = "信息登记成功。"
     Public Const MSG_WAREHOUSE_STOCK_NOT_ENOUGH As String = "物品名称为{0}，厂商为{1}，批次为{2}的物品库存数量不足，请重新输入出库数量"
     Public Const MSG_WAREHOUSE_STOCK_NOT_EXIST As String = "物品名称为{0}，厂商为{1}，批次为{2}的库存信息不存在，请重新输入"
-
+    Public Const MSG_HIGH_VALUE_COMPANY As String = "厂商条码信息无效，请重新输入"
+    Public Const MSG_HIGH_VALUE_CODE As String = "序列条码信息无效，请重新输入"
     'SUStock
     Public Const MSG_QUERY_INFO_NOT_EXIT As String = "您所查询的信息不存在。"
     'RUStock
@@ -419,6 +421,10 @@
     Public Const MSG_PACKAGE_SCAN_CONTROL_ERROR_PACKAGE_NOT_EXIST As String = "{0}号治疗包不存在。"
     Public Const MSG_PACKAGE_SCAN_CONTROL_ERROR_PACKAGE_NOT_ALLOW_RETURN As String = "治疗包编号为{0}的治疗包不允许{1}，该治疗包将不被记录入本次{1}。"
     Public Const MSG_PACKAGE_SCAN_CONTROL_ERROR_PACKAGE_NOT_ALLOW_RETURN_REASON As String = "该治疗包错误信息：{0}"
+    Public Const MSG_PACKAGE_SCAN_CONTROL_ERROR_EXPRIED As String = "{0}号治疗包已过期，不允许发放"
+    Public Const MSG_PACKAGE_SCAN_CONTROL_ERROR_ENOUGH As String = "{0}物品发放数量已足够"
+    Public Const MSG_PACKAGE_SCAN_CONTROL_ERROR_NONEED As String = "申请单中不需要物品编号为{0}的物品"
+    Public Const MSG_PACKAGE_SCAN_CONTROL_ERROR_PACKAGE_NOT_EXIST_IN_EQUIENT As String = "{0}号治疗包不在库存中。"
 
     'use
     Public Const MSG_ERROR_USE_AUDIT_ERROR_METHOD As String = "请选择处理方法"
@@ -444,9 +450,9 @@
     Public Const MSG_VALI_DATE_INFO_ERROR As String = "失效日期输入错误，请重新输入，格式为yyyyMMdd，如20090101，yyyy表示年份，MM表示月份。"
     Public Const MSG_EXIST_RECODR As String = "序列条码{0}的高值耗材已存在，请重新输入"
     Public Const MSG_SCAN_HV_INS As String = "请扫描高值耗材序列条码"
-    Public Const MSG_ERROR_SN_CODE_LESS As String = "请扫描有效的序列条码,13-25位数字"
-    Public Const MSG_ERROR_COM_CODE_LESS As String = "请扫描有效的厂商条码,10-25位数字"
-    Public Const MSG_ERROR_BATCH_CODE_LESS As String = "请扫描有效的生产批号,8-12位数字"
+    Public Const MSG_ERROR_SN_CODE_LESS As String = "请扫描有效的序列条码"
+    Public Const MSG_ERROR_COM_CODE_LESS As String = "请扫描有效的厂商条码"
+    Public Const MSG_ERROR_BATCH_CODE_LESS As String = "请扫描有效的生产批号"
     Public Const MSG_ERROR_CHECKDATE_BEYONUD_VALIDDATE As String = "检验日期大于失效日期，请重新输入"
 
     'INS Container
@@ -545,6 +551,18 @@
     Public Const MSG_LBS_LOAD_ENTITY_FIAL As String = "加载ID卡信息失败，请联系管理员。"
     Public Const MSG_LBS_LOAD_CARD_LOCATION_TIME_RANGE_FIAL As String = "找不到{0}至{1}期间编号:{2}的位置信息，请联系管理员。"
     Public Const MSG_LBS_FIND_LOCATION_FIAL As String = "找不到位置信息:{0}。"
+
+    'HIGH_VALUE
+    Public Const MSG_HIGH_VALUE_CODE_HAS_EXIST As String = "序列条码为{0}的高值耗材已存在，请重新输入"
+    Public Const MSG_HIGH_VALUE_IN_REG_ERROR As String = "物品名称为{0},序列条码为{1}的物品入库登记时出现异常，请联系管理员"
+    Public Const MSG_ERROR_WARRING As String = "警告"
+    Public Const MSG_INPUT_INFO_IS_EMPTY As String = "{0}信息为空，请输入"
+    Public Const MSG_NOTE_LOCK As String = "{0}单据已锁定，不允许发放"
+    Public Const MSG_NOTE_DISPATCH As String = "{0}单据已发放，不允许发放"
+    Public Const MSG_REQUEST_INS_ERROR_NOT_EXIST As String = "物品字典表中不存在物品编号为{0}的物品，请确认。"
+    Public Const MSG_REQUEST_OPERATION_STATUS As String = "手术通知单状态为{0},不允许进行申领登记"
+
+    Public Const MSG_DRUG_OUT_REG_COUNT_NOT_ENOUGH As String = "{0}库存总量为{1},请重新输入。"
 
     'Maintain
     Public Const MSG_INS_TYPE_EMPTY As String = "物品类型不能为空。"

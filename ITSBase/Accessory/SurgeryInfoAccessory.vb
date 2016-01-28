@@ -7,24 +7,27 @@ Namespace Accessory
 
     Public Module SurgeryInfoAccessory
         Public Class SurgeryRequestMaster
-            Private _id As String
-            Private _noteId As String
-            Private _depId As String
-            Private _depName As String
-            Private _room As String
-            Private _tableId As String
-            Private _emergencyFlag As String
-            Private _requestDate As String
-            Private _staffId As String
-            Private _staffName As String
+            Public _id As String
+            Public _noteId As String
+            Public _depId As String
+            Public _depName As String
+            Public _roomID As String
+            Public _room As String
+            Public _tableId As String
+            Public _emergencyFlag As String
+            Public _requestDate As String
+            Public _staffId As String
+            Public _staffName As String
             Private _memo As String
-            Private _status As String
-
+            Public _status As String
+            Public m_shEidtFlag As Short
+            Public m_dtRequestDetail As DataTable
+            Public m_lstDetail As List(Of RequestDetailInfo)
             Public Sub New()
                 Reset()
             End Sub
 
-            Private Sub Reset()
+            Public Sub Reset()
                 _id = String.Empty
                 _noteId = String.Empty
                 _depId = String.Empty
@@ -37,6 +40,52 @@ Namespace Accessory
                 _staffName = String.Empty
                 _memo = String.Empty
                 _status = String.Empty
+                m_shEidtFlag = EDIT_FLAG.EDITABLE
+                If Not (m_lstDetail Is Nothing) Then
+                    m_lstDetail.Clear()
+                Else
+                    m_lstDetail = New List(Of RequestDetailInfo)
+                End If
+                If Not m_dtRequestDetail Is Nothing Then
+                    m_dtRequestDetail.Clear()
+                Else
+                    TableConstructor.CreatRequestDetail(m_dtRequestDetail)
+                End If
+            End Sub
+            Public Sub LoadInfoToTable()
+                m_dtRequestDetail.Clear()
+                For Each oRequestDetailInfo As RequestDetailInfo In m_lstDetail
+                    Dim dr As DataRow = m_dtRequestDetail.NewRow
+                    dr.Item(TEXT_INS_ID) = oRequestDetailInfo.m_strINSID
+                    dr.Item(TEXT_INS_NAME) = oRequestDetailInfo.m_strName
+                    dr.Item(TEXT_INS_TYPE) = oRequestDetailInfo.m_strType
+                    dr.Item(TEXT_UNIT) = oRequestDetailInfo.m_strUnit
+                    dr.Item(TEXT_INS_UNITPRICE) = oRequestDetailInfo.m_fUintPrice
+                    dr.Item(TEXT_COUNT) = oRequestDetailInfo.m_nCount
+                    dr.Item(TEXT_DISPATCHCOUNT) = oRequestDetailInfo.m_nDispatchCount
+                    m_dtRequestDetail.Rows.Add(dr)
+                Next
+            End Sub
+            Public Sub LoadDetailInfo(ByVal dtDetail As DataTable)
+                If dtDetail Is Nothing Then Exit Sub
+                m_lstDetail.Clear()
+
+                For Each dr As DataRow In dtDetail.Rows
+                    Dim oRequestDetailInfo As New RequestDetailInfo
+
+                    oRequestDetailInfo.m_strINSID = CStr(dr.Item(TEXT_INS_ID))
+                    oRequestDetailInfo.m_strName = CStr(dr.Item(TEXT_INS_NAME))
+                    oRequestDetailInfo.m_strType = CStr(dr.Item(TEXT_INS_TYPE))
+                    oRequestDetailInfo.m_strUnit = CStr(dr.Item(TEXT_INS_UNIT))
+                    oRequestDetailInfo.m_nCount = CInt(dr.Item(TEXT_COUNT))
+                    If dr.Table.Columns.Contains(TEXT_DISPATCHCOUNT) Then
+                        oRequestDetailInfo.m_nDispatchCount = CInt(Judgement.JudgeDBNullValue(dr.Item(TEXT_DISPATCHCOUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
+                    Else
+                        oRequestDetailInfo.m_nDispatchCount = 0
+                    End If
+
+                    m_lstDetail.Add(oRequestDetailInfo)
+                Next
             End Sub
 
             Public Property Id() As String
@@ -53,9 +102,55 @@ Namespace Accessory
                 Dim arrCols = New String() {DR_ID, DR_OPN_REG_ID, DR_ROOM_NAME, DR_TABLE_ID}
                 If Not (arrCols.All(Function(col) dr.Table.Columns.Contains(col))) Then Return False
                 _id = Judgement.JudgeDBNullValue(dr.Item(DR_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)
-                _noteId = Judgement.JudgeDBNullValue(dr.Item(DR_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+                _noteId = Judgement.JudgeDBNullValue(dr.Item(DR_OPN_REG_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)
                 Return True
             End Function
+        End Class
+        Public Class RequestDetailInfo
+            Public m_strINSID As String
+            Public m_strName As String
+            Public m_strType As String
+            Public m_strUnit As String
+            Public m_fUintPrice As Single
+            Public m_fExpenablePrice As Single
+            Public m_nCount As Integer
+            Public m_nDispatchCount As Integer
+            Public m_nReceivingCount As Integer
+            Public m_nBorrowBackCount As Integer
+            Public m_nReturnCount As Integer
+            Friend m_lstDetail As Object
+
+            Public Sub New()
+                Reset()
+            End Sub
+            Public Sub New(ByVal oRequestDetailInfo As RequestDetailInfo)
+                Reset()
+                If oRequestDetailInfo Is Nothing Then Exit Sub
+                m_strINSID = oRequestDetailInfo.m_strINSID
+                m_strName = oRequestDetailInfo.m_strName
+                m_strType = oRequestDetailInfo.m_strType
+                m_strUnit = oRequestDetailInfo.m_strUnit
+                m_fUintPrice = oRequestDetailInfo.m_fUintPrice
+                m_fExpenablePrice = oRequestDetailInfo.m_fExpenablePrice
+                m_nCount = oRequestDetailInfo.m_nCount
+                m_nDispatchCount = oRequestDetailInfo.m_nDispatchCount
+                m_nReceivingCount = oRequestDetailInfo.m_nReceivingCount
+                m_nBorrowBackCount = oRequestDetailInfo.m_nBorrowBackCount
+                m_nReturnCount = oRequestDetailInfo.m_nReturnCount
+            End Sub
+            Public Sub Reset()
+                m_strINSID = ""
+                m_strName = ""
+                m_strType = ""
+                m_strUnit = ""
+                m_fUintPrice = 0.0
+                m_fExpenablePrice = 0.0
+                m_nCount = CONST_INVALID_DATA
+                m_nDispatchCount = 0
+                m_nReceivingCount = 0
+                m_nBorrowBackCount = 0
+                m_nReturnCount = 0
+            End Sub
         End Class
 
         Public Class SurgerUseMaster
@@ -90,6 +185,7 @@ Namespace Accessory
             Private _room As String
             Private _table As String
             Private _visitId As String
+            Private _patId As String
             Private _patName As String
             Private _gender As String
             Private _age As String
@@ -201,7 +297,14 @@ Namespace Accessory
                     _visitId = value
                 End Set
             End Property
-
+            Public Property PatId() As String
+                Get
+                    Return _patId
+                End Get
+                Set(value As String)
+                    _patId = value
+                End Set
+            End Property
             Public Property PatName() As String
                 Get
                     Return _patName
@@ -281,15 +384,19 @@ Namespace Accessory
                 _orderDate = String.Empty
                 _surId = String.Empty
                 _surName = String.Empty
+                _roomID = String.Empty
                 _room = String.Empty
                 _table = String.Empty
                 _visitId = String.Empty
                 _patName = String.Empty
                 _gender = String.Empty
+                _patId = String.Empty
                 _age = String.Empty
                 _surgeon = String.Empty
                 _diagnosis = String.Empty
                 _memo = String.Empty
+                _Weight = String.Empty
+                _departmentName = String.Empty
                 _surgeryRequestMaster = New SurgeryRequestMaster()
                 _surgeryUseMaster = New SurgerUseMaster()
                 _noteStatus = OPerationNoteState.UnConfirmed
@@ -302,9 +409,11 @@ Namespace Accessory
                 If Not (arrCols.All(Function(col) dr.Table.Columns.Contains(col))) Then Return False
                 _id = dr.Item(OPN_ID)
                 _orderDate = CDate(Judgement.JudgeDBNullValue(dr.Item(TEXT_ORDER_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString()
+                _patId = Judgement.JudgeDBNullValue(dr.Item(TEXT_PATIENT_id), ENUM_DATA_TYPE.DATA_TYPE_STRING)
                 _patName = Judgement.JudgeDBNullValue(dr.Item(TEXT_PATIENT_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING)
                 _surId = Judgement.JudgeDBNullValue(dr.Item(OPN_OPERATION_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)
                 _surName = Judgement.JudgeDBNullValue(dr.Item(TEXT_OPERATION_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+                _roomID = Judgement.JudgeDBNullValue(dr.Item(OPN_ROOM_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)
                 _room = Judgement.JudgeDBNullValue(dr.Item(TEXT_ROOM_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING)
                 _table = Judgement.JudgeDBNullValue(dr.Item(TEXT_TABLE_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)
                 _visitId = Judgement.JudgeDBNullValue(dr.Item(TEXT_VISIT_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)
@@ -314,6 +423,8 @@ Namespace Accessory
                 _diagnosis = Judgement.JudgeDBNullValue(dr.Item(TEXT_DIAGNOSIS), ENUM_DATA_TYPE.DATA_TYPE_STRING)
                 _memo = Judgement.JudgeDBNullValue(dr.Item(TEXT_DR_MEMO), ENUM_DATA_TYPE.DATA_TYPE_STRING)
                 _noteStatus = MatchStringToEnumNoteStatus(Judgement.JudgeDBNullValue(dr.Item(TEXT_OPERATION_STATUS), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                _Weight = Judgement.JudgeDBNullValue(dr.Item(TEXT_WEIGHT), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+                _departmentName = Judgement.JudgeDBNullValue(dr.Item(TEXT_DEPARTMENT_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING)
                 Return True
             End Function
         End Class

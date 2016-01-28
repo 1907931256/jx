@@ -135,6 +135,14 @@
     <Compile Include="MyUserControlBase.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="PrintReport\ICustomPaint.vb" />
+    <Compile Include="PrintReport\Paper.vb" />
+    <Compile Include="PrintReport\PrintReport.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PrintReport\StyledTableColumn.vb" />
+    <Compile Include="PrintReport\StyleTable.vb" />
+    <Compile Include="PrintReport\TextField.vb" />
     <Compile Include="UIDataGridViewCheckBoxColumn.vb" />
     <Compile Include="UIDataGridViewEditBtnColumn.vb" />
     <Compile Include="UIDataGridViewImgColumn.vb" />
@@ -283,6 +291,7 @@
       <DependentUpon>OutputView.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PrintReport\PrintReport.resx" />
     <EmbeddedResource Include="UIExpandPanel.resx">
       <DependentUpon>UIExpandPanel.vb</DependentUpon>
       <SubType>Designer</SubType>

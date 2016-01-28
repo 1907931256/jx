@@ -24,6 +24,7 @@ Friend Class VTrackManage
     Private _traceQuery As FrmTraceQuery
     Private _workloadAccount As FrmWorkloadAccount
     Private _alertQuery As FrmAlertQuery
+    Private _HighValueInReg As FrmHighValueInReg
     Private _insMaintain As FrmInsM
     Private _drugMaintain As FrmDrugM
     Private _drugManufactures As FrmDrugManufacturesM
@@ -90,6 +91,7 @@ Friend Class VTrackManage
             page = PageSelector.TraceQuery, GetType(FrmTraceQuery), _
             page = PageSelector.TraceWorkloadAccount, GetType(FrmWorkloadAccount), _
             page = PageSelector.TraceAlertQuery, GetType(FrmAlertQuery), _
+            page = PageSelector.HighValueInReg, GetType(FrmHighValueInReg), _
             page = PageSelector.InsMaintainment, GetType(FrmInsM), _
             page = PageSelector.DrugMaintainment, GetType(FrmDrugM), _
             page = PageSelector.AutoPackageMaintainment, GetType(FrmAutoPackageM), _

@@ -9,7 +9,7 @@ Public Class DbWareHouseManager
     Public Function QueryInsInfo(ByRef dt As DataTable, ByVal ParamArray arrType() As INS_KINDS) As Long
         Dim strSQl, strCon, strCols As String
         strCon = CreateArrayCondition(INS_KIND, SqlDbType.SmallInt, True, arrType)
-        strCols = String.Format("{0},{1},{2},{3},{4}", INS_CODE, INS_NAME_INPUTCODE, INS_NAME, INS_TYPE, INS_UNIT)
+        strCols = String.Format("{0},{1},{2},{3},{4}", INS_CODE, INS_NAME_INPUTCODE, INS_NAME, INS_SPEC, INS_UNIT)
         strSQl = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, strCols, MST_INSTRUMENT_INFO, strCon)
         Dim ds As New DataSet
         If Not QueryOleDb(strSQl, ds) Then
@@ -22,6 +22,20 @@ Public Class DbWareHouseManager
         End If
         Return DBMEDITS_RESULT.SUCCESS
     End Function
+    Public Function QueryDrugInfo(ByRef dt As DataTable) As Long
+        Dim strSQl, strCols As String
+        strCols = String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}", DRUG_CODE, DRUG_COMMON_NAME, _
+                                DRUG_COMMON_NAME_INPUTCODE, DRUG_PRODUCT_NAME, DRUG_SPECIFICATION, DRUG_MANUFACTURERS, DRUG_MEASUER_UNITS, DRUG_PACK_UNITS, DRUG_TO_PACK_CONVERSION_RATIO)
+
+        strSQl = String.Format(DBCONSTDEF_SQL_SELECT, strCols, MST_DRUG_INFO)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSQl, ds) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        dt = ds.Tables(0).Copy
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
     Public Function QueryProductCompanyInfo(ByRef dt As DataTable) As Long
         Dim strSQl As String
         strSQl = String.Format(DBCONSTDEF_SQL_SELECT, DBCONSTDEF_SQL_SELECT_ALL, MST_PRODUCE_COMPANY_INFO)
@@ -29,10 +43,10 @@ Public Class DbWareHouseManager
         If Not QueryOleDb(strSQl, ds) Then
             Return DBMEDITS_RESULT.ERROR_EXCEPTION
         End If
-        If ds.Tables(0).Rows.Count > 0 Then
-            dt = ds.Tables(0).Copy
-            ds.Dispose()
-        End If
+
+        dt = ds.Tables(0).Copy
+        ds.Dispose()
+
         Return DBMEDITS_RESULT.SUCCESS
     End Function
     Public Function WareHouseInReg(ByVal dt As DataTable) As Long
@@ -103,6 +117,98 @@ Public Class DbWareHouseManager
         End If
         Return DBMEDITS_RESULT.SUCCESS
     End Function
+    Public Function DrugInReg(ByVal dt As DataTable) As Long
+        Dim strSQL, strCondition, strCols, strValues, strJudge, strSqlInsert, strSqlUpdate As String
+        Dim lRetID As Long = -1
+        If Not QueryNextVal(lRetID, SEQ_STOREROOM_ABNORMAL_INOUT) Then
+            Logger.WriteLine(m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not TransactionBegin() Then
+            Logger.WriteLine(m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        For Each dr As DataRow In dt.Rows
+            Dim strINSID As String = JudgeDataValue(dr.Item(TEXT_DRUG_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+            Dim strBatch As String = JudgeDataValue(dr.Item(TEXT_DRUG_BATCHNO), ENUM_DATA_TYPE.DATA_TYPE_STRING)
+            Dim nCount As Integer = JudgeDataValue(dr.Item(TEXT_DRUG_AMOUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER)
+            strCondition = String.Format("{0}='{1}' AND {2}='{3}'", _
+                                     DRS_DRUG_CODE, strINSID, DRS_BATCH_ID, strBatch)
+
+            strJudge = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DRS_DRUG_CODE, TBL_DRUG_STOCK, strCondition)
+            strCols = String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", _
+                               DRS_DRUG_CODE, DRS_DRUG_COMMON_NAME, DRS_DRUG_PRODUCT_NAME, DRS_MEASUER_UNITS, DRS_MANUFACTURERS, DRS_SPECIFICATION, _
+                               DRS_DRUG_COUNT, DRS_BATCH_ID, DRS_PRODUCE_DATE, DRS_AVAILABLE_DATE)
+            strValues = String.Format("'{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}',to_date('{8}','{10}'),to_date('{9}','{10}')", _
+                               dr.Item(TEXT_DRUG_ID), dr.Item(TEXT_DRUG_COMMON_NAME), dr.Item(TEXT_DRUG_NAME), dr.Item(TEXT_DRUG_UNIT), _
+                                dr.Item(TEXT_DRUG_FACTORY), dr.Item(TEXT_DRUG_SPECIFICATION), dr.Item(TEXT_DRUG_AMOUNT), _
+                                dr.Item(TEXT_DRUG_BATCHNO), CDate(dr.Item(TEXT_WS_PRODUCE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE), _
+                                CDate(dr.Item(TEXT_WS_EXPIRE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE), CONST_TEXT_ORACLE_DATETIME_FORMAT_YYYYMMDD)
+            strSqlInsert = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_DRUG_STOCK, strCols, strValues)
+
+            strValues = String.Format("{0}={0}+{1}", DRS_DRUG_COUNT, nCount)
+            strSqlUpdate = String.Format(DBCONSTDEF_SQL_UPDATE_WHERE, TBL_DRUG_STOCK, _
+                                     strValues, strCondition)
+
+            strSQL = String.Format(DBCONSTDEF_ORACLE_SELECT_INSERT_UPDATE, TBL_DRUG_STOCK, strJudge, strSqlUpdate, strSqlInsert)
+            If Not TransactionExecute(strSQL) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        Next
+
+        If Not ImplementSterileRoomAbnormalInOutLog(EnumDef.SR_LOG_INOUT_TYPE.DRUG_IN, lRetID) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        If Not ImplementStoreRoomDrugAbnormalDetailLog(lRetID, dt) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not ImplementSterileRoomInOutLog(SR_LOG_INOUT_TYPE.DRUG_IN, lRetID) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not TransactionCommit() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function HighValueInReg(ByVal oHighValue As HighValueInfo, ByVal nSterilizeRoomID As Integer, ByVal lPackageID As Long, ByVal oUserInfo As UserInfo) As Long
+        Dim strSQL, strValus, strCols As String
+        '插入治疗包信息表
+        '插入打包信息表
+        '插入至库房
+        If Not QueryNextVal(lPackageID, SEQ_TBL_PACKAGE_INFO) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not TransactionBegin() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        strCols = String.Format("{0},{1},{2},{3},{4},{5},{6},{7}", SRS_PACKAGE_ID, SRS_INS_ID, SRS_INS_NAME, SRS_INS_TYPE, SRS_INS_UNIT, SRS_STERILIZE_DATE, SRS_AVAILABLE_DATE, SRS_STERILIZE_ROOM_ID)
+        strValus = String.Format("{0},'{1}','{2}','{3}','{4}',to_date('{5}','{8}'),to_date('{6}''{8}'),'{7}'", lPackageID, oHighValue.m_strINSID, oHighValue.m_strINSName, oHighValue.m_strINSType, _
+                                  oHighValue.m_strINSUnit, oHighValue.m_datExamDate, oHighValue.m_datExpriedDate, nSterilizeRoomID, CONST_TEXT_ORACLE_DATETIME_FORMAT_YYYYMMDD)
+        strSQL = String.Format(DBCONSTDEF_SQL_INSERT_FULL, TBL_STERILEROOM_RU_STOCK, strCols, strValus)
+        If Not TransactionExecute(strSQL) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        If Not ImplementSterileRoomInOutLog(SR_LOG_INOUT_TYPE.HV_IN_STOCK, lPackageID) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not TransactionCommit() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
     Public Function CheckWareHouseStock(ByVal strINSID As String, ByVal nCompanyID As Integer, ByVal strBatch As String, ByRef nStockCount As Integer, Optional ByRef dtProducDate As Date = Nothing, Optional ByRef dtExpried As Date = Nothing) As Long
         Dim strSQL, strCon As String
         strCon = String.Format("{0}='{1}' and {2}='{3}' and {4}='{5}'", WS_INS_ID, strINSID, WS_COMPANY_ID, nCompanyID, WS_BATCH_ID, strBatch)
@@ -141,7 +247,6 @@ Public Class DbWareHouseManager
 
         'strSqlCheckCount = String.Format("IF EXISTS({0}) SET {1} := 1  ELSE SET {1} := 0", strJudgeMore, "@CHECK_COUNT")
         'strSQl = String.Format("IF EXISTS(0}) {1}  ELSE {2}", strJudgeEqual, strSqlDelete, strSqlUpdate)
-
 
         For Each dr As DataRow In dt.Rows
 
@@ -191,6 +296,69 @@ Public Class DbWareHouseManager
         Return DBMEDITS_RESULT.SUCCESS
 
     End Function
+    Public Function DrugOutReg(ByVal dt As DataTable) As Long
+        Dim strCondition, strSQl, strConditionMore, strConditionEqual, strJudgeEqual, strJudgeMore, strValues, strSqlUpdate, strSqlDelete As String
+
+        Dim lRetID As Long = -1
+        If Not QueryNextVal(lRetID, SEQ_STOREROOM_ABNORMAL_INOUT) Then
+            Logger.WriteLine(m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not TransactionBegin() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        'strSqlCheckCount = String.Format("IF EXISTS({0}) SET {1} := 1  ELSE SET {1} := 0", strJudgeMore, "@CHECK_COUNT")
+        'strSQl = String.Format("IF EXISTS(0}) {1}  ELSE {2}", strJudgeEqual, strSqlDelete, strSqlUpdate)
+
+        For Each dr As DataRow In dt.Rows
+
+            strCondition = String.Format("{0}='{1}' AND {2}='{3}' ", _
+                                      DRS_DRUG_CODE, CStr(JudgeDataValue(dr.Item(TEXT_DRUG_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING)), _
+                                      DRS_BATCH_ID, CStr(JudgeDataValue(dr.Item(TEXT_DRUG_BATCHNO), ENUM_DATA_TYPE.DATA_TYPE_STRING)))
+
+            strConditionMore = String.Format("{0} AND {1} > {2}", strCondition, DRS_DRUG_COUNT, CInt(JudgeDataValue(dr.Item(TEXT_DRUG_AMOUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER)))
+            strConditionEqual = String.Format("{0} AND {1} = {2}", strCondition, DRS_DRUG_COUNT, CInt(JudgeDataValue(dr.Item(TEXT_DRUG_AMOUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER)))
+
+            strJudgeEqual = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DRS_DRUG_CODE, TBL_DRUG_STOCK, strConditionEqual)
+            strJudgeMore = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DRS_DRUG_CODE, TBL_DRUG_STOCK, strConditionMore)
+
+            strValues = String.Format("{0}={0}-{1}", DRS_DRUG_COUNT, CInt(JudgeDataValue(dr.Item(TEXT_DRUG_AMOUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER)))
+            strSqlUpdate = String.Format(DBCONSTDEF_SQL_UPDATE_WHERE, TBL_DRUG_STOCK, _
+                                         strValues, strCondition)
+
+            strSqlDelete = String.Format(DBCONSTDEF_SQL_DELETE_WHERE, TBL_DRUG_STOCK, strCondition)
+
+            strSQl = String.Format(DBCONSTDEF_ORACLE_SELECT_INSERT_UPDATE, TBL_DRUG_STOCK, strJudgeEqual, strSqlDelete, strSqlUpdate)
+
+            If Not TransactionExecute(strSQl) Then
+                Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+                Dim str As String = m_oDBConnect.GetCommandString
+                Return DBMEDITS_RESULT.ERROR_EXCEPTION
+            End If
+        Next
+        If Not ImplementSterileRoomAbnormalInOutLog(EnumDef.SR_LOG_INOUT_TYPE.DRUG_OUT_OTHER, lRetID) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        If Not ImplementStoreRoomDrugAbnormalDetailLog(lRetID, dt) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not ImplementSterileRoomInOutLog(SR_LOG_INOUT_TYPE.DRUG_OUT_OTHER, lRetID) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        If Not TransactionCommit() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        Return DBMEDITS_RESULT.SUCCESS
+
+    End Function
 
 
     Public Function QueryWareHouseStockTotal(ByRef dt As DataTable) As Long
@@ -213,6 +381,32 @@ Public Class DbWareHouseManager
             drNew.Item(TEXT_WS_INS_TYPE) = CStr(JudgeDataValue(dr.Item(WS_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
             drNew.Item(TEXT_WS_INS_UNIT) = CStr(JudgeDataValue(dr.Item(WS_INS_UNIT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
             drNew.Item(TEXT_STOCK_COUNT) = CInt(JudgeDataValue(dr.Item(WS_INS_COUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
+            dt.Rows.Add(drNew)
+        Next
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function QueryDrugStockTotal(ByRef dt As DataTable) As Long
+        dt.Clear()
+        Dim strSQl, strCols, strGroup As String
+        strCols = String.Format("{0},{1},{2},{3},{4},{5},sum({6}) as {6}", _
+                                 DRS_DRUG_CODE, DRS_DRUG_COMMON_NAME, DRS_DRUG_PRODUCT_NAME, DRS_SPECIFICATION, DRS_MEASUER_UNITS, DRS_MANUFACTURERS, DRS_DRUG_COUNT)
+        strGroup = String.Format("{0},{1},{2},{3},{4},{5}", _
+                                 DRS_DRUG_CODE, DRS_DRUG_COMMON_NAME, DRS_DRUG_PRODUCT_NAME, DRS_SPECIFICATION, DRS_MEASUER_UNITS, DRS_MANUFACTURERS)
+        strSQl = String.Format(DBCONSTDEF_SQL_SELECT_GROUP_ORDER, strCols, TBL_DRUG_STOCK, strGroup, DRS_DRUG_CODE)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSQl, ds) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        For Each dr As DataRow In ds.Tables(0).Rows
+            Dim drNew As DataRow = dt.NewRow
+            drNew.Item(TEXT_DRUG_ID) = CStr(JudgeDataValue(dr.Item(DRS_DRUG_CODE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_COMMON_NAME) = CStr(JudgeDataValue(dr.Item(DRS_DRUG_COMMON_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_NAME) = CStr(JudgeDataValue(dr.Item(DRS_DRUG_PRODUCT_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_SPECIFICATION) = CStr(JudgeDataValue(dr.Item(DRS_SPECIFICATION), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_UNIT) = CStr(JudgeDataValue(dr.Item(DRS_MEASUER_UNITS), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_FACTORY) = CStr(JudgeDataValue(dr.Item(DRS_MANUFACTURERS), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_AMOUNT) = CInt(JudgeDataValue(dr.Item(DRS_DRUG_COUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
             dt.Rows.Add(drNew)
         Next
         Return DBMEDITS_RESULT.SUCCESS
@@ -267,6 +461,32 @@ Public Class DbWareHouseManager
         Next
         Return DBMEDITS_RESULT.SUCCESS
     End Function
+    Public Function QueryDrugStockDetail(ByRef dt As DataTable) As Long
+        dt.Clear()
+        Dim strSQl As String
+        strSQl = String.Format(DBCONSTDEF_SQL_SELECT_ORDER_ASC, DBCONSTDEF_SQL_SELECT_ALL, TBL_DRUG_STOCK, DRS_DRUG_CODE)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSQl, ds) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        For Each dr As DataRow In ds.Tables(0).Rows
+            Dim drNew As DataRow = dt.NewRow
+            drNew.Item(TEXT_DRUG_ID) = CInt(JudgeDataValue(dr.Item(DRS_DRUG_CODE), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
+            drNew.Item(TEXT_DRUG_COMMON_NAME) = CStr(JudgeDataValue(dr.Item(DRS_DRUG_COMMON_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_NAME) = CStr(JudgeDataValue(dr.Item(DRS_DRUG_PRODUCT_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_SPECIFICATION) = CStr(JudgeDataValue(dr.Item(DRS_SPECIFICATION), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_UNIT) = CStr(JudgeDataValue(dr.Item(DRS_MEASUER_UNITS), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_FACTORY) = CStr(JudgeDataValue(dr.Item(DRS_MANUFACTURERS), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_DRUG_AMOUNT) = CStr(JudgeDataValue(dr.Item(DRS_DRUG_COUNT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_WS_PRODUCE_DATE) = CDate(JudgeDataValue(dr.Item(DRS_PRODUCE_DATE), ENUM_DATA_TYPE.DATA_TYPE_STRING)).ToString(TEXT_DATETIME_FORMATION_DATE)
+            drNew.Item(TEXT_DRUG_BATCHNO) = CStr(JudgeDataValue(dr.Item(DRS_BATCH_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+            drNew.Item(TEXT_WS_EXPIRE_DATE) = CDate(JudgeDataValue(dr.Item(DRS_AVAILABLE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
+            drNew.Item(DRS_ID) = CLng(JudgeDataValue(dr.Item(DRS_ID), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
+            dt.Rows.Add(drNew)
+        Next
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
     Public Function UpdateWareHouseStock(ByVal lWsID As Long, ByVal oSuInfo As SUInfo, ByVal etype As SR_LOG_INOUT_TYPE) As Long
         Dim strSQL, strCon, strValue As String
         Dim lRet As Long = CONST_INVALID_DATA
@@ -291,6 +511,52 @@ Public Class DbWareHouseManager
             Return DBMEDITS_RESULT.ERROR_EXCEPTION
         End If
         If Not ImplementStoreRoomAbnormalDetailLog(lRet, oSuInfo) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        If Not ImplementSterileRoomInOutLog(etype, lRet) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not TransactionCommit() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function UpdateDrugStock(ByVal lDrugID As Long, ByVal dt As DataTable, ByVal nRealCount As Integer, ByVal etype As SR_LOG_INOUT_TYPE, Optional bDelete As Boolean = False) As Long
+        Dim strSQL, strCon, strValue As String
+        Dim lRet As Long = CONST_INVALID_DATA
+        If Not QueryNextVal(lRet, SEQ_STOREROOM_ABNORMAL_INOUT) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString + m_oDBConnect.GetCommandString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        If Not TransactionBegin() Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString + m_oDBConnect.GetCommandString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+
+        strCon = String.Format("{0}={1}", DRS_ID, lDrugID)
+        If bDelete Then
+            strSQL = String.Format(DBCONSTDEF_SQL_DELETE_WHERE, TBL_DRUG_STOCK, strCon)
+        Else
+            strValue = String.Format("{0}={1}", DRS_DRUG_COUNT, nRealCount)
+            strSQL = String.Format(DBCONSTDEF_SQL_UPDATE_WHERE, TBL_DRUG_STOCK, strValue, strCon)
+        End If
+
+        If Not TransactionExecute(strSQL) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+
+        If Not ImplementSterileRoomAbnormalInOutLog(etype, lRet) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If Not ImplementDrugAbnormalDetailLog(lRet, dt) Then
             Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION + m_oDBConnect.GetErrorString)
             Return DBMEDITS_RESULT.ERROR_EXCEPTION
         End If
@@ -380,7 +646,9 @@ Public Class DbWareHouseManager
             Select Case eType
                 Case SR_LOG_INOUT_TYPE.WH_IN, SR_LOG_INOUT_TYPE.WH_IN_BALANCE, SR_LOG_INOUT_TYPE.WH_OUT_BALANCE, SR_LOG_INOUT_TYPE.WH_OUT_EXPIRED, _
                     SR_LOG_INOUT_TYPE.WH_OUT_OTHER, SR_LOG_INOUT_TYPE.INS_EXPRIED_OUT, SR_LOG_INOUT_TYPE.INS_USE_OUT, _
-                    SR_LOG_INOUT_TYPE.HV_IN_STOCK, SR_LOG_INOUT_TYPE.HV_OUT_BACK, SR_LOG_INOUT_TYPE.HV_OUT_DISPATCH
+                    SR_LOG_INOUT_TYPE.HV_IN_STOCK, SR_LOG_INOUT_TYPE.HV_OUT_BACK, SR_LOG_INOUT_TYPE.HV_OUT_DISPATCH, _
+                    SR_LOG_INOUT_TYPE.DRUG_BACK_OUT, SR_LOG_INOUT_TYPE.DRUG_IN, SR_LOG_INOUT_TYPE.DRUG_IN_BALANCE, SR_LOG_INOUT_TYPE.DRUG_OUT_BALANCE, _
+                    SR_LOG_INOUT_TYPE.DRUG_OUT_EXPRIED, SR_LOG_INOUT_TYPE.DRUG_OUT_OTHER
 
                     strCols = String.Format("{0} as {1},{2} as {3},{4} as {5},{6} as {7},{8} as {9},{10}", _
                                             SIM_ID, TEXT_STERILIZEROOM_INS_INOUT_NO, _
@@ -429,6 +697,7 @@ Public Class DbWareHouseManager
             Case SR_LOG_INOUT_TYPE.WH_IN, SR_LOG_INOUT_TYPE.WH_IN_BALANCE, _
                 SR_LOG_INOUT_TYPE.WH_OUT_BALANCE, SR_LOG_INOUT_TYPE.WH_OUT_EXPIRED, SR_LOG_INOUT_TYPE.WH_OUT_OTHER
 
+
                 strCondition = String.Format(" {0}={1}", SIM_TYPE, CShort(eType))
                 If lRegID <> -1 Then
                     strCondition += String.Format(" and {0}={1}", SAID_REG_ID, lRegID)
@@ -455,33 +724,162 @@ Public Class DbWareHouseManager
                                             LOG_ABNORMAL_INOUT_DETAIL, SAID_REG_ID, SAI_ID, _
                                             MST_INSTRUMENT_INFO, SAID_INS_ID, INS_CODE)
                 strSql = String.Format(DBCONSTDEF_SQL_SELECT_WHERE_ORDER, strCols, strTables, strCondition, SAID_INS_ID)
+                strCondition = String.Format(" {0}={1}", SIM_TYPE, CShort(eType))
+                If lRegID <> -1 Then
+                    strCondition += String.Format(" and {0}={1}", DSAID_REG_ID, lRegID)
+                End If
+
+                If Not String.IsNullOrEmpty(strINSID) Then
+                    strCondition += String.Format("and {0}='{1}'", DSAID_DRUG_CODE, strINSID)
+                End If
+
+                strCondition += strDateCon
+                strCols = String.Format(" distinct {0} as {1},{2} as {3},{4} as {5},{6} as {7},{8} as {9},{10} as {11},{12} as {13},{14} as {15},{16} as {17},{18} as {19}", _
+                                        DSAID_DRUG_CODE, TEXT_INS_ID, _
+                                        DSAID_DRUG_COMMON_NAME, TEXT_DRUG_COMMON_NAME, _
+                                        DSAID_DRUG_PRODUCT_NAME, TEXT_DRUG_NAME, _
+                                        DSAID_SPECIFICATION, TEXT_DRUG_SPECIFICATION, _
+                                        DSAID_MANUFACTURERS, TEXT_PRODUCE_COMPANY, _
+                                        DSAID_DRUG_MEASUER_UNITS, TEXT_DRUG_UNIT, _
+                                        DSAID_DRUG_COUNT, TEXT_DRUG_AMOUNT, _
+                                        DSAID_PRODUCE_DATE, TEXT_DRUG_EXPIRE, _
+                                        DSAID_BATCH_ID, TEXT_DRUG_BATCHNO, _
+                                        DSAID_AVAILABLE_DATE, TEXT_DRUG_EXPIRE, _
+                                         SAI_SF_NAME, TEXT_STERILIZEROOM_INS_INOUT_STAFF_NAME, _
+                                        SAI_DATETIME, TEXT_STERILIZEROOM_INS_INOUT_REG_TIME)
+                strTables = String.Format(" {0} INNER JOIN {1} ON {2} = {3} INNER JOIN {4} ON {5} = {6} INNER JOIN {7} ON {8} = {9}", _
+                                            LOG_STOREROOM_INOUT_MASTER, LOG_STOREROOM_ABNORMAL_INOUT, SIM_REG_ID, SAI_ID, _
+                                            LOG_DRUG_ABNORMAL_INOUT_DETAIL, DSAID_REG_ID, SAI_ID, _
+                                            MST_INSTRUMENT_INFO, DSAID_DRUG_CODE, INS_CODE)
+                strSql = String.Format(DBCONSTDEF_SQL_SELECT_WHERE_ORDER, strCols, strTables, strCondition, DSAID_DRUG_CODE)
+                Dim ds As New DataSet()
+                If Not QueryOleDb(strSql, ds) Then
+                    Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                    Return DBMEDITS_RESULT.ERROR_EXCEPTION
+                End If
+
+                If ds.Tables(0).Rows.Count = 0 Then
+                    Return DBMEDITS_RESULT.ERROR_NOT_EXIST
+                End If
+
+                For Each dr As DataRow In ds.Tables(0).Rows
+                    Dim drNew As DataRow = dtSterilizeRoomINSDetail.NewRow
+                    drNew.Item(TEXT_INS_ID) = CStr(JudgeDataValue(dr.Item(TEXT_INS_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_INS_NAME) = CStr(JudgeDataValue(dr.Item(TEXT_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_INS_TYPE) = CStr(JudgeDataValue(dr.Item(TEXT_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_UNIT) = CStr(JudgeDataValue(dr.Item(TEXT_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_COUNT) = CInt(JudgeDataValue(dr.Item(TEXT_COUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
+                    drNew.Item(TEXT_PRODUCE_COMPANY) = CStr(JudgeDataValue(dr.Item(TEXT_PRODUCE_COMPANY), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_DRUG_BATCHNO) = CStr(JudgeDataValue(dr.Item(TEXT_DRUG_BATCHNO), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_EXPIRE_DATE) = CDate(JudgeDataValue(dr.Item(TEXT_EXPIRE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
+                    drNew.Item(TEXT_STERILIZEROOM_INS_INOUT_STAFF_NAME) = CStr(JudgeDataValue(dr.Item(TEXT_STERILIZEROOM_INS_INOUT_STAFF_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_STERILIZEROOM_INS_INOUT_REG_TIME) = CDate(JudgeDataValue(dr.Item(TEXT_STERILIZEROOM_INS_INOUT_REG_TIME), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE_TIME)
+                    dtSterilizeRoomINSDetail.Rows.Add(drNew)
+                Next
+            Case SR_LOG_INOUT_TYPE.DRUG_IN, SR_LOG_INOUT_TYPE.DRUG_IN_BALANCE, SR_LOG_INOUT_TYPE.DRUG_OUT_BALANCE, _
+                SR_LOG_INOUT_TYPE.DRUG_OUT_EXPRIED, SR_LOG_INOUT_TYPE.DRUG_OUT_OTHER
+              
+                strCondition = String.Format(" {0}={1}", SIM_TYPE, CShort(eType))
+                If lRegID <> -1 Then
+                    strCondition += String.Format(" and {0}={1}", DSAID_REG_ID, lRegID)
+                End If
+
+                If Not String.IsNullOrEmpty(strINSID) Then
+                    strCondition += String.Format("and {0}='{1}'", DSAID_DRUG_CODE, strINSID)
+                End If
+
+                strCondition += strDateCon
+                strCols = String.Format(" distinct {0} as {1},{2} as {3},{4} as {5},{6} as {7},{8} as {9},{10} as {11},{12} as {13},{14} as {15},{16} as {17},{18} as {19},{20} as {21},{22} as {23}", _
+                                        DSAID_DRUG_CODE, TEXT_DRUG_ID, _
+                                        DSAID_DRUG_COMMON_NAME, TEXT_DRUG_COMMON_NAME, _
+                                        DSAID_DRUG_PRODUCT_NAME, TEXT_DRUG_NAME, _
+                                        DSAID_SPECIFICATION, TEXT_DRUG_SPECIFICATION, _
+                                        DSAID_MANUFACTURERS, TEXT_PRODUCE_COMPANY, _
+                                        DSAID_DRUG_MEASUER_UNITS, TEXT_DRUG_UNIT, _
+                                        DSAID_DRUG_COUNT, TEXT_DRUG_AMOUNT, _
+                                        DSAID_PRODUCE_DATE, TEXT_WS_PRODUCE_DATE, _
+                                        DSAID_BATCH_ID, TEXT_DRUG_BATCHNO, _
+                                        DSAID_AVAILABLE_DATE, TEXT_WS_EXPIRE_DATE, _
+                                       SAI_SF_NAME, TEXT_STERILIZEROOM_INS_INOUT_STAFF_NAME, _
+                                        SAI_DATETIME, TEXT_STERILIZEROOM_INS_INOUT_REG_TIME)
+                strTables = String.Format(" {0} INNER JOIN {1} ON {2} = {3} INNER JOIN {4} ON {5} = {6} INNER JOIN {7} ON {8} = {9}", _
+                                            LOG_STOREROOM_INOUT_MASTER, LOG_STOREROOM_ABNORMAL_INOUT, SIM_REG_ID, SAI_ID, _
+                                            LOG_DRUG_ABNORMAL_INOUT_DETAIL, DSAID_REG_ID, SAI_ID, _
+                                            MST_DRUG_INFO, DSAID_DRUG_CODE, DRUG_CODE)
+                strSql = String.Format(DBCONSTDEF_SQL_SELECT_WHERE_ORDER, strCols, strTables, strCondition, DSAID_DRUG_CODE)
+                Dim ds As New DataSet()
+                If Not QueryOleDb(strSql, ds) Then
+                    Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+                    Return DBMEDITS_RESULT.ERROR_EXCEPTION
+                End If
+
+                If ds.Tables(0).Rows.Count = 0 Then
+                    Return DBMEDITS_RESULT.ERROR_NOT_EXIST
+                End If
+
+                For Each dr As DataRow In ds.Tables(0).Rows
+                    Dim drNew As DataRow = dtSterilizeRoomINSDetail.NewRow
+                    drNew.Item(TEXT_DRUG_ID) = CStr(JudgeDataValue(dr.Item(TEXT_DRUG_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_DRUG_COMMON_NAME) = CStr(JudgeDataValue(dr.Item(TEXT_DRUG_COMMON_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_DRUG_NAME) = CStr(JudgeDataValue(dr.Item(TEXT_DRUG_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_DRUG_SPECIFICATION) = CStr(JudgeDataValue(dr.Item(TEXT_DRUG_SPECIFICATION), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_DRUG_FACTORY) = CStr(JudgeDataValue(dr.Item(TEXT_PRODUCE_COMPANY), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_DRUG_UNIT) = CStr(JudgeDataValue(dr.Item(TEXT_DRUG_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_DRUG_AMOUNT) = CStr(JudgeDataValue(dr.Item(TEXT_DRUG_AMOUNT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_WS_PRODUCE_DATE) = CDate(JudgeDataValue(dr.Item(TEXT_WS_PRODUCE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
+                    drNew.Item(TEXT_WS_EXPIRE_DATE) = CDate(JudgeDataValue(dr.Item(TEXT_WS_EXPIRE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
+                    drNew.Item(TEXT_STERILIZEROOM_INS_INOUT_STAFF_NAME) = CStr(JudgeDataValue(dr.Item(TEXT_STERILIZEROOM_INS_INOUT_STAFF_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
+                    drNew.Item(TEXT_STERILIZEROOM_INS_INOUT_REG_TIME) = CDate(JudgeDataValue(dr.Item(TEXT_STERILIZEROOM_INS_INOUT_REG_TIME), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE_TIME)
+                    dtSterilizeRoomINSDetail.Rows.Add(drNew)
+                Next
             Case Else
                 Return DBMEDITS_RESULT.ERROR_PARAMETER
         End Select
-
-        Dim ds As New DataSet()
-        If Not QueryOleDb(strSql, ds) Then
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function QueryDrugStockBatch(ByRef dt As DataTable, ByVal strDrugCode As String) As Long
+        Dim strCon, strSQL, strCols As String
+        strCols = String.Format("{0},{1},{2},{3}", DRS_BATCH_ID, DRS_PRODUCE_DATE, DRS_AVAILABLE_DATE, DRS_DRUG_COUNT)
+        strCon = String.Format("{0}='{1}'", DRS_DRUG_CODE, strDrugCode)
+        strSQL = String.Format(DBCONSTDEF_SQL_SELECT_WHERE_ORDER_ASC, strCols, TBL_DRUG_STOCK, strCon, DRS_BATCH_ID)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSQL, ds) Then
             Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
             Return DBMEDITS_RESULT.ERROR_EXCEPTION
         End If
-
-        If ds.Tables(0).Rows.Count = 0 Then Return DBMEDITS_RESULT.ERROR_NOT_EXIST
-        For Each dr As DataRow In ds.Tables(0).Rows
-            Dim drNew As DataRow = dtSterilizeRoomINSDetail.NewRow
-            drNew.Item(TEXT_INS_ID) = CStr(JudgeDataValue(dr.Item(TEXT_INS_ID), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            drNew.Item(TEXT_INS_NAME) = CStr(JudgeDataValue(dr.Item(TEXT_INS_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            drNew.Item(TEXT_INS_TYPE) = CStr(JudgeDataValue(dr.Item(TEXT_INS_TYPE), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            drNew.Item(TEXT_UNIT) = CStr(JudgeDataValue(dr.Item(TEXT_UNIT), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            drNew.Item(TEXT_COUNT) = CInt(JudgeDataValue(dr.Item(TEXT_COUNT), ENUM_DATA_TYPE.DATA_TYPE_INTEGER))
-            drNew.Item(TEXT_PRODUCE_COMPANY) = CStr(JudgeDataValue(dr.Item(TEXT_PRODUCE_COMPANY), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            drNew.Item(TEXT_INS_BATCH) = CStr(JudgeDataValue(dr.Item(TEXT_INS_BATCH), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            drNew.Item(TEXT_EXPIRE_DATE) = CDate(JudgeDataValue(dr.Item(TEXT_EXPIRE_DATE), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
-            drNew.Item(TEXT_STERILIZEROOM_INS_INOUT_STAFF_NAME) = CStr(JudgeDataValue(dr.Item(TEXT_STERILIZEROOM_INS_INOUT_STAFF_NAME), ENUM_DATA_TYPE.DATA_TYPE_STRING))
-            drNew.Item(TEXT_STERILIZEROOM_INS_INOUT_REG_TIME) = CDate(JudgeDataValue(dr.Item(TEXT_STERILIZEROOM_INS_INOUT_REG_TIME), ENUM_DATA_TYPE.DATA_TYPE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE_TIME)
-            dtSterilizeRoomINSDetail.Rows.Add(drNew)
-        Next
-
-        ds.Dispose()
+        dt = ds.Tables(0).Copy
         Return DBMEDITS_RESULT.SUCCESS
     End Function
+    Public Function QueryWareHouseStockBatch(ByRef dt As DataTable, ByVal strINSCode As String, ByVal nCompanyID As Integer) As Long
+        Dim strCon, strSQL As String
+        Dim strCols As String = String.Format("{0},{1},{2},{3}", WS_BATCH_ID, WS_PRODUCE_DATE, WS_EXPIRE_DATE, WS_INS_COUNT)
+        strCon = String.Format("{0}='{1}' and {2}={3}", WS_INS_ID, strINSCode, WS_COMPANY_ID, nCompanyID)
+        strSQL = String.Format(DBCONSTDEF_SQL_SELECT_WHERE_ORDER_ASC, strCols, TBL_WAREHOUSE_STOCK, strCon, WS_BATCH_ID)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSQL, ds) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        dt = ds.Tables(0).Copy
+        Return DBMEDITS_RESULT.SUCCESS
+    End Function
+    Public Function QueryDrugStockByID(ByRef dt As DataTable, ByVal lID As Long) As Long
+        Dim strSQl, strCon As String
+        strCon = String.Format("{0}={1}", DRS_ID, lID)
+        strSQl = String.Format(DBCONSTDEF_SQL_SELECT_WHERE, DBCONSTDEF_SQL_SELECT_ALL, TBL_DRUG_STOCK, strCon)
+        Dim ds As New DataSet
+        If Not QueryOleDb(strSQl, ds) Then
+            Logger.WriteLine(DBMEDITS_CONST_TEXT_ERROR_EXCEPTION)
+            Return DBMEDITS_RESULT.ERROR_EXCEPTION
+        End If
+        If ds.Tables(0).Rows.Count < 1 Then
+            Return DBMEDITS_RESULT.ERROR_NOT_EXIST
+        ElseIf ds.Tables(0).Rows.Count > 1 Then
+            Return DBMEDITS_RESULT.ERROR_EXIST_OVERFLOW
+        Else
+            dt = ds.Tables(0).Copy
+            Return DBMEDITS_RESULT.SUCCESS
+        End If
+    End Function
+
 End Class

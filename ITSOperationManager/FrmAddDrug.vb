@@ -17,17 +17,17 @@ Public Class FrmAddDrug
         InitialDrugInfo()
     End Sub
 
-    Private Sub lbl_OK_Click(sender As Object, e As EventArgs) Handles lbl_OK.Click
+    Private Sub lbl_OK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
         Dim errorMsg As String = String.Empty
         If Not CheckParameter(errorMsg) Then
-            UIMsgBox.Show(errorMsg)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", errorMsg)
             Return
         End If
         DrugInfo = New DrugInfo With {.CommonName = tbCommonName.Text, .ProductName = tbProductName.Text, .Specification = tbSpec.Text, .Factory = tbManufacture.Text, .Unit = tbUnit.Text, .Amount = tbQuantity.Text, .strDrugID = m_strDrugCode}
         DialogResult = Windows.Forms.DialogResult.OK
     End Sub
 
-    Private Sub lbl_Cancel_Click(sender As Object, e As EventArgs) Handles lbl_Cancel.Click
+    Private Sub lbl_Cancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         DialogResult = Windows.Forms.DialogResult.Cancel
     End Sub
 

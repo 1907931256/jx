@@ -133,6 +133,16 @@
                 Return SR_LOG_INOUT_TYPE.HV_OUT_DISPATCH
             Case TEXT_HV_OUT_USED
                 Return SR_LOG_INOUT_TYPE.HV_OUT_USED
+            Case TEXT_DRUG_IN
+                Return SR_LOG_INOUT_TYPE.DRUG_IN
+            Case TEXT_DRUG_OUT
+                Return SR_LOG_INOUT_TYPE.DRUG_OUT_OTHER
+            Case TEXT_DRUG_IN_BALANCE
+                Return SR_LOG_INOUT_TYPE.DRUG_IN_BALANCE
+            Case TEXT_DRUG_OUT_BALANCE
+                Return SR_LOG_INOUT_TYPE.DRUG_OUT_BALANCE
+            Case TEXT_DRUG_EXPRIED_OUT
+                Return SR_LOG_INOUT_TYPE.DRUG_OUT_EXPRIED
             Case Else
                 Return SR_LOG_INOUT_TYPE.INOUT_TYPE_NULL
         End Select
@@ -160,6 +170,16 @@
                 Return TEXT_HV_OUT_DISPATCH
             Case SR_LOG_INOUT_TYPE.HV_OUT_USED
                 Return TEXT_HV_OUT_USED
+            Case SR_LOG_INOUT_TYPE.DRUG_IN
+                Return TEXT_DRUG_IN
+            Case SR_LOG_INOUT_TYPE.DRUG_OUT_OTHER
+                Return TEXT_DRUG_OUT
+            Case SR_LOG_INOUT_TYPE.DRUG_IN_BALANCE
+                Return TEXT_DRUG_IN_BALANCE
+            Case SR_LOG_INOUT_TYPE.DRUG_OUT_BALANCE
+                Return TEXT_DRUG_OUT_BALANCE
+            Case SR_LOG_INOUT_TYPE.DRUG_OUT_EXPRIED
+                Return TEXT_DRUG_EXPRIED_OUT
             Case Else
                 Return String.Empty
         End Select

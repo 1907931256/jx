@@ -8,7 +8,7 @@ Public Class FrmWareHouseStocking
     Private m_nStockCount As Integer
     Private m_oSuInfo As SUInfo
 
-    Public Sub New(ByVal dr As DataRow)
+    Public Sub New(ByVal dr As DataGridViewRow)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -18,28 +18,28 @@ Public Class FrmWareHouseStocking
         txtCount.Focus()
 
     End Sub
-    Private Sub InitialControl(ByVal dr As DataRow)
+    Private Sub InitialControl(ByVal dr As DataGridViewRow)
         If dr Is Nothing Then Exit Sub
-        m_lWSID = CLng(dr.Item(TEXT_WS_ID))
+        m_lWSID = CLng(dr.Cells(TEXT_WS_ID).Value)
         m_oSuInfo = New SUInfo
-        m_oSuInfo.m_strINSID = CStr(dr.Item(TEXT_WS_INS_ID))
-        m_oSuInfo.m_strName = CStr(dr.Item(TEXT_WS_INS_NAME))
-        m_oSuInfo.m_strType = CStr(dr.Item(TEXT_WS_INS_TYPE))
-        m_oSuInfo.m_strUnit = CStr(dr.Item(TEXT_WS_INS_UNIT))
-        m_oSuInfo.m_dtimeExpire = CDate(dr.Item(TEXT_WS_EXPIRE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
-        m_oSuInfo.m_dtimeProduce = CDate(dr.Item(TEXT_WS_PRODUCE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
-        m_oSuInfo.m_strBatch = CStr(dr.Item(TEXT_WS_BATCH_ID))
-        m_oSuInfo.m_lCompanyID = CInt(dr.Item(TEXT_WS_COMPANY_ID))
-        m_oSuInfo.m_strCompanyName = CStr(dr.Item(TEXT_WS_COMPANY_NAME))
-        m_oSuInfo.m_nCount = CInt(dr.Item(TEXT_STOCK_COUNT))
+        m_oSuInfo.m_strINSID = CStr(dr.Cells(TEXT_WS_INS_ID).Value)
+        m_oSuInfo.m_strName = CStr(dr.Cells(TEXT_WS_INS_NAME).Value)
+        m_oSuInfo.m_strType = CStr(dr.Cells(TEXT_WS_INS_TYPE).Value)
+        m_oSuInfo.m_strUnit = CStr(dr.Cells(TEXT_WS_INS_UNIT).Value)
+        m_oSuInfo.m_dtimeExpire = CDate(dr.Cells(TEXT_WS_EXPIRE_DATE).Value).ToString(TEXT_DATETIME_FORMATION_DATE)
+        m_oSuInfo.m_dtimeProduce = CDate(dr.Cells(TEXT_WS_PRODUCE_DATE).Value).ToString(TEXT_DATETIME_FORMATION_DATE)
+        m_oSuInfo.m_strBatch = CStr(dr.Cells(TEXT_WS_BATCH_ID).Value)
+        m_oSuInfo.m_lCompanyID = CInt(dr.Cells(TEXT_WS_COMPANY_ID).Value)
+        m_oSuInfo.m_strCompanyName = CStr(dr.Cells(TEXT_WS_COMPANY_NAME).Value)
+        m_oSuInfo.m_nCount = CInt(dr.Cells(TEXT_STOCK_COUNT).Value)
 
-        txtInsID.Text = CStr(dr.Item(TEXT_WS_INS_ID))
-        txtINSName.Text = CStr(dr.Item(TEXT_WS_INS_NAME))
-        txtINSType.Text = CStr(dr.Item(TEXT_WS_INS_TYPE))
-        txtINSUnit.Text = CStr(dr.Item(TEXT_WS_INS_UNIT))
-        txtBatch.Text = CStr(dr.Item(TEXT_WS_BATCH_ID))
-        txtExpired.Text = CDate(dr.Item(TEXT_WS_EXPIRE_DATE)).ToString(TEXT_DATETIME_FORMATION_DATE)
-        txtCompany.Text = CStr(dr.Item(TEXT_WS_COMPANY_NAME))
+        txtInsID.Text = CStr(dr.Cells(TEXT_WS_INS_ID).Value)
+        txtINSName.Text = CStr(dr.Cells(TEXT_WS_INS_NAME).Value)
+        txtINSType.Text = CStr(dr.Cells(TEXT_WS_INS_TYPE).Value)
+        txtINSUnit.Text = CStr(dr.Cells(TEXT_WS_INS_UNIT).Value)
+        txtBatch.Text = CStr(dr.Cells(TEXT_WS_BATCH_ID).Value)
+        txtExpired.Text = CDate(dr.Cells(TEXT_WS_EXPIRE_DATE).Value).ToString(TEXT_DATETIME_FORMATION_DATE)
+        txtCompany.Text = CStr(dr.Cells(TEXT_WS_COMPANY_NAME).Value)
         txtCount.Focus()
     End Sub
 
@@ -47,7 +47,7 @@ Public Class FrmWareHouseStocking
         If m_lWSID = CONST_INVALID_DATA Then Exit Sub
         Dim oDBWareHouse As DbWareHouseManager = New DbWareHouseManager
         If Not Judgement.IsPlusInteger(txtCount.Text) Then
-            UIMsgBox.MSGBoxShow(MSG_OP_INS_RQUEST_ERROR_INS_COUNT)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_OP_INS_RQUEST_ERROR_INS_COUNT)
             txtCount.Focus()
             Exit Sub
         End If
@@ -61,7 +61,7 @@ Public Class FrmWareHouseStocking
             Exit Sub
         End If
         If Not lRet = DBMEDITS_RESULT.SUCCESS Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
             Exit Sub
         End If
         Me.Close()

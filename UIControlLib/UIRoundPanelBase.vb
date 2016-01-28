@@ -35,8 +35,8 @@ Public Class UIRoundPanelBase
     Private m_oCurItem As ColorLabel
 
     Private Sub UIRoundPanelBase_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
-        Me.pnlClient.Location = New System.Drawing.Point(2, Me.pnlHead.Bottom)
-        Me.pnlClient.Size = New System.Drawing.Size(Me.Width - 4, Me.Height - Me.pnlHead.Height - 2)
+        'Me.pnlClient.Location = New System.Drawing.Point(2, Me.pnlHead.Bottom)
+        Me.pnlClient.Size = New System.Drawing.Size(Me.Width - 4, Me.Height - 2)
         RelayoutLabels()
     End Sub
 
@@ -88,8 +88,8 @@ Public Class UIRoundPanelBase
                 uiExpandpanel.SetSearchCaption(strSearchCaption)
             End If
             uiExpandpanel.SetDataSet(ds, emStyle)
-            Me.pnlTopMid.Controls.Add(oColorLbl)
-            Me.pnlTopMid.Controls.SetChildIndex(oColorLbl, 0)
+            'Me.pnlTopMid.Controls.Add(oColorLbl)
+            'Me.pnlTopMid.Controls.SetChildIndex(oColorLbl, 0)
             AddHandler oColorLbl.Click, AddressOf OnColorLblClick
             RelayoutLabels()
         Else
@@ -110,18 +110,18 @@ Public Class UIRoundPanelBase
     End Sub
 
     Private Sub RelayoutLabels()
-        If m_aryColorLabels IsNot Nothing AndAlso m_aryColorLabels.Count > 0 Then
-            Dim nEachLength As Integer = (Me.pnlTopMid.Width) / m_aryColorLabels.Count
-            If nEachLength > COLOR_LABEL_MAX_WIDTH Then
-                nEachLength = COLOR_LABEL_MAX_WIDTH
-            End If
-            Dim nStartPos As Integer = (Me.pnlTopMid.Width - nEachLength * m_aryColorLabels.Count) / 2
-            For Each lbl As ColorLabel In m_aryColorLabels
-                lbl.Location = New System.Drawing.Point(nStartPos, Me.pnlHead.Height - COLOR_LABEL_HEIGHT)
-                lbl.Size = New System.Drawing.Size(nEachLength, COLOR_LABEL_HEIGHT)
-                nStartPos += nEachLength
-            Next
-        End If
+        'If m_aryColorLabels IsNot Nothing AndAlso m_aryColorLabels.Count > 0 Then
+        '    Dim nEachLength As Integer = (Me.pnlTopMid.Width) / m_aryColorLabels.Count
+        '    If nEachLength > COLOR_LABEL_MAX_WIDTH Then
+        '        nEachLength = COLOR_LABEL_MAX_WIDTH
+        '    End If
+        '    Dim nStartPos As Integer = (Me.pnlTopMid.Width - nEachLength * m_aryColorLabels.Count) / 2
+        '    For Each lbl As ColorLabel In m_aryColorLabels
+        '        lbl.Location = New System.Drawing.Point(nStartPos, Me.pnlHead.Height - COLOR_LABEL_HEIGHT)
+        '        lbl.Size = New System.Drawing.Size(nEachLength, COLOR_LABEL_HEIGHT)
+        '        nStartPos += nEachLength
+        '    Next
+        'End If
     End Sub
 
     Private Sub OnColorLblClick(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -156,7 +156,7 @@ Public Class UIRoundPanelBase
         Catch ex As Exception
 
         End Try
-     
+
     End Sub
 
     Private Sub PerformUnClick(ByVal oSender As ColorLabel)
@@ -216,14 +216,10 @@ Public Class UIRoundPanelBase
     End Sub
 
     Public Function UpdateDataTable(ByVal strItemName As String, ByVal strBindTableName As String, ByVal dt As DataTable) As Boolean
-        If String.IsNullOrEmpty(strItemName) OrElse String.IsNullOrEmpty(strBindTableName) OrElse dt Is Nothing Then
+        If dt Is Nothing Then
             Return False
         End If
-        For Each lbl As ColorLabel In m_aryColorLabels
-            If String.Compare(strItemName, lbl.Text, True) = 0 Then
-                Return CType(lbl.BindingCtrl, UIExpandPanel).UpdateDataTable(strBindTableName, dt)
-            End If
-        Next
+        'Return CType(Label, UIExpandPanel).UpdateDataTable(strBindTableName, dt)
         Return False
     End Function
 
@@ -345,4 +341,5 @@ Public Class UIRoundPanelBase
             End If
         Next
     End Sub
+
 End Class

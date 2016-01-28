@@ -25,9 +25,6 @@ Partial Class FrmOperationNoteQuery
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnlQuery = New System.Windows.Forms.Panel()
         Me.btnRefresh = New DevComponents.DotNetBar.ButtonX()
         Me.cmbStatus = New System.Windows.Forms.ComboBox()
@@ -39,16 +36,16 @@ Partial Class FrmOperationNoteQuery
         Me.dtpTimeStart = New System.Windows.Forms.DateTimePicker()
         Me.lblSurTime = New System.Windows.Forms.Label()
         Me.pnlFunction = New System.Windows.Forms.Panel()
+        Me.btnClose = New DevComponents.DotNetBar.ButtonX()
         Me.btnRecycle = New DevComponents.DotNetBar.ButtonX()
         Me.btnUse = New DevComponents.DotNetBar.ButtonX()
         Me.btnFrontUse = New DevComponents.DotNetBar.ButtonX()
         Me.btnRequest = New DevComponents.DotNetBar.ButtonX()
         Me.btnRequestAll = New DevComponents.DotNetBar.ButtonX()
-        Me.dgv = New UIControlLib.UIDataGridView()
-        Me.btnClose = New DevComponents.DotNetBar.ButtonX()
+        Me.dgvMain = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.pnlQuery.SuspendLayout()
         Me.pnlFunction.SuspendLayout()
-        CType(Me.dgv, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlQuery
@@ -76,7 +73,7 @@ Partial Class FrmOperationNoteQuery
         Me.btnRefresh.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnRefresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnRefresh.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnRefresh.Location = New System.Drawing.Point(734, 11)
+        Me.btnRefresh.Location = New System.Drawing.Point(735, 11)
         Me.btnRefresh.Margin = New System.Windows.Forms.Padding(2)
         Me.btnRefresh.Name = "btnRefresh"
         Me.btnRefresh.Size = New System.Drawing.Size(47, 22)
@@ -176,6 +173,18 @@ Partial Class FrmOperationNoteQuery
         Me.pnlFunction.Size = New System.Drawing.Size(786, 32)
         Me.pnlFunction.TabIndex = 10
         '
+        'btnClose
+        '
+        Me.btnClose.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnClose.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
+        Me.btnClose.Location = New System.Drawing.Point(304, 6)
+        Me.btnClose.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnClose.Name = "btnClose"
+        Me.btnClose.Size = New System.Drawing.Size(58, 22)
+        Me.btnClose.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
+        Me.btnClose.TabIndex = 10
+        Me.btnClose.Text = "关闭"
+        '
         'btnRecycle
         '
         Me.btnRecycle.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
@@ -228,7 +237,7 @@ Partial Class FrmOperationNoteQuery
         '
         Me.btnRequestAll.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.btnRequestAll.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnRequestAll.Location = New System.Drawing.Point(4, 6)
+        Me.btnRequestAll.Location = New System.Drawing.Point(2, 6)
         Me.btnRequestAll.Margin = New System.Windows.Forms.Padding(2)
         Me.btnRequestAll.Name = "btnRequestAll"
         Me.btnRequestAll.Size = New System.Drawing.Size(58, 22)
@@ -236,73 +245,32 @@ Partial Class FrmOperationNoteQuery
         Me.btnRequestAll.TabIndex = 5
         Me.btnRequestAll.Text = "一键请领"
         '
-        'dgv
+        'dgvMain
         '
-        Me.dgv.AllowDelete = True
-        Me.dgv.AllowSelectChangeRow = False
-        Me.dgv.AllowSort = True
-        Me.dgv.AllowUserToAddRows = False
-        Me.dgv.AllowUserToResizeColumns = False
-        Me.dgv.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(246, Byte), Integer))
-        Me.dgv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgv.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgv.BeQuerying = False
-        Me.dgv.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.dgv.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
-        Me.dgv.ChangeHeaderSize = False
-        Me.dgv.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(201, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(209, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
-        Me.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv.DefaultCellStyle = DataGridViewCellStyle3
-        Me.dgv.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgv.EnableHeadersVisualStyles = False
-        Me.dgv.Location = New System.Drawing.Point(0, 71)
-        Me.dgv.Margin = New System.Windows.Forms.Padding(2)
-        Me.dgv.MultiSelect = False
-        Me.dgv.Name = "dgv"
-        Me.dgv.NoItemAlter = ""
-        Me.dgv.RowHeadersVisible = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.dgv.RowsDefaultCellStyle = DataGridViewCellStyle4
-        Me.dgv.RowTemplate.Height = 23
-        Me.dgv.SelCombineKeyEnable = False
-        Me.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv.ShowSelectionColor = True
-        Me.dgv.Size = New System.Drawing.Size(786, 432)
-        Me.dgv.TabIndex = 11
-        '
-        'btnClose
-        '
-        Me.btnClose.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.btnClose.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.btnClose.Location = New System.Drawing.Point(304, 6)
-        Me.btnClose.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnClose.Name = "btnClose"
-        Me.btnClose.Size = New System.Drawing.Size(58, 22)
-        Me.btnClose.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010
-        Me.btnClose.TabIndex = 10
-        Me.btnClose.Text = "关闭"
+        Me.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("SimSun", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvMain.DefaultCellStyle = DataGridViewCellStyle1
+        Me.dgvMain.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvMain.GridColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(215, Byte), Integer), CType(CType(229, Byte), Integer))
+        Me.dgvMain.Location = New System.Drawing.Point(0, 71)
+        Me.dgvMain.Name = "dgvMain"
+        Me.dgvMain.ReadOnly = True
+        Me.dgvMain.RowTemplate.Height = 23
+        Me.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvMain.Size = New System.Drawing.Size(786, 432)
+        Me.dgvMain.TabIndex = 48
         '
         'FrmOperationNoteQuery
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.dgv)
+        Me.Controls.Add(Me.dgvMain)
         Me.Controls.Add(Me.pnlQuery)
         Me.Controls.Add(Me.pnlFunction)
         Me.Margin = New System.Windows.Forms.Padding(2)
@@ -311,13 +279,12 @@ Partial Class FrmOperationNoteQuery
         Me.pnlQuery.ResumeLayout(False)
         Me.pnlQuery.PerformLayout()
         Me.pnlFunction.ResumeLayout(False)
-        CType(Me.dgv, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvMain, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents pnlQuery As System.Windows.Forms.Panel
     Friend WithEvents pnlFunction As System.Windows.Forms.Panel
-    Friend WithEvents dgv As UIDataGridView
     Friend WithEvents cmbSurRoom As System.Windows.Forms.ComboBox
     Friend WithEvents lblSurRoom As System.Windows.Forms.Label
     Friend WithEvents dtpTimeEnd As System.Windows.Forms.DateTimePicker
@@ -333,5 +300,6 @@ Partial Class FrmOperationNoteQuery
     Friend WithEvents btnFrontUse As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnRefresh As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnClose As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents dgvMain As DevComponents.DotNetBar.Controls.DataGridViewX
 
 End Class

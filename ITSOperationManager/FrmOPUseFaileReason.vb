@@ -28,14 +28,14 @@ Public Class FrmOPUseFaileReason
     Private Sub Query()
         m_dtUnit.Clear()
         If m_oDBOperateOle.QueryTotalReason(m_dtUnit) = DBMEDITS_RESULT.ERROR_EXCEPTION Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
         Else
             dgvMain.DataSource = m_dtUnit
         End If
     End Sub
     Private Sub Insert()
         If Not m_oDBOperateOle.InsertUseFaileReason(txtReason.Text) = DBMEDITS_RESULT.SUCCESS Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
             Exit Sub
         End If
         Clear()
@@ -44,7 +44,7 @@ Public Class FrmOPUseFaileReason
 
     Private Sub Modify(ByVal strID As String)
         If Not m_oDBOperateOle.ModifyUseFaileReason(txtReason.Text, CLng(strID)) = DBMEDITS_RESULT.SUCCESS Then
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
             Exit Sub
         End If
         Clear()
@@ -60,7 +60,7 @@ Public Class FrmOPUseFaileReason
             Clear()
             Query()
         Else
-            UIMsgBox.MSGBoxShow(MSG_DBERROR_EXCEPTION)
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_DBERROR_EXCEPTION)
         End If
     End Sub
 
@@ -79,7 +79,7 @@ Public Class FrmOPUseFaileReason
         End If
         Dim drFind() As DataRow = m_dtUnit.Select(strCol)
         If drFind.Length > 0 Then
-            UIMsgBox.MSGBoxShow(String.Format(MSG_ERROR_USE_FAILE_REASON_EXIST))
+            ZhiFa.Base.MessageControl.BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", MSG_ERROR_USE_FAILE_REASON_EXIST)
             txtReason.Focus()
             txtReason.SelectAll()
             Return True
@@ -196,4 +196,8 @@ Public Class FrmOPUseFaileReason
         Return MyBase.ProcessCmdKey(msg, keyData)
     End Function
 #End Region
+
+    Private Sub btnSel_Click(sender As Object, e As EventArgs)
+
+    End Sub
 End Class

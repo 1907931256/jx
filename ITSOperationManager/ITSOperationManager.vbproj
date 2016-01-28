@@ -101,7 +101,13 @@
     <Compile Include="FrmAddDrug.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmINSDetail.Designer.vb">
+    <Compile Include="FrmHighValueDetail.Designer.vb">
+      <DependentUpon>FrmHighValueDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmHighValueDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmINSDetail.designer.vb">
       <DependentUpon>FrmINSDetail.vb</DependentUpon>
     </Compile>
     <Compile Include="FrmINSDetail.vb">
@@ -113,7 +119,13 @@
     <Compile Include="FrmOperationRecycleReg.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FrmOperationRequestReg.Designer.vb">
+    <Compile Include="FrmOperationRequestDetail.Designer.vb">
+      <DependentUpon>FrmOperationRequestDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmOperationRequestDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmOperationRequestReg.designer.vb">
       <DependentUpon>FrmOperationRequestReg.vb</DependentUpon>
     </Compile>
     <Compile Include="FrmOperationRequestReg.vb">
@@ -172,11 +184,17 @@
     <EmbeddedResource Include="FrmAddDrug.resx">
       <DependentUpon>FrmAddDrug.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmHighValueDetail.resx">
+      <DependentUpon>FrmHighValueDetail.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmINSDetail.resx">
       <DependentUpon>FrmINSDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmOperationRecycleReg.resx">
       <DependentUpon>FrmOperationRecycleReg.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmOperationRequestDetail.resx">
+      <DependentUpon>FrmOperationRequestDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmOperationRequestReg.resx">
       <DependentUpon>FrmOperationRequestReg.vb</DependentUpon>
@@ -222,6 +240,10 @@
     <ProjectReference Include="..\ITSBase\ITSBase.vbproj">
       <Project>{cc5e39f5-66fe-401e-bb81-4f9e47f1b190}</Project>
       <Name>ITSBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UiControlLibCS\UiControlLibCS.csproj">
+      <Project>{c3915cda-2f6e-4900-b5d8-c1a6bafc6e4e}</Project>
+      <Name>UiControlLibCS</Name>
     </ProjectReference>
     <ProjectReference Include="..\UIControlLib\UIControlLib.vbproj">
       <Project>{91e4f7e2-5797-4365-b74f-e748d2115d42}</Project>
