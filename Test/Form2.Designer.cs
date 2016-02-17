@@ -46,6 +46,7 @@ namespace Test
             this.btnTraceQuery = new System.Windows.Forms.Button();
             this.btnLocationQuery = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnHighValueInReg = new System.Windows.Forms.Button();
             this.btnInOutStatistics = new System.Windows.Forms.Button();
             this.btnStockManage = new System.Windows.Forms.Button();
             this.btnWareHouseOutReg = new System.Windows.Forms.Button();
@@ -60,8 +61,6 @@ namespace Test
             this.pnlPatInfo = new System.Windows.Forms.Panel();
             this.lblScretch = new System.Windows.Forms.Label();
             this.pnlContainer = new System.Windows.Forms.Panel();
-            this.btnHighValueInReg = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pnlFunc.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -94,7 +93,7 @@ namespace Test
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 300);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(228, 133);
+            this.groupBox1.Size = new System.Drawing.Size(228, 134);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "维护";
@@ -238,6 +237,16 @@ namespace Test
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "库房管理";
             // 
+            // btnHighValueInReg
+            // 
+            this.btnHighValueInReg.Location = new System.Drawing.Point(118, 23);
+            this.btnHighValueInReg.Name = "btnHighValueInReg";
+            this.btnHighValueInReg.Size = new System.Drawing.Size(108, 23);
+            this.btnHighValueInReg.TabIndex = 15;
+            this.btnHighValueInReg.Text = "高值耗材入库登记";
+            this.btnHighValueInReg.UseVisualStyleBackColor = true;
+            this.btnHighValueInReg.Click += new System.EventHandler(this.btnHighValueInReg_Click);
+            // 
             // btnInOutStatistics
             // 
             this.btnInOutStatistics.Location = new System.Drawing.Point(4, 80);
@@ -380,26 +389,6 @@ namespace Test
             this.pnlContainer.Name = "pnlContainer";
             this.pnlContainer.Size = new System.Drawing.Size(673, 496);
             this.pnlContainer.TabIndex = 2;
-            // 
-            // btnHighValueInReg
-            // 
-            this.btnHighValueInReg.Location = new System.Drawing.Point(118, 23);
-            this.btnHighValueInReg.Name = "btnHighValueInReg";
-            this.btnHighValueInReg.Size = new System.Drawing.Size(108, 23);
-            this.btnHighValueInReg.TabIndex = 15;
-            this.btnHighValueInReg.Text = "高值耗材入库登记";
-            this.btnHighValueInReg.UseVisualStyleBackColor = true;
-            this.btnHighValueInReg.Click += new System.EventHandler(this.btnHighValueInReg_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 300);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(228, 100);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "维护";
             // 
             // Form2
             // 

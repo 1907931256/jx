@@ -99,7 +99,7 @@ Public Class FrmLocationQuery
             Dim code As String = dgv.SelectedRows(0).Cells(TEXT_ID_INFO_CODE).Value.ToString()
             Dim retMsg As String = String.Empty
             If Not LocationMinitor(code, retMsg) Then
-                BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Error, "", retMsg, 10)
+                BaseMessageBox.ShowCustomerMessage(MessageBoxIcon.Warning, "", retMsg, 10)
             End If
         End If
     End Sub

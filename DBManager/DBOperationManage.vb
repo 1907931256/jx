@@ -28,7 +28,7 @@ Public Class DbOperationManage
         Return DBMEDITS_RESULT.SUCCESS
     End Function
     Public Function QuerySurgeryNoteInfo(ByRef tableSureryNote As DataTable, startTime As String, endTime As String, surRoomId As String, ByVal ParamArray arrStatus() As OPerationNoteState) As EnumDef.DBMEDITS_RESULT
-        Dim columns As String = String.Format("{0},{1} As {2},{3} As {4},{5} As {6},{7} As {8},{9} As {10},{11} As {12},{13} As {14},{15} As {16},{17} As {18},{19} As {20},{21} As {22},{23} As {24},{25} As {26}, {27},{28} AS {29}，{30},{31}", _
+        Dim columns As String = String.Format("{0},{1} As {2},{3} As {4},{5} As {6},{7} As {8},{9} As {10},{11} As {12},{13} As {14},{15} As {16},{17} As {18},{19} As {20},{21} As {22},{23} As {24},{25} As {26}, {27},{28} AS {29},{30},{31}", _
                     OPN_ID, OPN_VISIT_ID, TEXT_VISIT_ID, OPN_PATIENT_NAME, TEXT_PATIENT_NAME, OPN_GENDER, TEXT_GENDER, OPN_AGE, TEXT_AGE, OPN_OPERATION_NAME, TEXT_OPERATION_NAME, _
                     OPN_ORDER_DATE, TEXT_ORDER_DATE, ROOM_NAME, TEXT_ROOM_NAME, OPN_TABLE_ID, TEXT_TABLE_ID, TRUE_NAME, TEXT_DOCTOR_NAME, FULL_NAME, TEXT_DEPARTMENT_NAME, _
                     OPN_WEIGHT, TEXT_WEIGHT, OPN_DIAGNOSIS, TEXT_DIAGNOSIS, OPN_DR_MEMO, TEXT_DR_MEMO, OPN_OPERATION_ID, OPN_OPERATION_STATUS, TEXT_OPERATION_STATUS, OPN_ROOM_ID, OPN_PATIENT_ID)
@@ -40,10 +40,10 @@ Public Class DbOperationManage
         If Not String.IsNullOrEmpty(surRoomId) Then
             condition += String.Format(" AND {0}='{1}'", OPN_ROOM_ID, surRoomId)
         End If
-        Dim statusCondition As String = CreateArrayCondition(OPN_OPERATION_STATUS, SqlDbType.SmallInt, True, arrStatus)
-        If Not String.IsNullOrEmpty(statusCondition) Then
-            condition = String.Format("{0} and {1}", condition, statusCondition)
-        End If
+        'Dim statusCondition As String = CreateArrayCondition(OPN_OPERATION_STATUS, SqlDbType.SmallInt, True, arrStatus)
+        'If Not String.IsNullOrEmpty(statusCondition) Then
+        '    condition = String.Format("{0} and {1}", condition, statusCondition)
+        'End If
         Dim orderBy As String = String.Format("{0}", TEXT_ORDER_DATE)
         Dim strSql = String.Format("Select {0} From {1} {2} Where {3} Order By {4}", columns, TBL_OPERATION_NOTE, leftJoin, condition, orderBy)
         Dim ds As New DataSet
@@ -110,7 +110,7 @@ Public Class DbOperationManage
         Dim leftJoin As String = String.Format(" Left Join {0} On {1}={2}", DIC_USER_INFO, USER_CODE, OPN_DOCTOR_ID)
         leftJoin += String.Format(" Left Join {0} On {1}={2}", DIC_DEPT_INFO, DEPT_ID, OPN_DEPARTMENT_ID)
         leftJoin += String.Format(" Left Join {0} On {1}={2}", DIC_OPERATING_ROOM, ROOM_ID, OPN_ROOM_ID)
-        leftJoin += String.Format(" Left Join {0} On {1}={2}", DIC_OPERATION, OPERATION_CODE, OPN_OPERATION_ID)
+        leftJoin += String.Format(" Left Join {0} On {1}='{2}'", DIC_OPERATION, OPERATION_CODE, OPN_OPERATION_ID)
         
         Dim condition = String.Format("{0}={1}", OPN_ID, lOPN_ID)
         Dim strSql = String.Format("Select {0} From {1} {2} Where {3}", columns, TBL_OPERATION_NOTE, leftJoin, condition)
@@ -147,7 +147,7 @@ Public Class DbOperationManage
         Dim leftJoin As String = String.Format(" Left Join {0} On {1}={2}", DIC_USER_INFO, USER_CODE, OPN_DOCTOR_ID)
         leftJoin += String.Format(" Left Join {0} On {1}={2}", DIC_DEPT_INFO, DEPT_ID, OPN_DEPARTMENT_ID)
         leftJoin += String.Format(" Left Join {0} On {1}={2}", DIC_OPERATING_ROOM, ROOM_ID, OPN_ROOM_ID)
-        leftJoin += String.Format(" Left Join {0} On {1}={2}", DIC_OPERATION, OPERATION_CODE, OPN_OPERATION_ID)
+        leftJoin += String.Format(" Left Join {0} On {1}='{2}'", DIC_OPERATION, OPERATION_CODE, OPN_OPERATION_ID)
         Dim condition As String = String.Format("{0} BETWEEN　to_date('{1}','{3}') AND to_date('{2}','{3}')", OPN_ORDER_DATE, startTime, endTime, CONST_TEXT_ORACLE_DATETIME_FORMAT_YYYYMMDDHHMMSS)
         If Not String.IsNullOrEmpty(surRoomId) Then
             condition += String.Format(" AND {0}='{1}'", OPN_ROOM_ID, surRoomId)

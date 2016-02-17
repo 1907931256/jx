@@ -28,10 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlFunc = new System.Windows.Forms.Panel();
             this.btnClose = new DevComponents.DotNetBar.ButtonX();
             this.pnlInfo = new System.Windows.Forms.Panel();
+            this.gbInfo = new System.Windows.Forms.GroupBox();
+            this.tbInputcode = new System.Windows.Forms.TextBox();
+            this.lblInputcode = new System.Windows.Forms.Label();
+            this.tbName = new System.Windows.Forms.TextBox();
+            this.lblName = new System.Windows.Forms.Label();
             this.pnlAction = new System.Windows.Forms.Panel();
             this.btnUpdateCancel = new DevComponents.DotNetBar.ButtonX();
             this.btnDel = new DevComponents.DotNetBar.ButtonX();
@@ -39,16 +45,11 @@
             this.btnUpdate = new DevComponents.DotNetBar.ButtonX();
             this.btnAdd = new DevComponents.DotNetBar.ButtonX();
             this.dgv = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.lblName = new System.Windows.Forms.Label();
-            this.tbName = new System.Windows.Forms.TextBox();
-            this.lblInputcode = new System.Windows.Forms.Label();
-            this.tbInputcode = new System.Windows.Forms.TextBox();
-            this.gbInfo = new System.Windows.Forms.GroupBox();
             this.pnlFunc.SuspendLayout();
             this.pnlInfo.SuspendLayout();
+            this.gbInfo.SuspendLayout();
             this.pnlAction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
-            this.gbInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlFunc
@@ -82,6 +83,59 @@
             this.pnlInfo.Name = "pnlInfo";
             this.pnlInfo.Size = new System.Drawing.Size(1024, 76);
             this.pnlInfo.TabIndex = 15;
+            // 
+            // gbInfo
+            // 
+            this.gbInfo.Controls.Add(this.tbInputcode);
+            this.gbInfo.Controls.Add(this.lblInputcode);
+            this.gbInfo.Controls.Add(this.tbName);
+            this.gbInfo.Controls.Add(this.lblName);
+            this.gbInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbInfo.Font = new System.Drawing.Font("SimSun", 9F);
+            this.gbInfo.Location = new System.Drawing.Point(0, 0);
+            this.gbInfo.Name = "gbInfo";
+            this.gbInfo.Size = new System.Drawing.Size(958, 74);
+            this.gbInfo.TabIndex = 1;
+            this.gbInfo.TabStop = false;
+            this.gbInfo.Text = "信息";
+            // 
+            // tbInputcode
+            // 
+            this.tbInputcode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(217)))), ((int)(((byte)(247)))));
+            this.tbInputcode.Location = new System.Drawing.Point(98, 46);
+            this.tbInputcode.Margin = new System.Windows.Forms.Padding(2);
+            this.tbInputcode.Name = "tbInputcode";
+            this.tbInputcode.Size = new System.Drawing.Size(224, 21);
+            this.tbInputcode.TabIndex = 38;
+            // 
+            // lblInputcode
+            // 
+            this.lblInputcode.AutoSize = true;
+            this.lblInputcode.Location = new System.Drawing.Point(4, 50);
+            this.lblInputcode.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblInputcode.Name = "lblInputcode";
+            this.lblInputcode.Size = new System.Drawing.Size(89, 12);
+            this.lblInputcode.TabIndex = 37;
+            this.lblInputcode.Text = "生产厂家拼音码";
+            // 
+            // tbName
+            // 
+            this.tbName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(217)))), ((int)(((byte)(247)))));
+            this.tbName.Location = new System.Drawing.Point(98, 19);
+            this.tbName.Margin = new System.Windows.Forms.Padding(2);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(224, 21);
+            this.tbName.TabIndex = 36;
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(4, 23);
+            this.lblName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(77, 12);
+            this.lblName.TabIndex = 30;
+            this.lblName.Text = "生产厂家名称";
             // 
             // pnlAction
             // 
@@ -164,6 +218,15 @@
             // dgv
             // 
             this.dgv.AllowUserToAddRows = false;
+            this.dgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -184,59 +247,6 @@
             this.dgv.TabIndex = 17;
             this.dgv.SelectionChanged += new System.EventHandler(this.dgv_SelectionChanged);
             // 
-            // lblName
-            // 
-            this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(4, 23);
-            this.lblName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(77, 12);
-            this.lblName.TabIndex = 30;
-            this.lblName.Text = "生产厂家名称";
-            // 
-            // tbName
-            // 
-            this.tbName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(217)))), ((int)(((byte)(247)))));
-            this.tbName.Location = new System.Drawing.Point(98, 19);
-            this.tbName.Margin = new System.Windows.Forms.Padding(2);
-            this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(224, 21);
-            this.tbName.TabIndex = 36;
-            // 
-            // lblInputcode
-            // 
-            this.lblInputcode.AutoSize = true;
-            this.lblInputcode.Location = new System.Drawing.Point(4, 50);
-            this.lblInputcode.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblInputcode.Name = "lblInputcode";
-            this.lblInputcode.Size = new System.Drawing.Size(89, 12);
-            this.lblInputcode.TabIndex = 37;
-            this.lblInputcode.Text = "生产厂家拼音码";
-            // 
-            // tbInputcode
-            // 
-            this.tbInputcode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(217)))), ((int)(((byte)(247)))));
-            this.tbInputcode.Location = new System.Drawing.Point(98, 46);
-            this.tbInputcode.Margin = new System.Windows.Forms.Padding(2);
-            this.tbInputcode.Name = "tbInputcode";
-            this.tbInputcode.Size = new System.Drawing.Size(224, 21);
-            this.tbInputcode.TabIndex = 38;
-            // 
-            // gbInfo
-            // 
-            this.gbInfo.Controls.Add(this.tbInputcode);
-            this.gbInfo.Controls.Add(this.lblInputcode);
-            this.gbInfo.Controls.Add(this.tbName);
-            this.gbInfo.Controls.Add(this.lblName);
-            this.gbInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbInfo.Font = new System.Drawing.Font("SimSun", 9F);
-            this.gbInfo.Location = new System.Drawing.Point(0, 0);
-            this.gbInfo.Name = "gbInfo";
-            this.gbInfo.Size = new System.Drawing.Size(958, 74);
-            this.gbInfo.TabIndex = 1;
-            this.gbInfo.TabStop = false;
-            this.gbInfo.Text = "信息";
-            // 
             // FrmDrugManufacturesM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -250,10 +260,10 @@
             this.Load += new System.EventHandler(this.FrmDrugManufacturesM_Load);
             this.pnlFunc.ResumeLayout(false);
             this.pnlInfo.ResumeLayout(false);
-            this.pnlAction.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.gbInfo.ResumeLayout(false);
             this.gbInfo.PerformLayout();
+            this.pnlAction.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
 
         }

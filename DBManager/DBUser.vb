@@ -38,6 +38,8 @@ Public Class DBUser
             Return DBMEDITS_RESULT.ERROR_EXIST_OVERFLOW
         End If
     End Function
+
+
     'Public Function QueryTotalUser(ByRef dtUser As DataTable) As DBMEDITS_RESULT
     '    Dim lRet As DBMEDITS_RESULT = QueryTotal(dtUser, MST_USER_INFO)
     '    If lRet <> DBMEDITS_RESULT.SUCCESS Then

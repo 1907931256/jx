@@ -216,4 +216,12 @@ Public Class FrmOperationNoteQuery
         'End If
         'm_dtSelect.Clear()
     End Sub
+
+    Private Sub ButtonX1_Click(sender As Object, e As EventArgs)
+        Dim dbOper As New DbOperationManage
+
+        Dim ds As New DataTable
+        dbOper.QueryTotal(ds, "dept_info")
+        MessageBox.Show(ds.Rows.Count.ToString())
+    End Sub
 End Class

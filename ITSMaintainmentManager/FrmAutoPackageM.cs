@@ -63,12 +63,12 @@ namespace ITSMaintainmentManager
                 filter = string.Format("{0} like '%{1}%'", ConstDef.TEXT_OPERATION_NAME, filter);
             DataRow[] selectRows = _operDict.Select(filter);
             DataTable filterTable = new DataTable();
-            filterTable.Columns.Add(DBConstDef.OPERATION_CODE, typeof (int));
+            filterTable.Columns.Add(DBConstDef.OPERATION_CODE, typeof (string));
             filterTable.Columns.Add(ConstDef.TEXT_OPERATION_NAME, typeof(string));
             foreach (DataRow selrow in selectRows)
             {
                 DataRow newRow = filterTable.NewRow();
-                newRow[DBConstDef.OPERATION_CODE] = Judgement.JudgeDBNullValue(selrow[DBConstDef.OPERATION_CODE],EnumDef.ENUM_DATA_TYPE.DATA_TYPE_INTEGER);
+                newRow[DBConstDef.OPERATION_CODE] = Judgement.JudgeDBNullValue(selrow[DBConstDef.OPERATION_CODE], EnumDef.ENUM_DATA_TYPE.DATA_TYPE_STRING);
                 newRow[ConstDef.TEXT_OPERATION_NAME] = Judgement.JudgeDBNullValue(selrow[ConstDef.TEXT_OPERATION_NAME], EnumDef.ENUM_DATA_TYPE.DATA_TYPE_STRING);
                 filterTable.Rows.Add(newRow);
             }
@@ -112,26 +112,26 @@ namespace ITSMaintainmentManager
             pnlDrug.Enabled = dgvOperList.SelectedRows.Count == 1;
             if (dgvOperList.SelectedRows.Count != 1)
                 return;
-            int id = Convert.ToInt32(Judgement.JudgeDBNullValue(dgvOperList.SelectedRows[0].Cells[DBConstDef.OPERATION_CODE].Value, EnumDef.ENUM_DATA_TYPE.DATA_TYPE_INTEGER));
+            string id = Judgement.JudgeDBNullValue(dgvOperList.SelectedRows[0].Cells[DBConstDef.OPERATION_CODE].Value, EnumDef.ENUM_DATA_TYPE.DATA_TYPE_STRING).ToString();
             LoadIns(id);
             LoadDrug(id);
         }
 
-        private void LoadIns(int operId)
+        private void LoadIns(string operId)
         {
             DbMaintainment operDb = new DbMaintainment();
             DataTable insTable = new DataTable();
-            operDb.QueryAutoPackageInsInfo(ref insTable, operId.ToString());
+            operDb.QueryAutoPackageInsInfo(ref insTable, operId);
             dgvIns.DataSource = insTable;
             if (null != dgvIns.Columns[DBConstDef.OPID_ID])
                 dgvIns.Columns[DBConstDef.OPID_ID].Visible = false;
         }
 
-        private void LoadDrug(int operId)
+        private void LoadDrug(string operId)
         {
             DbMaintainment operDb = new DbMaintainment();
             DataTable drugTable = new DataTable();
-            operDb.QueryAutoPackageDrugInfo(ref drugTable, operId.ToString());
+            operDb.QueryAutoPackageDrugInfo(ref drugTable, operId);
             dgvDrug.DataSource = drugTable;
             if (null != dgvDrug.Columns[DBConstDef.OPDD_ID])
                 dgvDrug.Columns[DBConstDef.OPDD_ID].Visible = false;
@@ -151,7 +151,7 @@ namespace ITSMaintainmentManager
                 var insName = (TextBox)ddlInsName;
                 ddlInsName.Attach(ref insName, _insDict);
             }
-            LoadIns(-1);
+            LoadIns("invalid");
         }
 
         private void InsNamePressEnter()
@@ -185,7 +185,7 @@ namespace ITSMaintainmentManager
                 var textBox = ddlDrugName as TextBox;
                 ddlDrugName.Attach(ref textBox, _drugDict);
             }
-            LoadDrug(-1);
+            LoadDrug("invalid");
         }
 
         private void DrugNamePressEnter()
@@ -251,7 +251,7 @@ namespace ITSMaintainmentManager
                 //insert a new row, db and datatable
                 DbMaintainment operDb = new DbMaintainment();
                 int id = 0;
-                int operId = Convert.ToInt32(Judgement.JudgeDBNullValue(dgvOperList.SelectedRows[0].Cells[DBConstDef.OPERATION_CODE].Value, EnumDef.ENUM_DATA_TYPE.DATA_TYPE_INTEGER));
+                string operId = Judgement.JudgeDBNullValue(dgvOperList.SelectedRows[0].Cells[DBConstDef.OPERATION_CODE].Value, EnumDef.ENUM_DATA_TYPE.DATA_TYPE_STRING).ToString();
                 int insCount = 0;
                 if (!string.IsNullOrEmpty(tbInsQuantity.Text))
                     insCount = Convert.ToInt32(tbInsQuantity.Text);
@@ -304,7 +304,7 @@ namespace ITSMaintainmentManager
                 //insert a new row, db and datatable
                 DbMaintainment operDb = new DbMaintainment();
                 int id = 0;
-                int operId = Convert.ToInt32(Judgement.JudgeDBNullValue(dgvOperList.SelectedRows[0].Cells[DBConstDef.OPERATION_CODE].Value, EnumDef.ENUM_DATA_TYPE.DATA_TYPE_INTEGER));
+                string operId = Judgement.JudgeDBNullValue(dgvOperList.SelectedRows[0].Cells[DBConstDef.OPERATION_CODE].Value, EnumDef.ENUM_DATA_TYPE.DATA_TYPE_STRING).ToString();
                 int drugCount = 0;
                 if (!string.IsNullOrEmpty(tbDrugQuantity.Text))
                     drugCount = Convert.ToInt32(tbDrugQuantity.Text);

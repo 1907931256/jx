@@ -104,7 +104,9 @@ Public Class FrmHighValueDispatchReg
     End Sub
     Private Sub SetNoteInfo()
         tbApplyNo.Text = m_oCurRequestInfo._id
-        tbApplyDate.Text = CDate(m_oCurRequestInfo._requestDate).ToString(TEXT_DATETIME_FORMATION_DATE)
+        If (Not String.IsNullOrEmpty(m_oCurRequestInfo._requestDate)) Then
+            tbApplyDate.Text = CDate(m_oCurRequestInfo._requestDate).ToString(TEXT_DATETIME_FORMATION_DATE)
+        End If
         tbApplyRoom.Text = m_oCurRequestInfo._room
         txtRequestName.Text = m_oCurRequestInfo._staffName
     End Sub
